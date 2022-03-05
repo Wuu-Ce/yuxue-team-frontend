@@ -1,0 +1,11 @@
+<!--pages/user/home/home.wxml-->
+<cu-custom bgColor="bg-white" ><view slot="content">我的</view></cu-custom>
+
+<view class="cu-bar bg-white solid-bottom margin-top" bindtap="toMyTeam">
+  <view class='action'>
+    <text class='cuIcon-titles text-orange '></text> 我的队伍
+  </view>
+  <view class='action'>
+    <text class="cuIcon-right"></text>
+  </view>
+</view>

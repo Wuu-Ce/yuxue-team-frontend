@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "teamItem": "/pages/team/teamItem/teamItem"
+  }
+}

@@ -1,0 +1,6 @@
+<!--pages/team/home/home.wxml-->
+<cu-custom bgColor="bg-white" ><view slot="content">队伍列表</view></cu-custom>
+<view wx:for="{{teams}}" wx:for-item="team" wx:key="*this">
+  <teamItem team="{{team}}"></teamItem>
+</view>
+
