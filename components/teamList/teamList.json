@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "teamItem": "/pages/team/teamItem/teamItem"
+    "teamItem": "/components/teamItem/teamItem"
   }
 }

@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "firstPage": "/pages/team/home/home",
-    "userPage": "/pages/user/home/home"
+    "teamList": "/components/teamList/teamList",
+    "homePage": "/components/homePage/home"
   }
 }

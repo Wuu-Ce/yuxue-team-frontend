@@ -1,4 +1,5 @@
 // pages/user/home/home.js
+const app = getApp()
 Component({
   /**
    * 组件的属性列表
@@ -14,13 +15,19 @@ Component({
 
   },
 
+  lifetimes: {
+    attached: function() {
+
+    }
+  },
+
   /**
    * 组件的方法列表
    */
   methods: {
-    toMyTeam() {
+    jumpToMyTeam() {
       wx.navigateTo({
-        url: '/pages/user/myteam/myteam',
+        url: '/pages/myTeam/myTeam',
       })
     }
   }

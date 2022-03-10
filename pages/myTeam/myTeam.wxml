@@ -1,0 +1,24 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view class="text-black" slot="backText">我的队伍</view>
+  <!-- <view slot="content" class="text-black text-bold">予学</view> -->
+</cu-custom>
+
+<view class="bg-white nav text-grey text-center">
+  <view class="cu-item {{0==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="0" style="height: {{NavHeight}}px;">
+    <text>创建的</text>
+  </view>
+  <view class="cu-item {{1==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="1" style="height: {{NavHeight}}px;">
+    <text>加入的</text>
+  </view>
+  <view class="cu-item {{2==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="2" style="height: {{NavHeight}}px;">
+    <text>申请中</text>
+  </view>
+</view>
+
+<teamList from="myTeam"></teamList>
+
+<!-- <scroll-view id="container" class="container text-black" style="height: {{containerH}}px;" capture-bind:touchstart="touchStart" capture-bind:touchcancel="touchCancel" capture-bind:touchend="touchEnd">
+  <view wx:for="{{0==tabCur? created_team_list:(1==tabCur? joined_team_list:applying_team_list)}}" wx:for-item="team" wx:key="item" >
+    <teamItem team="{{team}}"></teamItem>
+  </view>
+</scroll-view> -->

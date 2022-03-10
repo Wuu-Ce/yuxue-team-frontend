@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/myteam/myteam"
+    "pages/teamDetail/teamDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -11,7 +11,7 @@
     "navigationStyle": "custom"
   },
   "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom"
+    "cu-custom": "/utils/colorui/components/cu-custom"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

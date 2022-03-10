@@ -11,22 +11,58 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
 
-    nowPage:"firstPage",
-    nowIndex:0,
-    tabBar:[
-      {
-        "iconClass":"iconfont icon-shouye",
-        "text":"首页",
-        "tapFunction":"toFirst",
-        "active":"active"
-      },
-      {
-        "iconClass":"iconfont icon-wode",
-        "text":"我的",
-        "tapFunction": "toSecond",
-        "active": ""
-      }
-    ]
+    tabCur: 0,  // 当前选中的底部tab
+  },
+
+  onLoad: function(options){
+    this.setData({
+      pageCur: app.globalData.pageCur,
+      pageList: app.globalData.pageList
+    })
+  },
+  onShow: function(options){
+    this.setData({
+      pageCur: app.globalData.pageCur,
+      pageList: app.globalData.pageList
+    })
+  },
+  // tab切换
+  changetab(e){
+    var tabindex = e.currentTarget.dataset.tabindex;
+    console.log()
+    if(tabindex!=this.data.tabCur){
+      this.setData({
+        tabCur: parseInt(tabindex)
+      })
+    }
+  },
+  // 跳转到我的队伍页
+  onJumpToMyTeam(e){
+    this.pageSwitch(1);
+  },
+  // 跳转到上一个页面
+  onJumpBack(e){
+    var pageCur = e.detail.pageCur;
+    app.setPageCur(pageCur);
+    this.setData({
+      pageCur: pageCur
+    })
+  },
+  // 跳转到发布页
+  jumpToIssue(){
+    // this.pageSwitch(2);
+    wx.navigateTo({
+      url: '/pages/createTeam/createTeam',
+    })
+  },
+  // 页面切换
+  pageSwitch(index){
+    // 切换到对应的页面
+    app.setPageCur(index);
+    app.setPageNext(index);
+    this.setData({
+      pageCur: index
+    })
   },
   // 事件处理函数
   bindViewTap() {
@@ -60,22 +96,6 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-  },
-
-  // 转到首页-队伍列表
-  toFirst(){
-    this.setData({
-      nowPage:"firstPage",
-      nowIndex: 0
-    })
-  },
-
-  // 转到我的
-  toSecond() {
-    this.setData({
-      nowPage: "userPage",
-      nowIndex: 1
     })
   }
 

@@ -1,15 +1,46 @@
-<!--index.wxml-->
+<view wx:if="{{pageCur==0}}">
+  <cu-custom bgColor="bg-white">
+    <view slot="content" class="text-black text-bold">
+      <text wx:if="{{tabCur==0}}">予学</text>
+      <text wx:if="{{tabCur==1}}">我的</text>
+    </view>
+  </cu-custom>
+</view>
+
+<!-- 组队列表 -->
+<view wx:if="{{tabCur==0}}">
+  <teamList from="index"></teamList> <!-- 队伍列表 -->
+</view>
+<!-- 个人中心 -->
+<view wx:if="{{tabCur==1}}">
+  <homePage></homePage>
+</view>
+
 
 <!-- 底部切换菜单 -->
-<view class="tab-bar">
-  <block wx:for="{{tabBar}}" wx:for-item="item" wx:key="index">
-    <view class="tab-item {{index==nowIndex?'active':''}}" bindtap="{{item.tapFunction}}">
-        <view class="{{item.iconClass}} icons"></view>
-        <text class="icon-text">{{item.text}}</text>
+<view wx:if="{{pageCur==0}}" class="cu-tabbar-height"></view> <!-- 占位置用的，和底部tab一样的高度 -->
+<view wx:if="{{pageCur==0}}" class="cu-bar tabbar bg-white">
+  <!-- 组队 -->
+  <view class="action" bindtap="changetab" data-tabindex="0">
+    <view wx:if="{{tabCur==0}}" class="action text-brown">
+      <view class="cuIcon-homefill"></view> 组队
     </view>
-  </block>
+    <view wx:else class="action text-black">
+      <view class="cuIcon-home"></view> 组队
+    </view>
+  </view>
+  <!-- 创建 -->
+  <view class="action text-gray add-action" bindtap="jumpToIssue">
+    <button class="cu-btn cuIcon-add bg-brown shadow"></button>
+    <text class="text-black">创建</text>
+  </view>
+  <!-- 我的 -->
+  <view class="action" bindtap="changetab" data-tabindex="1">
+    <view wx:if="{{tabCur==1}}" class="action text-brown">
+      <view class="cuIcon-myfill"></view> 我的
+    </view>
+    <view wx:else class="action text-black">
+      <view class="cuIcon-my"></view> 我的
+    </view>
+  </view>
 </view>
-<!-- 页面容器 -->
-<firstPage wx:if="{{nowPage=='firstPage'}}"></firstPage>
-
-<userPage wx:if="{{nowPage=='userPage'}}"></userPage>
