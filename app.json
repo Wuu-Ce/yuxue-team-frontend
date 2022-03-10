@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/createTeam/createTeam",
+    "pages/myTeam/myTeam",
     "pages/teamDetail/teamDetail"
   ],
   "window": {
