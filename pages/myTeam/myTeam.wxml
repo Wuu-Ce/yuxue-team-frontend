@@ -3,6 +3,7 @@
   <!-- <view slot="content" class="text-black text-bold">予学</view> -->
 </cu-custom>
 
+<!-- 标题导航栏 -->
 <view class="bg-white nav text-grey text-center">
   <view class="cu-item {{0==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="0" style="height: {{NavHeight}}px;">
     <text>创建的</text>
@@ -15,7 +16,28 @@
   </view>
 </view>
 
-<teamList from="myTeam"></teamList>
+<!-- 队伍列表 -->
+<swiper id="swiperContainer" 
+  style="height: {{swiperContainerH}}px;" 
+  duration="500" 
+  current="{{tabCur}}" 
+  bindchange="swiperCurChange"
+>
+  <!-- 我创建的 -->
+  <swiper-item>
+    <teamList from="myTeamCreated"></teamList>
+  </swiper-item>
+  <!-- 我加入的 -->
+  <swiper-item>
+    <teamList from="myTeamJoined"></teamList>
+  </swiper-item>
+  <!-- 正在申请的 -->
+  <swiper-item>
+    <teamList from="myTeamApplying"></teamList>
+  </swiper-item>
+</swiper>
+
+
 
 <!-- <scroll-view id="container" class="container text-black" style="height: {{containerH}}px;" capture-bind:touchstart="touchStart" capture-bind:touchcancel="touchCancel" capture-bind:touchend="touchEnd">
   <view wx:for="{{0==tabCur? created_team_list:(1==tabCur? joined_team_list:applying_team_list)}}" wx:for-item="team" wx:key="item" >
