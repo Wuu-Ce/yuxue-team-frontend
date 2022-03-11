@@ -161,56 +161,12 @@ Component({
           ]
         })
       }
-      else if(from=="myTeamCreated"){  // 表示在“我的队伍”中请求队伍列表
+      else if(from=="myTeam"){  // 表示在“我的队伍”中请求队伍列表
         // 以某种条件，向后端请求列表
         this.setData({
           teamList: [
             {
               teamName: '我创建的队伍1',
-              category: '0',
-              categoryExplain: [],
-              introduction: '不睡觉的星星，代替我吻吻你的眼睛。',
-              members: [
-                {
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/book%20and%20letters.png'
-                },{
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/cyan.png'
-                },{
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/go%20with%20the%20flow.png'
-                },
-              ]
-            }
-          ]
-        })
-      }
-      else if(from=="myTeamJoined"){  // 表示在“我的队伍”中请求队伍列表
-        // 以某种条件，向后端请求列表
-        this.setData({
-          teamList: [
-            {
-              teamName: '我加入的队伍1',
-              category: '0',
-              categoryExplain: [],
-              introduction: '不睡觉的星星，代替我吻吻你的眼睛。',
-              members: [
-                {
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/book%20and%20letters.png'
-                },{
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/cyan.png'
-                },{
-                  avatar: 'https://qiniu.freespace.yuxue0824.com/go%20with%20the%20flow.png'
-                },
-              ]
-            }
-          ]
-        })
-      }
-      else if(from=="myTeamApplying"){  // 表示在“我的队伍”中请求队伍列表
-        // 以某种条件，向后端请求列表
-        this.setData({
-          teamList: [
-            {
-              teamName: '申请中的队伍1',
               category: '0',
               categoryExplain: [],
               introduction: '不睡觉的星星，代替我吻吻你的眼睛。',

@@ -55,7 +55,7 @@
   </view>
   <!-- 创建 -->
   <view class="action text-gray add-action" bindtap="jumpToIssue">
-    <button class="cu-btn cuIcon-add bg-brown shadow" style=""></button>
+    <button class="cu-btn cuIcon-add bg-brown shadow" ></button>
     <text class="text-black " style="font-size:26rpx;">创建</text>
   </view>
   <!-- 我的 -->

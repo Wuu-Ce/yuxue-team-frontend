@@ -10,7 +10,7 @@
     </view>
     <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categoryColor[team.category]}} light text-sm text-bold radius">{{categoryName[team.category]}}</text>
     <view class="more margin-left margin-right-sm" style="position:relative;">
-      <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}" style="">
+      <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}">
         <text class="cuIcon-more text-grey" style="font-size:45rpx" catchtap="onClickMore"></text>
       </view>
       <!-- 收藏、举报 -->
