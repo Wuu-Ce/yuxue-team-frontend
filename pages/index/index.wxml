@@ -9,38 +9,60 @@
 
 <!-- 组队列表 -->
 <view wx:if="{{tabCur==0}}">
-  <teamList from="index"></teamList> <!-- 队伍列表 -->
+  <view  class="flex flex-direction padding-top-sm padding-bottom-xxs padding-lr-lg bg-white search" style="z-index:500;">
+    <!-- 搜索 -->
+    <view class="flex align-center padding-lr-sm padding-tb-xxs round bg-gray" style="flex-grow:1;" bindtap="jumpToSearchTeam">
+      <text class="cuIcon-search margin-right-sm text-grey"></text>
+      <input type="text" placeholder="搜索队伍、分类、团队介绍" disabled="true" placeholder-class="text-sm text-grey" placeholder-style="letter-spacing:2rpx;" style="width:100%;"></input>
+    </view>
+    <!-- tab -->
+    <scroll-view scroll-x class="margin-tb-sm bg-white nav " scroll-with-animation scroll-left="{{scrollLeft}}">
+      <view class="padding-lr-lg" style="display: inline-block;height:55rpx;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key bindtap="topTabSelect" data-id="{{index}}">
+        <view >
+          <text class="{{index==topTabCur?'text-brown text-bold text-lg':'text-black text-lg'}}">{{item.name}}</text>
+        </view>
+        <view class="margin-lr-xs" style="{{index==topTabCur?'border-bottom:6rpx solid #A5673F':''}}"></view>
+      </view>
+    </scroll-view>
+    <!-- <view class="flex flex-direction align-center justify-center margin-lr text-black">
+      <text class="cuIcon-apps" style="font-size:40rpx;"></text>
+      <text class="text-sm text-black" style="font-size:23rpx;font-family:Arial, Helvetica, sans-serif;">分类</text>
+    </view> -->
+  </view>
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" bindchange="topTabChange">
+    <swiper-item wx:for="{{topTabList}}" wx:key>
+      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;">
+        <teamList listData="{{listData}}"></teamList> <!-- 队伍列表 -->
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+  
 </view>
 <!-- 个人中心 -->
 <view wx:if="{{tabCur==1}}">
   <homePage></homePage>
 </view>
 
-
 <!-- 底部切换菜单 -->
-<view wx:if="{{pageCur==0}}" class="cu-tabbar-height"></view> <!-- 占位置用的，和底部tab一样的高度 -->
+<view id="tabbar" wx:if="{{pageCur==0}}" class="cu-tabbar-height"></view> <!-- 占位置用的，和底部tab一样的高度 -->
 <view wx:if="{{pageCur==0}}" class="cu-bar tabbar bg-white">
   <!-- 组队 -->
   <view class="action" bindtap="changetab" data-tabindex="0">
-    <view wx:if="{{tabCur==0}}" class="action text-brown">
-      <view class="cuIcon-homefill"></view> 组队
-    </view>
-    <view wx:else class="action text-black">
-      <view class="cuIcon-home"></view> 组队
+    <view class="flex flex-direction justify-center">
+      <text class="cuIcon-{{tabCur==0?'homefill':'home'}} text-{{tabCur==0?'brown':''}}"></text> 
+      <text class="text-{{tabCur==0?'brown':'black'}}" style="font-size:26rpx;">组队</text>
     </view>
   </view>
   <!-- 创建 -->
   <view class="action text-gray add-action" bindtap="jumpToIssue">
-    <button class="cu-btn cuIcon-add bg-brown shadow"></button>
-    <text class="text-black">创建</text>
+    <button class="cu-btn cuIcon-add bg-brown shadow" style=""></button>
+    <text class="text-black " style="font-size:26rpx;">创建</text>
   </view>
   <!-- 我的 -->
   <view class="action" bindtap="changetab" data-tabindex="1">
-    <view wx:if="{{tabCur==1}}" class="action text-brown">
-      <view class="cuIcon-myfill"></view> 我的
-    </view>
-    <view wx:else class="action text-black">
-      <view class="cuIcon-my"></view> 我的
+    <view class="flex flex-direction justify-center">
+      <text class="cuIcon-{{tabCur==1?'myfill':'my'}} text-{{tabCur==1?'brown':''}}"></text> 
+      <text class="text-{{tabCur==1?'brown':'black'}}"  style="font-size:26rpx;">我的</text>
     </view>
   </view>
 </view>

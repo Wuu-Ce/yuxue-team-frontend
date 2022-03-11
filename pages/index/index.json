@@ -2,5 +2,6 @@
   "usingComponents": {
     "teamList": "/components/teamList/teamList",
     "homePage": "/components/homePage/home"
-  }
+  },
+  "disableScroll": true
 }

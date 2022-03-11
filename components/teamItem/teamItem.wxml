@@ -1,23 +1,35 @@
 <view class="bg-white margin-lr margin-tb padding shadow" style="border-radius:15rpx;">
   <!-- 一、头像，队名 -->
   <view class="flex justify align-center text-black"> 
-    <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+    <view class="cu-avatar round margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:75rpx;height:75rpx;font-size:1.5em;"></view>
     <view class="title flex flex-direction justify-center align-start" style="flex-grow:1">
-      <view class="flex align-center text-bold margin-bottom-xs">
+      <view class="flex align-center text-bold margin-bottom-xxs">
         <text class="margin-right-sm">{{team.teamName}}</text>
       </view>
       <view class="text-gray text-sm flex justify-between">2019年12月3日</view>
     </view>
     <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categoryColor[team.category]}} light text-sm text-bold radius">{{categoryName[team.category]}}</text>
-    <view class="more margin-left margin-right-sm">
-      <!-- <text class="cuIcon-moreandroid margin-left-sm text-grey" style="font-size:45rpx"></text> -->
-      <text class="cuIcon-more text-grey" style="font-size:45rpx"></text>
+    <view class="more margin-left margin-right-sm" style="position:relative;">
+      <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}" style="">
+        <text class="cuIcon-more text-grey" style="font-size:45rpx" catchtap="onClickMore"></text>
+      </view>
+      <!-- 收藏、举报 -->
+      <view wx:if="{{collectButtonShow}}" class="flex justify-around align-center bg-black text-white radius" style="position:absolute;top:65rpx;right:-60rpx;width:260rpx;z-index:1000">
+        <view class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickCollect">
+          <text class="cuIcon-{{collected?'favorfill text-yellow':'favor'}} margin-right-xxs"></text>
+          <text class="">收藏</text>
+        </view>
+        <view class="flex align-center padding-lr-sm padding-tb-xs" catchtap="onClickAccuse">
+          <text class="cuIcon-warn margin-right-xxs"></text>
+          <text class="">举报</text>
+        </view>
+      </view>
     </view>
   </view>
-  <!-- 二、分类、团队介绍 -->
+  <!-- 二、分类、团队介绍 --> 
   <view class="margin-top-sm text-black" catchtap="jumpToTeamDetailPage">
     <view class="margin-tb-xs">
-      <text class="margin-right-sm text-{{categoryColor[team.category]}} text-bold" wx:for="{{team.categoryExplain}}">{{item}}</text>
+      <text class="margin-right-sm text-black text-bold" wx:for="{{team.categoryExplain}}">{{item}}</text>
     </view>
     <view class="margin-tb-xs introduction">
       <text class="margin-tb-xs margin-right-sm text-brown text-bold">团队介绍：</text>
@@ -25,16 +37,17 @@
     </view>
   </view>
   <!-- 三、队伍成员 -->
-  <view class="flex margin-top-sm light flex-wrap">
-    <view class="margin-right-xs margin-bottom-xs cu-avatar round" style="background-image:url({{item.avatar}});" wx:for="{{team.members}}"></view>
-    <view class="cu-avatar round bg-grey light">
+  <view id="teamMembers" class="flex flex-wrap margin-top-sm light">
+    <view class="teamMember flex margin-right-xs margin-bottom-xs cu-avatar round" style="background-image:url({{item.avatar}});flex-shrink:0;" wx:for="{{iconMoreShow?membersShow:team.members}}"></view>
+    <view wx:if="{{iconMoreShow}}" catchtap="showAllMembers" class="cu-avatar round bg-grey light">
       <text class="cuIcon-more"></text>
     </view>
   </view>
   <!-- 四、申请加入 -->
   <view class="flex justify-end align-center margin-top-sm">
-    <view class="cu-btn bg-brown text-bold text-white radius shadow">申请加入</view>
-    
+    <view class="cu-btn bg-brown text-bold text-white radius shadow"  style="animation-delay: 0.1s;">申请加入</view>
   </view>
 </view>
 
+<!-- 点击空白处，隐藏收藏、举报按钮 -->
+<view wx:if="{{collectButtonShow}}" class="" style="position:fixed;top:0px;left:0px;;width:100vw;height:100vh;opacity:0.9;" catchtap="hideCollectButton"></view>

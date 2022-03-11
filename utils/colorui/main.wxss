@@ -3048,7 +3048,9 @@ scroll-view.cu-steps .cu-item {
 .margin-xl {
 	margin: 50rpx;
 }
-
+.margin-top-xxs {
+	margin-top: 5rpx;
+}
 .margin-top-xs {
 	margin-top: 10rpx;
 }
@@ -3068,7 +3070,9 @@ scroll-view.cu-steps .cu-item {
 .margin-top-xl {
 	margin-top: 50rpx;
 }
-
+.margin-right-xxs {
+	margin-right: 5rpx;
+}
 .margin-right-xs {
 	margin-right: 10rpx;
 }
@@ -3087,6 +3091,10 @@ scroll-view.cu-steps .cu-item {
 
 .margin-right-xl {
 	margin-right: 50rpx;
+}
+
+.margin-bottom-xxs {
+	margin-bottom: 5rpx;
 }
 
 .margin-bottom-xs {
@@ -3182,7 +3190,9 @@ scroll-view.cu-steps .cu-item {
 .padding-0 {
 	padding: 0;
 }
-
+.padding-xxs {
+	padding: 5rpx;
+}
 .padding-xs {
 	padding: 10rpx;
 }
@@ -3242,7 +3252,9 @@ scroll-view.cu-steps .cu-item {
 .padding-right-xl {
 	padding-right: 50rpx;
 }
-
+.padding-bottom-xxs {
+	padding-bottom: 5rpx;
+}
 .padding-bottom-xs {
 	padding-bottom: 10rpx;
 }
@@ -3307,10 +3319,13 @@ scroll-view.cu-steps .cu-item {
 	padding-left: 50rpx;
 	padding-right: 50rpx;
 }
-
-.padding-tb-xs {
+.padding-tb-xxs {
 	padding-top: 10rpx;
 	padding-bottom: 10rpx;
+}
+.padding-tb-xs {
+	padding-top: 7rpx;
+	padding-bottom: 7rpx;
 }
 
 .padding-tb-sm {

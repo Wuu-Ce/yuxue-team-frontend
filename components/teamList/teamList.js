@@ -4,8 +4,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    from: {
-      type: String,
+    listData: {
+      type: Object
     }
   },
 
@@ -21,9 +21,10 @@ Component({
   lifetimes: {
     attached: function() {
       // 在组件实例进入页面节点树时执行
-      var from = this.properties.from;
+      var from = this.properties.listData.from;
       if(from=="index"){  // 表示在“首页”中请求队伍列表
         // 以某种条件，向后端请求列表
+        var topTabCur = this.properties.listData.topTabCur;
         this.setData({
           teamList: [
             {
@@ -34,6 +35,22 @@ Component({
               members: [
                 {
                   avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.1.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.2.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.3.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.2.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.3.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.2.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.3.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.2.png'
+                },{
+                  avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.3.png'
                 },{
                   avatar: 'https://qiniu.pregnancy.yuxue0824.com/1.1.1.2.png'
                 },{
