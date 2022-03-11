@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/teamDetail/teamDetail",
     "pages/accuseTeam/accuseTeam",
-    "pages/searchTeam/searchTeam"
+    "pages/searchTeam/searchTeam",
+    "pages/createTeam/createTeam",
+    "pages/myTeam/myTeam"
   ],
   "window": {
     "backgroundTextStyle": "light",
