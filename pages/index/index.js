@@ -15,9 +15,11 @@ Page({
 
     listData: {from:'index',topTabCur:1},
     topTabCur: 1,  // 当前的顶部tab
-    topTabList: [{index: 0,name: '热榜'},{index: 1,name: '推荐'},{index: 2,name: '创意'},{index: 3,name: '竞赛'},{index: 4,name: '考证'},{index: 5,name: '创业'},{index: 6,name: '科研'},{index: 7,name: '游戏'}],
+    topTabList: [{index: 0,name: '热榜'},{index: 1,name: '推荐'},{index: 2,name: '本校'},{index: 3,name: '兴趣'},{index: 4,name: '竞赛'},{index: 5,name: '创意'},{index: 6,name: '创业'},{index: 7,name: '科研'},{index: 8,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
+
+    accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}]
   },
 
   onLoad: function(options) {
@@ -31,8 +33,11 @@ Page({
         tabbarQuery.select('#tabbar').boundingClientRect()
         tabbarQuery.exec(
           function (res1) {
+            console.log(res[0].top);
+            console.log(res1[0].height);
+            console.log(wx.getSystemInfoSync().windowHeight);
             that.setData({
-              swiperContainerH: wx.getSystemInfoSync().windowHeight - that.data.CustomBar - res[0].top - res1[0].height - 10        
+              swiperContainerH: wx.getSystemInfoSync().windowHeight - res[0].top - res1[0].height - 10        
             })
           }
         )
@@ -96,6 +101,31 @@ Page({
     })
   },
 
+  // 模态框
+  showModal(e) {
+    this.setData({
+      modalName: 'DialogModal2'
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  }, 
+  onAccuseTeam(){
+    console.log('aaa')
+    this.showModal();
+  },
+  // 选择举报选项
+  chooseAccuseOption(e){
+    console.log(e);
+    var optionID = e.currentTarget.dataset.id;
+    var accuseOptions = this.data.accuseOptions;
+    accuseOptions[optionID].selected = !accuseOptions[optionID].selected;
+    this.setData({
+      accuseOptions: accuseOptions
+    })
+  },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({

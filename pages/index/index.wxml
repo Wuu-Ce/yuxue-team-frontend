@@ -1,11 +1,11 @@
-<view wx:if="{{pageCur==0}}">
-  <cu-custom bgColor="bg-white">
-    <view slot="content" class="text-black text-bold">
-      <text wx:if="{{tabCur==0}}">予学</text>
-      <text wx:if="{{tabCur==1}}">我的</text>
-    </view>
-  </cu-custom>
-</view>
+<!-- <view wx:if="{{tabCur==0}}" ></view> -->
+
+<cu-custom bgColor="bg-white" >
+  <view slot="content" class="text-black text-bold">
+    <text wx:if="{{tabCur==0}}">予学</text>
+    <text wx:if="{{tabCur==1}}">我的</text>
+  </view>
+</cu-custom>
 
 <!-- 组队列表 -->
 <view wx:if="{{tabCur==0}}">
@@ -15,24 +15,28 @@
       <text class="cuIcon-search margin-right-sm text-grey"></text>
       <input type="text" placeholder="搜索队伍、分类、团队介绍" disabled="true" placeholder-class="text-sm text-grey" placeholder-style="letter-spacing:2rpx;" style="width:100%;"></input>
     </view>
-    <!-- tab -->
-    <scroll-view scroll-x class="margin-tb-sm bg-white nav " scroll-with-animation scroll-left="{{scrollLeft}}">
-      <view class="padding-lr-lg" style="display: inline-block;height:55rpx;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key bindtap="topTabSelect" data-id="{{index}}">
-        <view >
-          <text class="{{index==topTabCur?'text-brown text-bold text-lg':'text-black text-lg'}}">{{item.name}}</text>
+    <!-- 顶部tab -->
+    <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" >
+      <!-- tabs -->
+      <scroll-view scroll-x class="nav flex" enable-flex="true" scroll-with-animation scroll-left="{{scrollLeft}}" style="flex-grow:0;height:55rpx;width:95%;">
+        <view class="padding-lr" style="display: inline-block;height:100%;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key bindtap="topTabSelect" data-id="{{index}}">
+          <view >
+            <text class="{{index==topTabCur?'mainTone-color1 text-bold text-lg':'text-black text-lg'}}">{{item.name}}</text>
+            <text wx:if="{{item.index==0}}" class="cuIcon-hotfill text-orange margin-left-xxs"></text>
+          </view>
+          <view class="margin-lr-xs {{index==topTabCur?'mainTone-bgColor':''}}" style="{{index==topTabCur?'height:6rpx;':''}}"></view>
         </view>
-        <view class="margin-lr-xs" style="{{index==topTabCur?'border-bottom:6rpx solid #A5673F':''}}"></view>
+      </scroll-view>
+      <!-- 分类 -->
+      <view class="flex padding-xs shadow" style="flex-shrink: 0;">
+        <text class="cuIcon-apps" style="font-size:32rpx;"></text>
       </view>
-    </scroll-view>
-    <!-- <view class="flex flex-direction align-center justify-center margin-lr text-black">
-      <text class="cuIcon-apps" style="font-size:40rpx;"></text>
-      <text class="text-sm text-black" style="font-size:23rpx;font-family:Arial, Helvetica, sans-serif;">分类</text>
-    </view> -->
+    </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" bindchange="topTabChange">
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="300" bindchange="topTabChange">
     <swiper-item wx:for="{{topTabList}}" wx:key>
-      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;">
-        <teamList listData="{{listData}}"></teamList> <!-- 队伍列表 -->
+      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true">
+        <teamList listData="{{listData}}" bindaccuseteam="onAccuseTeam" ></teamList> <!-- 队伍列表 -->
       </scroll-view>
     </swiper-item>
   </swiper>
@@ -49,20 +53,44 @@
   <!-- 组队 -->
   <view class="action" bindtap="changetab" data-tabindex="0">
     <view class="flex flex-direction justify-center">
-      <text class="cuIcon-{{tabCur==0?'homefill':'home'}} text-{{tabCur==0?'brown':''}}"></text> 
-      <text class="text-{{tabCur==0?'brown':'black'}}" style="font-size:26rpx;">组队</text>
+      <text class="cuIcon-{{tabCur==0?'homefill':'home'}} {{tabCur==0?'mainTone-color1':''}}"></text> 
+      <text class="{{tabCur==0?'mainTone-color1':''}}" style="font-size:26rpx;">组队</text>
     </view>
   </view>
   <!-- 创建 -->
   <view class="action text-gray add-action" bindtap="jumpToIssue">
-    <button class="cu-btn cuIcon-add bg-brown shadow" ></button>
+    <button class="cu-btn cuIcon-add mainTone-bgColor text-bold shadow" ></button>
     <text class="text-black " style="font-size:26rpx;">创建</text>
   </view>
   <!-- 我的 -->
   <view class="action" bindtap="changetab" data-tabindex="1">
     <view class="flex flex-direction justify-center">
-      <text class="cuIcon-{{tabCur==1?'myfill':'my'}} text-{{tabCur==1?'brown':''}}"></text> 
-      <text class="text-{{tabCur==1?'brown':'black'}}"  style="font-size:26rpx;">我的</text>
+      <text class="cuIcon-{{tabCur==1?'myfill':'my'}} {{tabCur==1?'mainTone-color1':''}}"></text> 
+      <text class="{{tabCur==1?'mainTone-color1':''}}"  style="font-size:26rpx;">我的</text>
+    </view>
+  </view>
+</view>
+
+<!-- 举报 modal框 -->
+<view class="yuxue-modal bg-white {{modalName=='DialogModal2'?'show':''}}">
+  <view class="yuxue-dialog">
+    <view class="flex justify-center align-center">
+      <view class="content margin-lg">
+        <text class="text-black text-xl text-bold">举报该队伍</text>
+      </view>
+    </view>
+    <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
+      <view wx:for="{{accuseOptions}}" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
+    </view>
+    <view class="flex padding-lr-lg padding-tb-xs">
+      <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" auto-focus="true" fixed="true" maxlength="-1"></textarea>
+    </view>
+    <view class="padding-lg text-black">
+      <text>举报后我们会重新审核这支团队的信息，如果有更详细的证据，请发送给客服，感谢你帮助我们维持良好的网络环境</text>
+    </view>
+    <view class="flex solids-top">
+      <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view>
+      <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">提交</view>
     </view>
   </view>
 </view>

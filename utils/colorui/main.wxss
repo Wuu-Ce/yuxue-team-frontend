@@ -558,7 +558,7 @@ radio.white[checked] .wx-radio-input {
 }
 
 .solid::after {
-	border: 1rpx solid rgba(0, 0, 0, 0.1);
+	border: 1rpx solid rgba(0, 0, 0, 0.9);
 }
 
 .solid-top::after {
@@ -3116,7 +3116,9 @@ scroll-view.cu-steps .cu-item {
 .margin-bottom-xl {
 	margin-bottom: 50rpx;
 }
-
+.margin-left-xxs {
+	margin-left: 5rpx;
+}
 .margin-left-xs {
 	margin-left: 10rpx;
 }

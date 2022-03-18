@@ -8,7 +8,7 @@
       </view>
       <view class="text-gray text-sm flex justify-between">2019年12月3日</view>
     </view>
-    <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categoryColor[team.category]}} light text-sm text-bold radius">{{categoryName[team.category]}}</text>
+    <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categroyList[team.category].color}} light text-sm text-bold radius">{{categroyList[team.category].name}}</text>
     <view class="more margin-left margin-right-sm" style="position:relative;">
       <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}">
         <text class="cuIcon-more text-grey" style="font-size:45rpx" catchtap="onClickMore"></text>
@@ -19,7 +19,7 @@
           <text class="cuIcon-{{collected?'favorfill text-yellow':'favor'}} margin-right-xxs"></text>
           <text class="">收藏</text>
         </view>
-        <view class="flex align-center padding-lr-sm padding-tb-xs" catchtap="onClickAccuse">
+        <view class="flex align-center padding-lr-sm padding-tb-xs" bindtap="accuseTeam" >
           <text class="cuIcon-warn margin-right-xxs"></text>
           <text class="">举报</text>
         </view>
@@ -31,8 +31,8 @@
     <view class="margin-tb-xs">
       <text class="margin-right-sm text-black text-bold" wx:for="{{team.categoryExplain}}">{{item}}</text>
     </view>
-    <view class="margin-tb-xs introduction">
-      <text class="margin-tb-xs margin-right-sm text-brown text-bold">团队介绍：</text>
+    <view class="margin-tb-xs introduction" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow: hidden;">
+      <!-- <text class="margin-tb-xs margin-right-sm mainTone-color1 text-bold">团队介绍：</text> -->
       <text>{{team.introduction}}</text>
     </view>
   </view>
@@ -45,9 +45,10 @@
   </view>
   <!-- 四、申请加入 -->
   <view class="flex justify-end align-center margin-top-sm">
-    <view class="cu-btn bg-brown text-bold text-white radius shadow"  style="animation-delay: 0.1s;">申请加入</view>
+    <view class="cu-btn mainTone-bgColor  round shadow"  style="animation-delay: 0.1s;"><text style="letter-spacing:4rpx;">申请加入</text></view>
   </view>
 </view>
 
 <!-- 点击空白处，隐藏收藏、举报按钮 -->
 <view wx:if="{{collectButtonShow}}" class="" style="position:fixed;top:0px;left:0px;;width:100vw;height:100vh;opacity:0.9;" catchtap="hideCollectButton"></view>
+

@@ -1,0 +1,63 @@
+.mainTone-bgColor{
+  /* background-color: #568492 !important; */
+	/* background-color: #004B60 !important; */
+	background-image: linear-gradient(45deg,#0081ff, #1cbbb4);
+  color: white;
+}
+.mainTone-color1{
+	color: #0081ff  !important;
+	/* #004B60 */
+}
+.mainTone-color2{
+	color: #1cbbb4  !important;
+	/* #004B60 */
+}
+.yuxue-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1110;
+	opacity: 0;
+	outline: 0;
+	text-align: center;
+	-ms-transform: scale(1.185);
+	transform: scale(1.185);
+	backface-visibility: hidden;
+	perspective: 2000rpx;
+	background: rgba(0, 0, 0, 0.6);
+	transition: all 0.3s ease-in-out 0s;
+	pointer-events: none;
+}
+
+/* .cu-modal::before {
+	content: "\200B";
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+} */
+
+.yuxue-modal.show {
+	opacity: 1;
+	transition-duration: 0.3s;
+	-ms-transform: scale(1);
+	transform: scale(1);
+	overflow-x: hidden;
+	overflow-y: auto;
+	pointer-events: auto;
+}
+
+.yuxue-dialog{
+	display:flex;
+	flex-direction: column;
+  overflow: hidden;
+	width: 80vw;
+	border-radius: 20rpx;
+	background-color: white;
+}
+
+/* background-color: #f8f8f8;  一种白色*/

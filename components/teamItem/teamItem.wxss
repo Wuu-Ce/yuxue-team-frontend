@@ -4,7 +4,7 @@
   transform: translate(1rpx, 1rpx);
 }
 
-.moreArea:active{
+/* .moreArea:active{
   background-color:black;
   opacity: 0.1;
-}
+} */

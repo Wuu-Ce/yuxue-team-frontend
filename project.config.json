@@ -47,7 +47,7 @@
     "ignoreUploadUnusedFiles": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
+  "libVersion": "2.22.1",
   "appid": "wx3eb2d913f4be5a1d",
   "projectname": "JNJH",
   "debugOptions": {

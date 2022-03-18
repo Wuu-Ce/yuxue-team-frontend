@@ -1,5 +1,6 @@
 @import "/utils/colorui/main.wxss";
 @import "/utils/colorui/icon.wxss";
+@import "/utils/yuxueUI/yuxue.wxss";
 
 .container {
   height: 100%;
@@ -10,3 +11,6 @@
   padding: 30rpx 0;
   box-sizing: border-box;
 } 
+
+
+
