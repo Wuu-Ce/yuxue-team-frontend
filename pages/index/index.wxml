@@ -30,9 +30,9 @@
     </view> -->
   </view>
   <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" bindchange="topTabChange">
-    <swiper-item wx:for="{{topTabList}}" wx:key>
+    <swiper-item >
       <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;">
-        <teamList listData="{{listData}}"></teamList> <!-- 队伍列表 -->
+        <teamList listData  ="{{listData}}"></teamList> <!-- 队伍列表 -->
       </scroll-view>
     </swiper-item>
   </swiper>

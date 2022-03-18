@@ -17,14 +17,11 @@
 </view>
 
 <!-- 队伍列表 -->
-<swiper id="swiperContainer" 
-  style="height: {{swiperContainerH}}px;" 
-  duration="500" 
-  current="{{tabCur}}" 
-  bindchange="swiperCurChange"
->
+<swiper id="swiperContainer" style="height: {{swiperContainerH}}px;" duration="300" current="{{tabCur}}" bindchange="swiperCurChange">
   <swiper-item wx:for="{{3}}">
-    <teamList listData="{{listData}}"></teamList>
+    <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;">
+      <teamList listData="{{listData}}"></teamList>
+    </scroll-view>
   </swiper-item>
 </swiper>
 

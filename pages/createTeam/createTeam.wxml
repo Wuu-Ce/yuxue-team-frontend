@@ -1,3 +1,87 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
   <view class="text-black" slot="backText">创建队伍</view>
 </cu-custom>
+
+<!-- 步骤条 -->
+<view class="bg-white padding">
+  <view class="cu-steps">
+    <view class="cu-item {{index>step?'':'text-red'}}" wx:for="{{stepList}}" wx:key="index">
+      <text class="num {{item.fined?'':'err'}} " data-index="{{index + 1}}"></text> {{item.name}}
+    </view>
+  </view>
+</view>
+
+<!-- 队伍信息 -->
+<view class="padding-sm">
+  <view class="padding-lg radius cu-item  shadow bg-white" style="border-radius: 15rpx;">
+    <view class="card-bottomLine">
+      <view class="text-xl text-bold">创建队伍</view>
+      <view class="margin-tb text-red">在这里填写您所创建队伍的信息</view>
+    </view>
+    <form>
+      <view class="padding-tb card-bottomLine">
+        <view class="text">队伍名称：</view>
+        <input placeholder="10字以内" class="input-custom round"></input>
+      </view>
+      <view class="padding-tb card-bottomLine">
+        <view>分类：</view>
+        <view class="padding-left text-red text-sm">tips: 若选择竞赛/证书，需要输入竞赛/证书的名称</view>
+        <view class="flex flex-direction margin">
+          <button class="cu-btn shadow-wrap bg-red lg" bindtap="showClassModal">请选择分类</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</view>
+
+<!-- 下一步按钮 -->
+<view class="cu-bar">
+  <button class="cu-btn bg-white shadow" bindtap="numSteps">下一步</button>
+</view>
+
+<!-- 分类选择模态框 -->
+<view class="cu-modal {{showClassModal?'show':''}}" bindtap="hideModal">
+  <view class="cu-dialog" catchtap="true" style="height: 800rpx;">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">分类</view>
+      <!-- <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view> -->
+    </view>
+    <!-- 提示栏 -->
+    <view class="padding ">
+      <view class="flex justify-start" >
+        <view wx:if="{{curClass.name === class.name}}"class="animation-{{animationST}} animation-{{reverse?'reverse':''}}">请选择分类</view>
+        <view wx:else class="animation-{{cur==1? animationSR:''}} " bindtap="toPreClass">
+          <text class="cuIcon-back text-black"></text> {{classTitle}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 分类选择 -->
+    <view class="">
+      <!-- 输入名称-->
+      <view wx:if="{{curClass.edit}}" class="padding animation-{{animationSR}} animation-{{!reverse?'':'reverse'}}">
+        <view class="text-left">
+          <view class="">请输入{{curClass.tip}}：</view>
+          <input placeholder="{{curClass.tip}}" class="input-custom margin-lr radius" style="height: 200rpx;"></input>
+      </view>
+
+      </view>
+      <!-- 分类选择 -->
+      <view wx:else class="animation-{{reverse?'':animationSR}} ">
+        <view class="text-left animation-{{selected==index?animationSL:(selected>index? animationST:animationSB)}} animation-{{reverse?'reverse':''}}"
+         wx:for="{{curClass.nextClass}}" 
+         wx:key="index" 
+         bindtap="getNextClass" 
+         data-index="{{index}}"
+        >
+          <label class="padding solid flex justify-between align-center flex-sub" >
+            <view class="flex-sub">{{item.name}}</view>
+            <text class="cuIcon-right"></text>
+          </label>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
