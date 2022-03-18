@@ -8,7 +8,7 @@ Page({
    */
   data: {
     tabCur: 0,
-    listData: {from:'index',topTabCur:1},
+    listData: {from:'myTeam',topTabCur:1},
     swiperContainerH: 0,
   },
 

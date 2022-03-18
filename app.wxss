@@ -1,5 +1,6 @@
 @import "/utils/colorui/main.wxss";
 @import "/utils/colorui/icon.wxss";
+@import "/utils/colorui/animation.wxss";
 @import "/utils/yuxueUI/yuxue.wxss";
 
 .container {
