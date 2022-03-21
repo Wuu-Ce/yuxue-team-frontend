@@ -2,7 +2,16 @@
   /* background-color: #568492 !important; */
 	/* background-color: #004B60 !important; */
 	background-image: linear-gradient(45deg,#0081ff, #1cbbb4);
+	/* background-color: #7B886F !important; */
   color: white;
+}
+.mainTone-bgColor1{
+	background-color: #0081ff  !important;
+	/* #004B60 */
+}
+.mainTone-bgColor2{
+	background-color: #1cbbb4  !important;
+	/* #004B60 */
 }
 .mainTone-color1{
 	color: #0081ff  !important;
