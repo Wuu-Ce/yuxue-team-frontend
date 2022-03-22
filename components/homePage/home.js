@@ -29,6 +29,11 @@ Component({
       wx.navigateTo({
         url: '/pages/myTeam/myTeam',
       })
+    },
+    jumpToModifyPersonalInfo(){
+      wx.navigateTo({
+        url: '/pages/modifyPersonalInfo/modifyPersonalInfo',
+      })
     }
   }
 })

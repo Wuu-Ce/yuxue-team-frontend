@@ -1,11 +1,11 @@
 <view class="flex flex-direction justify-end" style="background-image: url(https://qiniu.freespace.yuxue0824.com/backImage3.png);background-repeat:no-repeat;background-size:contain;height:600rpx;">
   <view class="flex flex-direction align-center margin-lg shadow bg-white" style="border-radius: 40rpx;position:relative;box-shadow: 0rpx 0rpx 40rpx 0rpx rgb(211, 213, 229);">
     <!-- 头像 -->
-    <view class="cu-avatar round xl" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:128rpx !;height:128rpx !;position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;"></view>
+    <view class="cu-avatar round xl" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;"></view>
     <!-- 头像占位框 -->
     <view style="height: 64rpx;"></view>
     <!-- 右上角的编辑按钮 -->
-    <view style="position: absolute;top:25rpx;right:25rpx;">
+    <view style="position: absolute;top:25rpx;right:25rpx;" bindtap="jumpToModifyPersonalInfo">
       <text class="cuIcon-writefill text-grey" style="font-size: large;"></text>
     </view>
     <!-- 昵称 -->
@@ -13,14 +13,18 @@
       <text class="text-black text-bold">任涛</text>
     </view>
     <!-- 个人介绍 -->
-    <view class="flex justify-center margin-top-sm padding-lr-xl" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
-      <text class="" style="text-align: center">所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。</text>
+    <view>
+      <view style="display: block;">
+        <view class="margin-top-sm padding-lr-xl" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow: hidden;text-align: center;">
+          <text user-select="true" class="" style="text-align: center">所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。</text>
+        </view>
+      </view>
     </view>
     <!-- 学校、专业、擅长领域 -->
     <scroll-view class="flex padding-lr-xl margin-tb-sm" scroll-x="true" enable-flex="true" style="white-space: nowrap;height:55rpx;">
-      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block">长安大学</view>
-      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block">软件工程</view>
-      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block">小程序开发，网络爬虫</view>
+      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block"><text user-select="true">长安大学</text></view>
+      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block"><text user-select="true">软件工程</text></view>
+      <view class="flex align-center padding-tb-xs padding-lr margin-right text-black round" style="background-color: #DEE3DD; display:block"><text user-select="true">小程序开发，网络爬虫</text></view>
     </scroll-view>
   </view>
 </view>
@@ -28,11 +32,11 @@
 <view class="flex flex-direction margin-lg padding bg-white shadow" style="border-radius: 15rpx;">
   <view class="flex align-center padding-bottom solids-bottom" style="">
     <text class="cuIcon-my text-black margin-right-sm" style="font-size:40rpx;"></text>
-    <text class="text-black" style="font-size: 32rpx; font-family: Source Han Sans SC;">我的队伍</text>
+    <text class="text-black" style="font-size: 32rpx;">我的队伍</text>
   </view>
   <view class="flex align-center padding-top" style="">
     <text class="cuIcon-comment text-black margin-right-sm" style="font-size:40rpx;"></text>
-    <text class="text-black" style="font-size: 32rpx; font-family: Source Han Sans SC;">消息通知</text>
+    <text class="text-black" style="font-size: 32rpx;">消息通知</text>
   </view>
 </view>
 

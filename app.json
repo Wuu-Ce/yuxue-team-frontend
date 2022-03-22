@@ -5,7 +5,8 @@
     "pages/accuseTeam/accuseTeam",
     "pages/searchTeam/searchTeam",
     "pages/createTeam/createTeam",
-    "pages/myTeam/myTeam"
+    "pages/myTeam/myTeam",
+    "pages/modifyPersonalInfo/modifyPersonalInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,66 @@
+<cu-custom bgColor="bg-gray" isBack="{{true}}">
+  <view class="text-black" slot="backText">修改资料</view>
+</cu-custom>
+<view class="flex flex-direction bg-white">
+  <!-- 头像 -->
+  <view class="flex padding-lr padding-tb-sm justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">头像</view>
+    <view class="flex align-center" bindtap="chooseImage">
+      <view class="cu-avatar radius margin-right-sm lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+  </view>
+  <!-- 昵称 --> 
+  <view class="flex padding justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">昵称</view>
+    <view wx:if="{{!editName}}" class="flex align-center" bindtap="editName">
+      <view class="margin-right-sm">R.T</view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+    <!-- 编辑昵称框 -->
+    <view wx:else class="flex padding-left-lg" style="flex-grow: 1;">
+      <input class="margin-right-sm" style="flex-grow: 1;" type="text" placeholder="输入昵称"  />
+      <button class="cu-btn bg-green" style="width:120rpx;height: 50rpx;white-space: nowrap;" bindtap="saveName">保存</button>
+    </view>
+  </view>
+  <!-- 个人介绍 -->
+  <view class="flex padding justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">个人介绍</view>
+    <view class="flex align-center">
+      <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+        <text user-select="true" style="text-align: center;">所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。</text>
+      </view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+  </view>
+  <!-- 学校 -->
+  <view class="flex padding justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">学校</view>
+    <view class="flex align-center">
+      <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+        <text user-select="true">长安大学</text>
+      </view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+  </view>
+  <!-- 专业 -->
+  <view class="flex padding justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">专业</view>
+    <view class="flex align-center">
+      <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+        <text user-select="true">软件工程</text>
+      </view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+  </view>
+  <!-- 擅长领域 -->
+  <view class="flex padding justify-between align-center solids-bottom">
+    <view class="text-black text-bold margin-right-xl" style="white-space: nowrap;">擅长领域</view>
+    <view class="flex align-center">
+      <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow: hidden;">
+        <text user-select="true">小程序开发，网络爬虫</text>
+      </view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+  </view>
+</view>
