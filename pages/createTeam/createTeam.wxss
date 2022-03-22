@@ -12,6 +12,15 @@
   padding-left: 20rpx;
   box-sizing: border-box;
 }
+.normal-textarea {
+  position: relative;
+  width: 100%;
+  height: 300rpx;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10rpx;
+  padding: 20rpx 20rpx 20rpx 20rpx;
+  box-sizing: border-box;
+}
 
 .solid-normal {
   border: solid 2px rgba(238, 238, 238) !important; 

@@ -20,9 +20,6 @@ Page({
     }, {
       name: '确认',
       fined: false,
-    }, {
-      name: '完成',
-      fined: false,
     }, ],
     // 选中分类
     cur: 0,
@@ -61,6 +58,7 @@ Page({
     showClassModal: false,
     showWarningModal: false,
     warningText: '',
+    showOkModal: false,
 
     // 分类 
     class: {
@@ -88,18 +86,33 @@ Page({
           {edit: false, name: '商科', input:'', tip: '竞赛名称'},
           {edit: false, name: '综合', input:'', tip: '竞赛名称'},
         ],},
+     {
+        id:1, edit: true,name: '考证', input:'', tip:'请输入 证书名称'
+      }, 
       {
-        id:1, edit: true, name: '创业', input:'', tip:'创业方向'
+        id:2, edit: true, name: '创业', input:'', tip:'创业方向'
       },
       {
-        id:2, edit: true,name: '兴趣', input:'', tip:'兴趣类型'
+        id:3, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'
       },
       {
-        id:3, edit: true,name: '学习', input:'', tip:'学习内容'
-      },] 
+        id:4, edit: true,name: '兴趣', input:'', tip:'请输入兴趣类型'
+      },
+      {
+        id:5, edit: true,name: '学习', input:'', tip:'请输入学习内容'
+      },
+    ] 
     },
     // 年级
-    grades: ["大一", "大二", "大三", "大四", "研一", "研二"],
+    grades: [
+      { id:0, value:"大一"}, 
+      { id:1, value:"大二"}, 
+      { id:2, value:"大三"}, 
+      { id:3, value:"大四"}, 
+      { id:4, value:"研一"}, 
+      { id:5, value:"研二"}
+    ],
+    selectGrade: {id:[0], value:"大一"},
     // 年级必要性
     gradeNecessary: false,
     // 展示年级选择组件
@@ -316,12 +329,14 @@ Page({
         gradeNecessary: true,
         showGradePicker: true
       })
+      this.data.leader.grade = this.data.selectGrade.value
     } else {
       this.setData({
         gradeNecessary: false,
         showGradePicker: false
       })
     }
+    leaderable[1] = true
     // 次级分类
     curClassification.subcategories = []
     for(let i=1; i<cur; i++) {
@@ -356,6 +371,7 @@ Page({
         unfinish += ((i+1).toString()+ ' ')
       }
     }
+    console.log(this.data.team)
     if(success) {
       let steps = this.data.stepList
       steps[this.data.step].fined = true
@@ -386,7 +402,9 @@ Page({
   // 选择年级
   gradeChange(e) {
     const ind = e.detail.value[0]
-    this.data.leader.grade = this.data.grades[ind]
+    this.data.leader.grade = this.data.grades[ind].value
+    this.data.selectGrade.value = this.data.grades[ind].value
+    this.data.selectGrade.id[0] = this.data.grades[ind].id
     leaderable[1] = true
   },
   // 输入队长介绍
@@ -397,10 +415,15 @@ Page({
     }
   },
   // 展示/隐藏年级选择
-  bindGradePicker() {
+  bindGradePicker(e) {
     this.setData({
-      showGradePicker: !this.data.showGradePicker
+      showGradePicker: e.detail.value
     })
+    if(!e.detail.value) {
+      this.data.leader.grade = ''
+    } else {
+      this.data.leader.grade = this.data.selectGrade.value
+    }
   },
 
   submitLeaderInfo(e) {
@@ -411,7 +434,6 @@ Page({
         unfinish += (i+1).toString() + ' '
       }
     }
-    console.log(leaderable)
     if(unfinish.length) {
       //error
       this.setData({
@@ -425,11 +447,26 @@ Page({
       }, 2000)
     } else {
       // success
+      this.data.stepList[1].fined = true
       this.setData({
-        leader: this.data.leader
+        selectGrade: this.data.selectGrade,
+        leader: this.data.leader,
+        stepList: this.data.stepList
       })
       this.nextStep()
     }
   },
+  // 展示完成模态框
+  showOkMoldal() {
+    this.setData({
+      showOkModal: true
+    })
+  },
+
+  redictToHome() {
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
+  }
 
 })
