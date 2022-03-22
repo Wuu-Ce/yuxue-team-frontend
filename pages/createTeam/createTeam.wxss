@@ -1,13 +1,29 @@
 /* 卡片标题下方横线 */
 .card-bottomLine {
-  border-bottom: solid 3rpx #d8d5cd;
+  border-bottom: solid 3rpx rgba(0, 0, 0, 0.15);
 }
 
-/* 自定义输入框样式 */
-.input-custom {
-  height: 100%;
-  border: solid 2rpx #eea9a9;
-  padding: 10rpx 0 10rpx 15rpx;
-  margin-top: 8rpx;
-  background-color: rgb(252, 247, 247);
+.normal-input {
+  position: relative;
+  width: 100%;
+  height: 68rpx;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10rpx;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+}
+
+.solid-normal {
+  border: solid 2px rgba(238, 238, 238) !important; 
+}
+.solid-warnning {
+  border: solid 2px rgba(231, 43, 43, 0.5) !important; 
+}
+
+.cu-modal {
+  background-color: none !important;
+}
+
+cu-dialog {
+  background-color: rgba(105, 55, 55, 0.808) !important;
 }
