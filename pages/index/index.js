@@ -33,9 +33,6 @@ Page({
         tabbarQuery.select('#tabbar').boundingClientRect()
         tabbarQuery.exec(
           function (res1) {
-            console.log(res[0].top);
-            console.log(res1[0].height);
-            console.log(wx.getSystemInfoSync().windowHeight);
             that.setData({
               swiperContainerH: wx.getSystemInfoSync().windowHeight - res[0].top - res1[0].height - 10        
             })
@@ -51,10 +48,7 @@ Page({
     }
   },
   onShow: function(options){
-    this.setData({
-      pageCur: app.globalData.pageCur,
-      pageList: app.globalData.pageList
-    })
+
   },
   // 顶部tab切换
   topTabSelect(e) {

@@ -1,11 +1,11 @@
-<!-- <view wx:if="{{tabCur==0}}" ></view> -->
-
-<cu-custom bgColor="bg-white" >
-  <view slot="content" class="text-black text-bold">
-    <text wx:if="{{tabCur==0}}">予学</text>
-    <text wx:if="{{tabCur==1}}">我的</text>
-  </view>
-</cu-custom>
+<view wx:if="{{tabCur==0}}" >
+  <cu-custom bgColor="bg-white" >
+    <view slot="content" class="text-black text-bold">
+      <text wx:if="{{tabCur==0}}">予学</text>
+      <text wx:if="{{tabCur==1}}">我的</text>
+    </view>
+  </cu-custom>
+</view>
 
 <!-- 组队列表 -->
 <view wx:if="{{tabCur==0}}">
@@ -48,8 +48,8 @@
 </view>
 
 <!-- 底部切换菜单 -->
-<view id="tabbar" wx:if="{{pageCur==0}}" class="cu-tabbar-height"></view> <!-- 占位置用的，和底部tab一样的高度 -->
-<view wx:if="{{pageCur==0}}" class="cu-bar tabbar bg-white">
+<view id="tabbar" class="cu-tabbar-height"></view> <!-- 占位置用的，和底部tab一样的高度 -->
+<view class="cu-bar tabbar bg-white">
   <!-- 组队 -->
   <view class="action" bindtap="changetab" data-tabindex="0">
     <view class="flex flex-direction justify-center">
@@ -80,7 +80,7 @@
       </view>
     </view>
     <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
-      <view wx:for="{{accuseOptions}}" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
+      <view wx:for="{{accuseOptions}}" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
     </view>
     <view class="flex padding-lr-lg padding-tb-xs">
       <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" auto-focus="true" fixed="true" maxlength="-1"></textarea>
