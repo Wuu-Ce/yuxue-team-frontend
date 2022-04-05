@@ -128,6 +128,12 @@ Component({
       this.triggerEvent('accuseteam', {}, { bubbles: true,composed: true});
       this.hideCollectButton();
     },
+    //  跳转到队伍详情页
+    jumpToTeamDetailPage() {
+      wx.navigateTo({
+        url: '/pages/teamDetail/teamDetail?tid=',
+      })
+    },
     
   }
 })

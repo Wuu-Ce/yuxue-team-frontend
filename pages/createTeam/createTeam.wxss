@@ -23,10 +23,10 @@
 }
 
 .solid-normal {
-  border: solid 2px rgba(238, 238, 238) !important; 
+  border: solid 4rpx rgba(180, 174, 174, 0.356) !important; 
 }
 .solid-warnning {
-  border: solid 2px rgba(231, 43, 43, 0.5) !important; 
+  border: solid 4rpx rgba(231, 43, 43, 0.5) !important; 
 }
 
 .cu-modal {
