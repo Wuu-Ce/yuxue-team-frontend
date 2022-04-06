@@ -1,6 +1,6 @@
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
-let teamable = [false, false, false, false]
+let teamable = [false, false, false, false, false]
 // 队长信息可用 队长名-年级-介绍
 let leaderable = [false, false, false]
 Page({
@@ -15,9 +15,6 @@ Page({
       name: '队伍信息',
       fined: false,
     }, {
-      name: '队长信息',
-      fined: false,
-    }, {
       name: '确认',
       fined: false,
     }, ],
@@ -26,6 +23,8 @@ Page({
     inds: [-1, -1, -1, -1],
     curClass: {},
     classTitle: '',
+    classArray: [],
+    nowTag: '',
 
     // 展示分类
     classSelected: false,
@@ -33,12 +32,15 @@ Page({
 
     // 返回结果-队伍信息
     team: {
+      icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
       teamName: '',
       classification: {},
       teamAbout: '',
+      teamGoal: '',
       teamProtocol: ''
     },
     // 返回结果-队长信息
+    showLeaderInfo: false,
     leader: {
       leaderName: '',
       grade: '',
@@ -201,6 +203,44 @@ Page({
       teamable[0] = true
     }
   },
+  // 选择图片
+  chooseImage() {
+    const that = this
+    wx.chooseImage({
+      // 最多可以选择的图片张数
+      count: 1,
+      // 所选的图片的尺寸
+      sizeType: ['compressed'],
+      // 选择图片的来源
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        wx.getImageInfo({
+          src: res.tempFilePaths[0],
+          success (res) {
+            console.log(res)
+          }
+        })
+        wx.openDocument({
+          filePath: 'res.tempFilePaths[0]',
+          success:(res)=>{
+            console.log(res)
+          },
+          fail: (res) => {
+            console.log("open fail", res)
+          }
+        })
+        console.log(res)
+        const team = that.data.team
+        team.icon = res.tempFilePaths[0]
+        that.setData({
+          team: team,
+        })
+      },
+      fail: function (res) {
+        console.log('fail', res)
+      },
+    })
+  },
   // 竞赛名称
   bindClassInput(e) {
     this.data.curClass.input = e.detail.value
@@ -215,14 +255,27 @@ Page({
       teamable[2] = true
     }
   },
+    // 输入队伍目标
+    bindTeamGoal(e) {
+      this.data.team.teamGoal = e.detail.value
+      if(e.detail.value !== '') {
+        teamable[3] = true
+      }
+    },
   // 输入队伍规约
   bindTeamProtocol(e) {
     this.data.team.teamProtocol = e.detail.value
     if(e.detail.value !== '') {
-      teamable[3] = true
+      teamable[4] = true
     }
   },
-  // 获得一级分类
+  // 展示队长信息
+  changeLeaderInfo(e) {
+    this.setData({
+      showLeaderInfo: e.detail.value
+    })
+  },
+  // 获得下一级分类
   getNextClass(e) {
     // 动画
     const that = this
@@ -231,16 +284,20 @@ Page({
     let inds = this.data.inds
     let curClass = this.data.curClass
     let classTitle = this.data.classTitle
+    let classArray = this.data.classArray
     const index = e.currentTarget.dataset.index
-    
+    // 设置显示的分类数组
     curClass = curClass.nextClass[index]
     inds[cur++] = index
     if(cur>1)
       classTitle+= ' - '
     classTitle += curClass.name
+    classArray.push(curClass.name)
+
     that.setData({
       selected: index,
-      classTitle: classTitle
+      classTitle: classTitle,
+      classArray: classArray
     })
     // 动画
     that.setData({
@@ -278,9 +335,11 @@ Page({
     if(curClass.edit) {
       curClass.input = ''
     }
+    this.data.classArray.pop()
     // 修改选中值
     this.setData({
       selected: inds[--cur],
+      classArray: this.data.classArray
     })
     inds[cur] = -1;
     // 修改所在分类
@@ -344,8 +403,10 @@ Page({
       curClassification.subcategories.push(curClass.name)
     }
     // 名称
-    console.log(curClass)
     if(curClass.edit) {
+      this.setData({
+        nowTag: curClass.input
+      })
       curClassification.subcategories.push(curClass.input)
       showClass.push(curClass.input)
     }
@@ -353,14 +414,9 @@ Page({
       showClassModal: false,
       classSelected: true,
       showClass: showClass,
-      // 点击确认后重置数据
-      // cur: 0,
-      // inds: [-1, -1, -1, -1],
-      // curClass: {},
-      // classTitle: ''
     })
   },
-  
+  // 提交队伍信息
   submitTeamInfo(e) {
     const that = this
     let success = true
@@ -371,7 +427,7 @@ Page({
         unfinish += ((i+1).toString()+ ' ')
       }
     }
-    console.log(this.data.team)
+    console.log(this.data.stepList)
     if(success) {
       let steps = this.data.stepList
       steps[this.data.step].fined = true
@@ -381,15 +437,20 @@ Page({
       })
       this.nextStep()
     } else {
-      this.setData({
-        showWarningModal: true,
-        warningText: unfinish + '还未完成'
+      wx.showToast({
+        title: '填写未完成',
+        icon: 'error',
+        duration: 2000
       })
-      setTimeout( function() {
-        that.setData({
-          showWarningModal: false
-        })
-      }, 2000)
+      // this.setData({
+      //   showWarningModal: true,
+      //   warningText: unfinish + '还未完成'
+      // })
+      // setTimeout( function() {
+      //   that.setData({
+      //     showWarningModal: false
+      //   })
+      // }, 2000)
     }
   },
   // 输入队长名称
@@ -458,15 +519,20 @@ Page({
   },
   // 展示完成模态框
   showOkMoldal() {
+    this.data.stepList[1].fined = true
     this.setData({
-      showOkModal: true
+      showOkModal: true,
+      stepList: this.data.stepList
     })
   },
-
+  // 跳转到首页
   redictToHome() {
     wx.redirectTo({
       url: '/pages/index/index',
     })
-  }
+  },
+
+  // 上传logo
+  upLoadLogo() {},
 
 })
