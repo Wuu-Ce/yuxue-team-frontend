@@ -1,18 +1,37 @@
-// app.js
+const request_nocheck = require("./utils/util.js").request_nocheck
+const request = require("./utils/util.js").request
+
 App({
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        var code = res.code;
+        var res = request_nocheck('auth/wx/login','POST',{code: code})
+        res.then(
+          (res)=>{
+            console.log(res);
+          },
+          (res)=>{
+            console.log(res);
+            wx.login({
+              success(res){
+                var res = request_nocheck("auth/wx/reg",'POST',{code: res.code})
+                res.then(
+                  (res)=>{
+                    console.log(res);
+                  },
+                  (res)=>{
+                    console.log(res);
+                  }
+                )
+              }
+            })
+          }
+        )
       }
     })
-
+    
     // 环境信息
     wx.getSystemInfo({
       success: e => {

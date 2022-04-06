@@ -14,8 +14,8 @@ Page({
     CustomBar: app.globalData.CustomBar,
 
     listData: {from:'index',topTabCur:1},
-    topTabCur: 1,  // 当前的顶部tab
-    topTabList: [{index: 0,name: '热榜'},{index: 1,name: '推荐'},{index: 2,name: '本校'},{index: 3,name: '兴趣'},{index: 4,name: '竞赛'},{index: 5,name: '创意'},{index: 6,name: '创业'},{index: 7,name: '科研'},{index: 8,name: '考证'}],
+    topTabCur: 0,  // 当前的顶部tab
+    topTabList: [{index: 0,name: '推荐'},{index: 1,name: '本校'},{index: 2,name: '兴趣'},{index: 3,name: '竞赛'},{index: 4,name: '创意'},{index: 5,name: '创业'},{index: 6,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
 

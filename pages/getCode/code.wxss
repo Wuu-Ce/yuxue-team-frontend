@@ -1,0 +1,4 @@
+/* pages/getCode/code.wxss */
+.cu-btn:active{
+  transform: translate(1rpx, 1rpx);
+}

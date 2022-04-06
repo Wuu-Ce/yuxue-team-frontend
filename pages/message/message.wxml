@@ -1,0 +1,216 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view class="text-black" slot="backText">消息通知</view>
+</cu-custom>
+<!-- 顶部tab -->
+<view class="flex bg-white solids-bottom" style="height:50px;width:100%;">
+  <!-- 来自队伍 -->
+  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="0">
+    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
+      <text class="text-black" style="font-size: {{tabCur==0?'35rpx':'32rpx'}};">团队</text>
+    </view>
+    <view class="margin-tb-sm margin-lr-lg round {{tabCur==0?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+  </view>
+  <!-- 来自个人 -->
+  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="1">
+    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
+      <text class="text-black" style="font-size: {{tabCur==1?'35rpx':'32rpx'}};;">个人</text>
+    </view>
+    <view class="margin-tb-sm margin-lr-lg round {{tabCur==1?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+  </view>
+  <!-- 来自系统 -->
+  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="2">
+    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
+      <text class="text-black" style="font-size: {{tabCur==2?'35rpx':'32rpx'}};;">系统</text>
+    </view>
+    <view class="margin-tb-sm margin-lr-lg round {{tabCur==2?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+  </view>
+</view>
+<scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
+<!-- 来自队伍 -->
+  <!-- 我申请加入其他队伍的结果 -->
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black">你的申请已通过！</view>
+  </view>
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs">你的申请未通过。</view>
+    <view class="text-grey">你的擅长领域与我们队伍的需求不匹配。</view>
+  </view>
+  <!-- 我被移除出队伍 -->
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs">你被<text class="mainTone-color1">明天会不会下雨</text>移除出队伍。</view>
+    <view class="text-grey">你太水了</view>
+  </view>
+  <!-- 我收到来自某支队伍的邀请 -->
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">予学团队</text>。</view>
+    <view class="text-grey margin-bottom-sm">同学你好，我们团队很需要一位精通UI设计的同学，相信你能在这里你展露的实力，予学团队期待你的加入！</view>
+    <view class="flex justify-end padding-lr">
+      <view class="margin-right">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:65rpx;">
+          <text class="text-white" style="">接受</text>
+        </button>
+      </view>
+      <view>
+        <button class="cu-btn bg-red" style="width:120rpx;height:65rpx;">
+          <text class="text-white">拒绝</text>
+        </button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">予学团队</text>。</view>
+    <view class="text-grey margin-bottom-sm">同学你好，我们团队很需要一位精通UI设计的同学，相信你能在这里你展露的实力，予学团队期待你的加入！</view>
+    <view class="flex justify-end padding-lr">
+      <view class="margin-right">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:65rpx;">
+          <text class="text-white" style="">接受</text>
+        </button>
+      </view>
+      <view>
+        <button class="cu-btn bg-red" style="width:120rpx;height:65rpx;">
+          <text class="text-white">拒绝</text>
+        </button>
+      </view>
+    </view>
+  </view>
+<!-- 来自个人 -->
+  <!-- 我创建的队伍收到加入申请 -->
+  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solid-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">明天会不会下雨</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs">
+      请求加入你的队伍<text class="mainTone-color1">予学团队</text>
+    </view>
+    <view class="text-grey margin-bottom-xs">我叫任涛，今年大三，就读于软件工程专业，喜欢编程，擅长微信小程序开发，希望可以加入你的团队。</view>
+    <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view>
+    <view class="flex justify-end padding-lr margin-top-sm">
+      <view class="margin-right">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;">
+          <text class="text-white">同意</text>
+        </button>
+      </view>
+      <view>
+        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;">
+          <text class="text-white">拒绝</text>
+        </button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">刘懒懒</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black">收藏了你的队伍</view>
+  </view>
+  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solid-bottom">
+    <view class="flex justify-between align-center margin-bottom">
+      <!-- 头像、昵称、日期 -->
+      <view class="flex align-center">
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="">
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">明天会不会下雨</view>
+        </view>
+      </view>
+      <!-- 时间 -->
+      <view class="text-gray">12:22</view>
+    </view>
+    <view class="text-black margin-bottom-xs">
+      请求加入你的队伍<text class="mainTone-color1">予学团队</text>
+    </view>
+    <view class="text-grey margin-bottom-xs">方向：小程序开发</view>
+    <view class="text-grey margin-bottom-xs">我叫任涛，今年大三，就读于软件工程专业，喜欢编程，擅长微信小程序开发，希望可以加入你的团队。</view>
+    <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view>
+    <view class="flex justify-end padding-lr margin-top-sm">
+      <view class="margin-right">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;">
+          <text class="text-white">同意</text>
+        </button>
+      </view>
+      <view>
+        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;">
+          <text class="text-white">拒绝</text>
+        </button>
+      </view>
+    </view>
+  </view>
+<!-- 来自系统 -->
+  <view wx:if="{{tabCur==2}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="text-black margin-bottom-sm" style="font-size:32rpx;">队伍招募结束！</view>
+    <view class="text-grey margin-bottom-sm">你的队伍<text class="mainTone-color1">予学团队</text>招募人数已满（13人），招募结束。</view>
+    <view class="flex justify-end">
+      <text class="text-gray">晚上8:28</text>
+    </view>
+  </view>
+</scroll-view>

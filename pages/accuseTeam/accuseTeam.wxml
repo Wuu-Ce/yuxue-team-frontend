@@ -1,3 +1,0 @@
-<cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view class="text-black" slot="backText">举报</view>
-</cu-custom>

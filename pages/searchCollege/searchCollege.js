@@ -1,4 +1,4 @@
-// pages/accuse/accuse.js
+// pages/searchCollege/searchCollege.js
 Page({
 
   /**

@@ -30,9 +30,19 @@ Component({
         url: '/pages/myTeam/myTeam',
       })
     },
-    jumpToModifyPersonalInfo(){
+    jumpToModifyMyInfo(){
       wx.navigateTo({
-        url: '/pages/modifyPersonalInfo/modifyPersonalInfo',
+        url: '/pages/modifyMyInfo/modifyMyInfo',
+      })
+    },
+    jumpToMessage(){
+      wx.navigateTo({
+        url: '/pages/message/message',
+      })
+    },
+    jumpToCode(){
+      wx.navigateTo({
+        url: '/pages/getCode/code',
       })
     }
   }

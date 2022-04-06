@@ -39,5 +39,37 @@ Page({
     this.setData({
       editName: false
     })
-  }
+  },
+  // 跳转到搜索学校
+  jumpToSearchCollege(){
+    wx.navigateTo({
+      url: '/pages/searchCollege/searchCollege',
+    })
+  },
+  // 编辑个人介绍
+  editIntroduction(e){
+    var modalName = e.currentTarget.dataset.modalname
+    this.setData({
+      modalName: modalName
+    })
+  },
+  // 编辑专业
+  editMajor(e){
+    var modalName = e.currentTarget.dataset.modalname
+    this.setData({
+      modalName: modalName
+    })
+  },
+  // 编辑擅长领域
+  editSkilled(e){
+    var modalName = e.currentTarget.dataset.modalname
+    this.setData({
+      modalName: modalName
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  }, 
 })

@@ -29,10 +29,9 @@
   <!-- 二、分类、团队介绍 --> 
   <view class="margin-top-sm text-black" catchtap="jumpToTeamDetailPage">
     <view class="margin-tb-xs">
-      <text class="margin-right-sm text-black text-bold" wx:for="{{team.categoryExplain}}">{{item}}</text>
+      <text class="margin-right-sm text-black text-bold" wx:for="{{team.categoryExplain}}" wx:key="*this">{{item}}</text>
     </view>
-    <view class="margin-tb-xs introduction" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow: hidden;">
-      <!-- <text class="margin-tb-xs margin-right-sm mainTone-color1 text-bold">团队介绍：</text> -->
+    <view class="margin-tb-xs introduction line-ellipsis-3">
       <text>{{team.introduction}}</text>
     </view>
   </view>
@@ -45,7 +44,11 @@
   </view>
   <!-- 四、申请加入 -->
   <view class="flex justify-end align-center margin-top-sm">
-    <view class="cu-btn mainTone-bgColor  round shadow"  style="animation-delay: 0.1s;"><text style="letter-spacing:4rpx;">申请加入</text></view>
+    <view class="cu-btn flex align-center -white round shadow"  style="animation-delay: 0.1s;background-color: #F3F4EE;">
+      <!-- <image src="https://qiniu.freespace.yuxue0824.com/%E6%88%91%E7%9A%84.png" mode="aspectFill" style="height:35rpx;width:35rpx;"></image>
+      <text class="cuIcon-add" style="font-size: 30rpx;"></text> -->
+      <text class="text-bold" style="letter-spacing:4rpx;color:#6E6E6C">申请加入</text>
+    </view>
   </view>
 </view>
 

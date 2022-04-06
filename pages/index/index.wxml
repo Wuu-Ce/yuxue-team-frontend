@@ -19,12 +19,12 @@
     <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" >
       <!-- tabs -->
       <scroll-view scroll-x class="nav flex" enable-flex="true" scroll-with-animation scroll-left="{{scrollLeft}}" style="flex-grow:0;height:55rpx;width:95%;">
-        <view class="padding-lr" style="display: inline-block;height:100%;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key bindtap="topTabSelect" data-id="{{index}}">
-          <view >
+        <view class="padding-lr" style="display: inline-block;height:100%;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key="index" bindtap="topTabSelect" data-id="{{index}}">
+          <view class="flex flex-direction" style="position: relative;">
             <text class="{{index==topTabCur?'mainTone-color1 text-bold text-lg':'text-black text-lg'}}">{{item.name}}</text>
-            <text wx:if="{{item.index==0}}" class="cuIcon-hotfill text-orange margin-left-xxs"></text>
+            <view class="margin-lr-xs round {{index==topTabCur?'mainTone-bgColor':''}}" style="{{index==topTabCur?'height:6rpx;':''}}"></view>
+            <!-- <text wx:if="{{item.index==0}}" class="cuIcon-hotfill text-orange margin-left-xxs" style="position: absolute;right:-30rpx;"></text>  -->
           </view>
-          <view class="margin-lr-xs {{index==topTabCur?'mainTone-bgColor':''}}" style="{{index==topTabCur?'height:6rpx;':''}}"></view>
         </view>
       </scroll-view>
       <!-- 分类 -->
@@ -33,8 +33,8 @@
       </view>
     </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="300" bindchange="topTabChange">
-    <swiper-item wx:for="{{topTabList}}" wx:key>
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="350" bindchange="topTabChange">
+    <swiper-item wx:for="{{topTabList}}" wx:key="index">
       <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true">
         <teamList listData="{{listData}}" bindaccuseteam="onAccuseTeam" ></teamList> <!-- 队伍列表 -->
       </scroll-view>
@@ -80,10 +80,10 @@
       </view>
     </view>
     <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
-      <view wx:for="{{accuseOptions}}" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
+      <view wx:for="{{accuseOptions}}" wx:key="id" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
     </view>
     <view class="flex padding-lr-lg padding-tb-xs">
-      <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" auto-focus="true" fixed="true" maxlength="-1"></textarea>
+      <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" fixed="true" maxlength="-1"></textarea>
     </view>
     <view class="padding-lg text-black">
       <text>举报后我们会重新审核这支团队的信息，如果有更详细的证据，请发送给客服，感谢你帮助我们维持良好的网络环境</text>
