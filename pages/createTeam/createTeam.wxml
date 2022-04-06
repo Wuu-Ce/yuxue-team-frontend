@@ -22,23 +22,34 @@
     </view>
     <!-- 队伍名称 -->
     <view class="padding-lr-sm padding-top-sm">
-      <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="text-lg padding-bottom text-black">队伍名称</view>
+      <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white flex justify-start align-center" style="border-radius: 15rpx;">
+        <view class="text-lg text-black" style="width: 25%;">队伍名称</view>
         <input
           name = "teamName"
           placeholder="10字以内" 
           maxlength="10"
           value="{{team.teamName}}"
-          class="normal-input {{unTeamName?'solid-warnning':'solid-normal'}} " 
+          class="normal-input padding-lr-sm {{unTeamName?'solid-warnning':'solid-normal'}} " 
+          style="width: 75%;"
           bindblur = "bindTeamName"
           bindconfirm = "bindTeamName"
         ></input>
       </view>
     </view>  
+    <!-- 头像 -->
+    <view class="padding-lr-sm padding-top-sm">
+      <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white flex justfy-start align-center" style="border-radius: 15rpx;">
+        <view class="text-lg text-black" style="width: 25%;">队伍标志</view>
+        <view  class="flex jutify-between" style="width: 50%;">
+          <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.icon}}"></image>
+        </view>
+        <button class="cu-btn text-sm shadow-wrap mainTone-bgColor" style="width: 25%;" bindtap="chooseImage">选择图片</button>
+      </view>
+    </view>
     <!-- 分类 -->
     <view class="padding-lr-sm padding-top-sm">
       <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="text-lg text-black">分类</view>
+        <view class="text-lg text-black">队伍类型</view>
         <view wx:if="{{classSelected}}" class="padding-top">
           <scroll-view scroll-x="true"  style="height: 50rpx; margin-left: 100rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start">
             <view class=" flex justify-start">
@@ -50,7 +61,7 @@
           <view wx:if="{{nowTag!==''}}" class="padding-tb-sm" style="margin-left: 100rpx;">{{nowTag}}</view>
         </view>
         <view class="flex flex-direction margin-top">
-            <button class="cu-btn shadow-wrap mainTone-bgColor shadow-warp" bindtap="showClassModal">请选择分类</button>
+            <button class="cu-btn shadow-wrap mainTone-bgColor" bindtap="showClassModal">请选择分类</button>
         </view>       
       </view>
     </view>
@@ -181,7 +192,7 @@
 </scroll-view> -->
 
 <!-- 确认信息 -->
-<scroll-view scroll-y style="height: {{scrollH}}px;"  wx:if="{{step==1}}">
+<scroll-view scroll-y style="height: {{scrollH}}px;" wx:if="{{step==1}}">
   <view class="padding-sm animation-{{animation}} animation-{{reverse}}" style="min-height: {{scrollH-87}}px;">
     <view class="padding-lg radius cu-item  shadow bg-white" style="border-radius: 15rpx;">
       <view class="">
@@ -190,7 +201,11 @@
       </view>
       <!-- 队伍信息 -->
       <view class="padding-top ">
-        <view class="flex justify-start text-black">
+        <view class="flex justify-start text-black align-center">
+          <view style="min-width: 160rpx;">队伍标志：</view>
+          <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.icon}}"></image>
+        </view>
+        <view class="flex justify-start text-black padding-top">
           <view style="min-width: 160rpx;">队伍名称：</view>
           <view>{{team.teamName}}</view>
         </view>

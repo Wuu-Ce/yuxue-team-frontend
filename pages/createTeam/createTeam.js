@@ -32,6 +32,7 @@ Page({
 
     // 返回结果-队伍信息
     team: {
+      icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
       teamName: '',
       classification: {},
       teamAbout: '',
@@ -201,6 +202,44 @@ Page({
     if(e.detail.value !== '') {
       teamable[0] = true
     }
+  },
+  // 选择图片
+  chooseImage() {
+    const that = this
+    wx.chooseImage({
+      // 最多可以选择的图片张数
+      count: 1,
+      // 所选的图片的尺寸
+      sizeType: ['compressed'],
+      // 选择图片的来源
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        wx.getImageInfo({
+          src: res.tempFilePaths[0],
+          success (res) {
+            console.log(res)
+          }
+        })
+        wx.openDocument({
+          filePath: 'res.tempFilePaths[0]',
+          success:(res)=>{
+            console.log(res)
+          },
+          fail: (res) => {
+            console.log("open fail", res)
+          }
+        })
+        console.log(res)
+        const team = that.data.team
+        team.icon = res.tempFilePaths[0]
+        that.setData({
+          team: team,
+        })
+      },
+      fail: function (res) {
+        console.log('fail', res)
+      },
+    })
   },
   // 竞赛名称
   bindClassInput(e) {
@@ -377,7 +416,7 @@ Page({
       showClass: showClass,
     })
   },
-  
+  // 提交队伍信息
   submitTeamInfo(e) {
     const that = this
     let success = true
@@ -398,15 +437,20 @@ Page({
       })
       this.nextStep()
     } else {
-      this.setData({
-        showWarningModal: true,
-        warningText: unfinish + '还未完成'
+      wx.showToast({
+        title: '填写未完成',
+        icon: 'error',
+        duration: 2000
       })
-      setTimeout( function() {
-        that.setData({
-          showWarningModal: false
-        })
-      }, 2000)
+      // this.setData({
+      //   showWarningModal: true,
+      //   warningText: unfinish + '还未完成'
+      // })
+      // setTimeout( function() {
+      //   that.setData({
+      //     showWarningModal: false
+      //   })
+      // }, 2000)
     }
   },
   // 输入队长名称
@@ -486,6 +530,9 @@ Page({
     wx.redirectTo({
       url: '/pages/index/index',
     })
-  }
+  },
+
+  // 上传logo
+  upLoadLogo() {},
 
 })
