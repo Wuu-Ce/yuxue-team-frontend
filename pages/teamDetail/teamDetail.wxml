@@ -41,7 +41,7 @@
     </view>
     <scroll-view scroll-x="true"  style="height: 150rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start padding-lr-lg margin-top-sm">
       <view class="padding-sm flex flex-wrap justify-center" wx:for="{{team.members}}" wx:key="index">
-        <image class="cu-avatar round" src="{{team.icon}}"></image>
+        <image class="cu-avatar round" src="{{item.icon}}"></image>
         <view wx:if="{{index==0}}" class="leader-tag bg-blue radius text-xs padding-lr-xs">队长</view>
         <view class="padding-top-xs hidden-text">{{item.name}}</view>
       </view>

@@ -1,14 +1,14 @@
 <view class="bg-white margin-lr margin-tb padding shadow" style="border-radius:15rpx;">
   <!-- 一、头像，队名 -->
   <view class="flex justify align-center text-black"> 
-    <view class="cu-avatar round margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:75rpx;height:75rpx;font-size:1.5em;"></view>
+    <view class="cu-avatar round margin-right-sm" style="background-image:url({{team.avatar}});width:75rpx;height:75rpx;font-size:1.5em;"></view>
     <view class="title flex flex-direction justify-center align-start" style="flex-grow:1">
       <view class="flex align-center text-bold margin-bottom-xxs">
         <text class="margin-right-sm">{{team.teamName}}</text>
       </view>
       <view class="text-gray text-sm flex justify-between">2019年12月3日</view>
     </view>
-    <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categroyList[team.category].color}} light text-sm text-bold radius">{{categroyList[team.category].name}}</text>
+    <!-- <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categroyList[team.category].color}} light text-sm text-bold radius">{{categroyList[team.category].name}}</text> -->
     <view class="more margin-left margin-right-sm" style="position:relative;">
       <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}">
         <text class="cuIcon-more text-grey" style="font-size:45rpx" catchtap="onClickMore"></text>

@@ -19,49 +19,44 @@ const request = (url, method, data) => {
   var root_url = CONFIG.online_url?CONFIG.online_url:CONFIG.dev_url
   var url = root_url + url;
   return new Promise((resolve, reject) => {
-    checkIfHaveCookie().then(
-      function(cookie){
-        wx.request({
-          url: whole_url,
-          method: method,
-          data: data,
-          header: {
-            'Content-Type': 'application/json; charset=utf-8',
-            'cookie': cookie[0]
-          },
-          success(res) {
-            if (res.statusCode !== 200) {
-              reject({
-                msg: '请求失败',
-                statusCode: res.statusCode
-              })
-            }
-            else if (res.data.code === 0) {
-              resolve(res);
-            } else if(res.data.code===20101 || res.data.code===20102){
-              wx.navigateTo({
-                url: '/pages/signIn/signIn',
-              })
-              reject({
-                msg: res.data.msg || res.data.message || '数据错误',
-                statusCode: res.statusCode
-              })
-            }else{
-              reject({
-                msg: res.data.msg || res.data.message || '数据错误',
-                statusCode: res.statusCode
-              })
-            }
-          },
-          fail(error) {
-            reject(error)
-          },
-          complete(aaa) {
-            // 加载完成
-          }
+    var cookie = wx.getStorageSync('cookie');
+    wx.request({
+      url: url,
+      method: method,
+      data: data,
+      header: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'cookie': cookie
+      },
+      success(res) {
+        console.log(res);
+        if (res.statusCode !== 200) {
+          reject({
+            message: '请求失败',
+          })
+        }
+        else if (res.data.code === 0) {
+          resolve(res);
+        }else if(res.data.code===10301 || res.data.code===10302){ 
+          // 用户未登录或用户登录信息无效，应跳转到登录页面
+          console.log(res.data.message);
+          reject({
+            message: res.data.message || '数据错误',
+            code: res.data.code
+          })
+        }else{
+          reject({
+            message: res.data.message || '数据错误',
+            code: res.data.code
+          })
+        }
+      },
+      fail() {
+        reject({
+          message: '请求失败',
         })
-      }
-    )
+      },
+    })
   })
   
 
@@ -78,7 +73,6 @@ const request_nocheck = (url, method, data) => {
         'Content-Type': 'application/json; charset=utf-8',
       },
       success(res) {
-        console.log(res);
         if (res.statusCode !== 200) {
           reject({
             message: '请求失败',

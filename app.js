@@ -3,16 +3,25 @@ const request = require("./utils/util.js").request
 
 App({
   onLaunch() {
-    // 登录
+    let res = request('team/new','POST',{})
+    res.then(
+      (res)=>{
+        console.log(res);
+      },
+      (res)=>{
+        console.log(res);
+      }
+    )
     wx.login({
       success: res => {
         var code = res.code;
         var res = request_nocheck('auth/wx/login','POST',{code: code})
         res.then(
-          (res)=>{
+          (res)=>{  // 如果已经登录
             console.log(res);
+            wx.setStorageSync('cookie',res.cookies[0]);
           },
-          (res)=>{
+          (res)=>{  // 尚未登录
             console.log(res);
             wx.login({
               success(res){

@@ -15,7 +15,7 @@ Page({
 
     listData: {from:'index',topTabCur:1},
     topTabCur: 0,  // 当前的顶部tab
-    topTabList: [{index: 0,name: '推荐'},{index: 1,name: '本校'},{index: 2,name: '兴趣'},{index: 3,name: '竞赛'},{index: 4,name: '创意'},{index: 5,name: '创业'},{index: 6,name: '考证'}],
+    topTabList: [{index: 0,name: '兴趣'},{index: 1,name: '竞赛'},{index: 2,name: '创意'},{index: 3,name: '创业'},{index: 4,name: '学习'},{index: 5,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
 
