@@ -11,6 +11,9 @@ Page({
     hideTeamGoal: true,
     hideTeamProtocol:true,
     hideTeamAbout: true,
+
+    // 用户类型 leader; member; normal; notLogin
+    user: 'leader',
     // 队伍信息
     team:{
       tid: '10000001',
@@ -28,9 +31,10 @@ Page({
           {area: '计算机-前端', num: 2, need: '要求说明'},
           {area: '绘画，UI设计', num: 2,need: '要求说明'},
           {area: '数据库', num: 2, need: '要求说明'},
+          {area: '计算机-前端', num: 2, need: '要求说明'},
+          {area: '绘画，UI设计', num: 2,need: '要求说明'},
           {area: '数据库', num: 2, need: '要求说明'},
-          {area: '数据库', num: 2, need: '要求说明'},
-          {area: '数据库', num: 2, need: '要求说明'},
+
         ],
         num: 6,
       },
@@ -64,6 +68,7 @@ Page({
   },
   // 展示更多菜单
   showMoreMenu() {
+    this.data.team.neccessary.detail.length
     this.setData({
       moreMenuShow: !this.data.moreMenuShow
     })
@@ -115,4 +120,9 @@ Page({
       })
     }
   },
+  recruit() {
+    wx.navigateTo({
+      url: '/pages/recruitMember/recruitMember',
+    })
+  }
 })
