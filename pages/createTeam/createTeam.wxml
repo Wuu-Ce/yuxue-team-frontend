@@ -28,7 +28,7 @@
           name = "teamName"
           placeholder="10字以内" 
           maxlength="10"
-          value="{{team.teamName}}"
+          value="{{team.name}}"
           class="normal-input padding-lr-sm {{unTeamName?'solid-warnning':'solid-normal'}} " 
           style="width: 75%;"
           bindblur = "bindTeamName"
@@ -85,7 +85,7 @@
         <view class="text-lg text-black" >队伍目标</view>
         <textarea
           name = "teamGoal"
-          value="{{team.teamGoal}}"
+          value="{{team.goal}}"
           placeholder="请在此输入队伍目标"
           class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top" 
           bindblur = "bindTeamGoal"
@@ -99,7 +99,7 @@
         <view class="text-lg text-black">队伍规约</view>
         <textarea  
           name="teamProtocol"
-          value="{{team.teamProtocol}}"
+          value="{{team.rule}}"
           placeholder="请在此输入队伍的规约" 
           class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top" 
           bindblur = "bindTeamProtocol"
@@ -108,17 +108,6 @@
       </view>
     </view>
 
-    <!-- <view class="padding-lr-sm padding-top-sm">
-      <view class="padding-lg radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="padding-tb-sm">
-          <view class="flex justify-between">
-          <view class="text-lg text-black">展示个人信息</view>
-          <switch checked="{{showLeaderInfo}}" class="radius blue sm margin-right-sm" bindchange="changeLeaderInfo"></switch>
-          </view>
-          <view wx:if="{{!showLeaderInfo}}" class="text-sm text-blue padding-top">注：为了他人能获得更多信息，建议公开个人信息</view>
-        </view>
-      </view>
-    </view> -->
     <!-- 下一步按钮 -->
     <view class="padding-lg margin-top-sm radius cu-item shadow bg-white">
       <view class="cu-bar padding-bottom">
@@ -127,51 +116,6 @@
     </view>
   </form>
 </scroll-view>
-
-<!-- 
-<scroll-view scroll-y style="height: {{scrollH}}px;"  wx:if="{{step==1}}">
-  <view class="padding-sm animation-{{animation}} animation-{{reverse}}">
-    <view class="padding-lg radius cu-item  shadow-warp bg-white" style="border-radius: 15rpx;">
-      <view class="">
-        <view class="text-xl text-bold text-black">队伍信息</view>
-        <view class="margin-tb mainTone-color1">在这里填写您的个人信息</view>
-      </view>
-      <form bindsubmit="submitLeaderInfo">
-       <view class="padding-tb">
-          <view class="text-lg padding-bottom-sm text-black">队长名称</view>
-          <input name="leaderName" value="{{leader.leaderName}}" placeholder="10字以内" maxlength="10" class="normal-input {{unLeaderName?'solid-warnning':'solid-normal'}} " bindblur="bindLeaderName" bindconfirm="bindLeaderName"></input>
-        </view>
-       <view class="padding-tb">
-          <view class="text-lg text-black" wx:if="{{gradeNecessary}}">年级</view>
-          <view wx:else class="flex justify-between padding-tb-sm">
-            <view class="text-lg text-black">展示年级</view>
-            <switch checked="{{showGradePicker}}" class="radius blue sm margin-right-sm" bindchange="bindGradePicker"></switch>
-          </view>
-          <picker-view wx:if="{{showGradePicker}}" value="{{selectGrade.id}}" indicator-style="height: 30px;" style="height: 90px;" class="text-lg text-center solids mainTone-color1 margin-top-sm" bindchange="gradeChange">
-            <picker-view-column>
-              <view wx:for="{{grades}}" wx:for-item="grade" wx:key="grade" style="line-height: 30px; ">{{grade.value}}</view>
-            </picker-view-column>
-          </picker-view>
-        </view>
-       <view class="padding-tb">
-          <view class="text-lg text-black">队长介绍</view>
-          <textarea 
-            name = "leaderInfo"
-            value="{{leader.leaderInfo}}"
-            placeholder="请输入队长介绍" 
-            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm"  
-            bindblur = "bindLeaderInfo"
-            bindconfirm = "bindLeaderInfo"
-          ></textarea>
-        </view>
-        <view class="flex justify-around padding-tb">
-          <button class="cu-btn mainTone-bgColor basis-sm  shadow-warp" bindtap="subSteps">上一步</button>
-          <button class="cu-btn mainTone-bgColor basis-sm  shadow-warp" form-type="submit">下一步</button>
-        </view>
-      </form>
-    </view>
-  </view>
-</scroll-view> -->
 
 <!-- 确认信息 -->
 <scroll-view scroll-y style="height: {{scrollH}}px;" wx:if="{{step==1}}">
@@ -189,19 +133,19 @@
         </view>
         <view class="flex justify-start text-black padding-top">
           <view style="min-width: 160rpx;">队伍名称：</view>
-          <view>{{team.teamName}}</view>
+          <view>{{team.name}}</view>
         </view>
         <view class="padding-top flex justify-start text-black">
           <view style="min-width: 160rpx;">队伍介绍：</view>
-          <view>{{team.teamAbout}}</view>
+          <view>{{team.description}}</view>
         </view>
         <view class="padding-top flex justify-start text-black">
           <view style="min-width: 160rpx;">队伍目标：</view>
-          <view >{{team.teamGoal}}</view>
+          <view >{{team.goal}}</view>
         </view>
         <view class="flex justify-start padding-top text-black">
           <view style="min-width: 160rpx;">队伍规约：</view>
-          <view>{{team.teamProtocol}}</view>
+          <view>{{team.rule}}</view>
         </view>
       </view>
       <view class="padding-top">

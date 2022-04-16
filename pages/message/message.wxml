@@ -113,8 +113,8 @@
       <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
-    <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">予学团队</text>。</view>
-    <view class="text-grey margin-bottom-sm">同学你好，我们团队很需要一位精通UI设计的同学，相信你能在这里你展露的实力，予学团队期待你的加入！</view>
+    <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">iParding团队</text>。</view>
+    <view class="text-grey margin-bottom-sm">同学你好，我们团队很需要一位精通数据库的同学，如果你可以胜任这份工作，我们期待你的加入！</view>
     <view class="flex justify-end padding-lr">
       <view class="margin-right">
         <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:65rpx;">

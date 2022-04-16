@@ -57,7 +57,7 @@
     <view class="padding-lg">
       <viwe class="flex justify-start">
         <view style="min-width: 150rpx;">队长：</view>
-        <view>test</view>
+        <view>李浩</view>
       </viwe>
       <view class="margin-top flex justify-start">
         <view style="min-width:150rpx;">类型：</view>
@@ -98,22 +98,30 @@
     </view>
     <view class="padding-lg" style="min-height: 200rpx;">
       <view wx:if="{{team.neccessary.type=='fast'}}" class="text-long">{{team.neccessary.detail}}</view>
-      <scroll-view wx:else scroll-y style="height: {{team.neccessary.num>5?'400': team.neccessary.num*80}}px;">
+      <scroll-view wx:else scroll-y style="height: {{team.neccessary.detail.length>4?'320': team.neccessary.detail.length*80}}px;">
         <view wx:for="{{team.neccessary.detail}}" wx:for-item="detail" wx:key="index" class=" padding-sm borderAll {{index>0?'margin-top-sm':''}}">
           <view >领域：{{detail.area}}</view>
           <view class="padding-top-sm">要求：{{detail.need}}</view>
         </view>
       </scroll-view>
-      <view wx:if="{{team.neccessary.num>5}}" class="text-center cuIcon-unfold padding-top-xs"></view>
+      <view wx:if="{{team.neccessary.detail.length>4}}" class="text-center cuIcon-unfold padding-top-xs"></view>
     </view>
   </view>
 </view>
 
 <!-- 按钮 -->
 <view class="padding-top-sm">
-  <view class="bg-white padding-lg flex jsutify-center">
-    <button class="cu-btn mainTone-bgColor">申请加入</button>
+  <view class="bg-white padding-lg flex jsutify-center" wx:if="{{user=='normal'}}">
+    <button class="cu-btn mainTone-bgColor" bindtap="toApplyPage">申请加入</button>
   </view>
+  <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{user=='leader'}}">
+    <button class="cu-btn mainTone-bgColor basis-sm" bindtap="toManagementPage">管理队伍</button>
+    <button class="cu-btn mainTone-bgColor basis-sm"bindtap="toTecruitPage">开始招募</button>
+  </view>
+  <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{user=='member'}}">
+    <button class="cu-btn mainTone-bgColor basis-sm" bindtap="">退出队伍</button>
+  </view>
+
 </view>
 
-<report tid="{{team.tid}}" teamName="{{team.teamName}}" show="{{reportModalShow}}"></report>
+<report tid="{{team.tid}}" teamName="{{team.name}}" show="{{reportModalShow}}"></report>

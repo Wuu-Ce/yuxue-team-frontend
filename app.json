@@ -8,7 +8,8 @@
     "pages/modifyMyInfo/modifyMyInfo",
     "pages/searchCollege/searchCollege",
     "pages/message/message",
-    "pages/getCode/code"
+    "pages/getCode/code",
+    "pages/recruitMember/recruitMember"
   ],
   "window": {
     "backgroundTextStyle": "light",

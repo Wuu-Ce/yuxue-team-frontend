@@ -39,10 +39,10 @@ Component({
           teamList: [
             {
               avatar: 'https://team.test.yuxue0824.com/static/avatar/team/8.jpg',
-              teamName: '予学团队',
+              teamName: 'iParking团队',
               category: 0,
-              categoryExplain: ['做一款大学生组队平台'],
-              introduction: '当我们想做一件事情的时候，不容易找到能够一起做这件事情的人。',
+              categoryExplain: ['大学生创新创业大赛'],
+              introduction: '本产品基于高精度室内外无缝定位、智能云锁、地图街景，位置指纹匹配技术等多种信息技术，基于手机APP为用户提供停车诱导车位服务。',
               members: [
                 {
                   avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg'
@@ -68,10 +68,10 @@ Component({
               ]
             },{
               avatar: 'https://team.test.yuxue0824.com/static/avatar/user/1.jpg',
-              teamName: '予学小精灵',
+              teamName: '易知愿团队',
               category: 0,
-              categoryExplain: ['计算机&信息技术','微信小程序应用开发大赛'],
-              introduction: '我们通过设计一个平台，实现完整的组队流程，帮助有组队需求的人在平台上找到合适的队友。',
+              categoryExplain: ['网络技术挑战赛'],
+              introduction: '我们想要设计一个问答平台，回答高考毕业生对各高校的疑问，帮助高考毕业生找到心仪的学校。',
               members: [
                 {
                   avatar: 'https://team.test.yuxue0824.com/static/avatar/user/18.jpg'
@@ -85,7 +85,7 @@ Component({
               ]
             },{
               avatar: 'https://team.test.yuxue0824.com/static/avatar/user/1.jpg',
-              teamName: '予学小精灵',
+              teamName: '予学团队',
               category: 0,
               categoryExplain: ['计算机&信息技术','微信小程序应用开发大赛'],
               introduction: '我们通过设计一个平台，实现完整的组队流程，帮助有组队需求的人在平台上找到合适的队友。',
@@ -153,24 +153,36 @@ Component({
                   avatar: 'https://team.test.yuxue0824.com/static/avatar/user/9.jpg'
                 }
               ]
-            },{
-              avatar: 'https://team.test.yuxue0824.com/static/avatar/user/1.jpg',
-              teamName: '予学小精灵',
+            }, {
+              avatar: 'https://team.test.yuxue0824.com/static/avatar/team/8.jpg',
+              teamName: 'iParking团队',
               category: 0,
-              categoryExplain: ['计算机&信息技术','微信小程序应用开发大赛'],
-              introduction: '我们通过设计一个平台，实现完整的组队流程，帮助有组队需求的人在平台上找到合适的队友。',
+              categoryExplain: ['大学生创新创业大赛'],
+              introduction: '本产品基于高精度室内外无缝定位、智能云锁、地图街景，位置指纹匹配技术等多种信息技术，基于手机APP为用户提供停车诱导车位服务。',
               members: [
                 {
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg'
+                },{
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/1.jpg'
+                },{
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/3.jpg'
+                },{
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/9.jpg'
+                },{
                   avatar: 'https://team.test.yuxue0824.com/static/avatar/user/18.jpg'
                 },{
-                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/11.jpg'
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/1.jpg'
                 },{
-                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/10.jpg'
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/4.jpg'
                 },{
-                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/14.jpg'
-                },
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/3.jpg'
+                },{
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/6.jpg'
+                },{
+                  avatar: 'https://team.test.yuxue0824.com/static/avatar/user/9.jpg'
+                }
               ]
-            }
+            },
           ]
         })
       }

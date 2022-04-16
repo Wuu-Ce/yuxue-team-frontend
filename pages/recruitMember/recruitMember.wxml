@@ -1,0 +1,21 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="content" class="text-black text-bold">招募成员</view>
+  <view class="text-black" slot="backText">返回</view>
+</cu-custom>
+<view class="padding-lr-sm">
+  <image class="" src=""></image>
+  <view class=" yuxue-title">
+    <view class="radius cu-item bg-white text-center" style="border-radius: 15rpx;">
+      <view class="padding-lg text-lg text-bold">招募队伍成员</view>
+    </view>
+  </view>
+</view>
+
+
+
+<view class="padding-lr-sm padding-top-sm">
+  <view class="radius cu-item bg-white" style="border-radius: 15rpx;">
+    <view class="padding-lr-lg  padding-tb-sm text-lg text-bold">招募要求</view>
+    <view class="padding-lr-lg"></view>
+  </view>
+</view>

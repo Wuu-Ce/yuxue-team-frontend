@@ -1,3 +1,4 @@
+import {request} from '../../utils/util.js'
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
 let teamable = [false, false, false, false, false]
@@ -33,11 +34,13 @@ Page({
     // 返回结果-队伍信息
     team: {
       icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
-      teamName: '',
-      classification: {},
-      teamAbout: '',
-      teamGoal: '',
-      teamProtocol: ''
+      name: '',
+      field_id: 0,
+      type: {},
+      typeinfo: '',
+      description: '',
+      goal: '',
+      rule: ''
     },
     // 返回结果-队长信息
     showLeaderInfo: false,
@@ -68,7 +71,7 @@ Page({
       nextClass:[{
         id:0, edit: false, name: '竞赛',
         nextClass: [
-          {edit: false, name: '工科', nextClass:[
+          {id:0, edit: false, name: '工科', nextClass:[
             {edit: true, name: '数学建模', input:'', tip: '竞赛名称' },
             {edit: true, name: '程序设计',input:'', tip: '竞赛名称'},
             {edit: true, name: '机器人',   input:'', tip: '竞赛名称'},
@@ -76,7 +79,7 @@ Page({
             {edit: true, name: '土木建筑',input:'', tip: '竞赛名称'},
             {edit: true, name: '大数据',   input:'', tip: '竞赛名称'},
           ]},
-          {edit: false, name: '工业&创意设计', nextClass:[
+          {id:1, edit: false, name: '工业&创意设计', nextClass:[
             {edit: true, name: '外语',input:'', tip: '竞赛名称'},
             {edit: true, name: '演讲主持&辩论',input:'', tip: '竞赛名称'},
             {edit: true, name: '模特',   input:'', tip: '竞赛名称'},
@@ -84,9 +87,9 @@ Page({
             {edit: true, name: '体育',input:'', tip: '竞赛名称'},
             {edit: true, name: '科技文化艺术节',   input:'', tip: '竞赛名称'},
           ]},
-          {edit: false, name: '理科', input:'', tip: '竞赛名称'},
-          {edit: false, name: '商科', input:'', tip: '竞赛名称'},
-          {edit: false, name: '综合', input:'', tip: '竞赛名称'},
+          {id:2, edit: false, name: '理科', input:'', tip: '竞赛名称'},
+          {id:3, edit: false, name: '商科', input:'', tip: '竞赛名称'},
+          {id:4, edit: false, name: '综合', input:'', tip: '竞赛名称'},
         ],},
      {
         id:1, edit: true,name: '考证', input:'', tip:'请输入 证书名称'
@@ -198,7 +201,7 @@ Page({
   // 输入队伍名称
   bindTeamName(e) {
     console.log(e)
-    this.data.team.teamName = e.detail.value
+    this.data.team.name = e.detail.value
     if(e.detail.value !== '') {
       teamable[0] = true
     }
@@ -250,21 +253,21 @@ Page({
   },
   // 输入队伍介绍
   bindTeamAbout(e) {
-    this.data.team.teamAbout = e.detail.value
+    this.data.team.description = e.detail.value
     if(e.detail.value !== '') {
       teamable[2] = true
     }
   },
     // 输入队伍目标
     bindTeamGoal(e) {
-      this.data.team.teamGoal = e.detail.value
+      this.data.team.goal = e.detail.value
       if(e.detail.value !== '') {
         teamable[3] = true
       }
     },
   // 输入队伍规约
   bindTeamProtocol(e) {
-    this.data.team.teamProtocol = e.detail.value
+    this.data.team.rule = e.detail.value
     if(e.detail.value !== '') {
       teamable[4] = true
     }
@@ -375,7 +378,7 @@ Page({
     let cur = this.data.cur
     let classTitle = this.data.classTitle
     let curClass = this.data.class.nextClass[inds[0]]
-    let curClassification = this.data.team.classification
+    let curClassification = this.data.team.type
     let showClass = []
     // 设置展示的分类
     showClass.push(classTitle)
@@ -519,11 +522,32 @@ Page({
   },
   // 展示完成模态框
   showOkMoldal() {
-    this.data.stepList[1].fined = true
-    this.setData({
-      showOkModal: true,
-      stepList: this.data.stepList
+    wx.showLoading({
+      title: '队伍创建中',
+
     })
+    let res = request('team/new','POST',{
+
+    })
+    res.then(
+      (res)=>{
+        console.log('then1 called')
+        wx.hideLoading({
+          success: (res) => {console.log(res)},
+        })
+        this.data.stepList[1].fined = true
+        this.setData({
+          showOkModal: true,
+          stepList: this.data.stepList
+        })
+        console.log(res);
+      },
+      (res)=>{
+        console.log('then2 called')
+        console.log(res);
+      }
+    )
+
   },
   // 跳转到首页
   redictToHome() {
