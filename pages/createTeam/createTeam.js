@@ -1,4 +1,4 @@
-import {request} from '../../utils/util.js'
+import {request, request_nocheck} from '../../utils/util.js'
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
 let teamable = [false, false, false, false, false]
@@ -133,6 +133,12 @@ Page({
     this.setData({
       curClass: this.data.class
     })
+    let res = request_nocheck('team/getTypeList','POST',{})
+    res.then(
+      (res)=>{
+        console.log('/team/getTypeList called')
+        console.log(res);
+      })
   },
    // 步骤条下一步
   nextStep() {

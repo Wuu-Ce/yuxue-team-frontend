@@ -19,7 +19,6 @@
         style="text-align: left;width:100%;flex-grow:1;height:250rpx;" 
         placeholder="请输入举报理由" 
         plackholder-class="text-grey" 
-        auto-focus="true" 
         fixed="true" 
         maxlength="-1"
       ></textarea>

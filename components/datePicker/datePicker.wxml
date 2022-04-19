@@ -1,0 +1,48 @@
+
+<view class="wuu-picker {{show||animation?' show animation-show':'' }}{{animation?'  animation-hidden':''}}">
+<!-- 日历标题 -->
+  <view class="head">
+    <view class="title">日期选择</view>
+    <view class="exit icon-exit" catchtap="onClose"></view>
+    <view class="tip">{{showDate.year}}年{{showDate.month}}月</view>
+    <view class="week">
+      <view class="week-title">日</view>
+      <view class="week-title">一</view>
+      <view class="week-title">二</view>
+      <view class="week-title">三</view>
+      <view class="week-title">四</view>
+      <view class="week-title">五</view>
+      <view class="week-title">六</view>
+    </view>
+  </view>
+  <!-- 日历主体 -->
+  <scroll-view scroll-y class="content" bindscroll="onScroll">
+    <view 
+      wx:for="{{dateList}}" 
+      wx:key="index"
+      wx:for-index="index" 
+      wx:for-item="item"
+    >
+      <view class="tip">{{item.year}}年{{item.month}}月</view>
+      <view class="dayContent">
+        <view style="margin-left: {{item.firstDay*14.28}}vw; width:0;"></view>
+        <view
+          class="day {{ind<item.min||ind>item.max?'disable':''}}"
+          wx:for="{{item.day}}" 
+          wx:key="ind"
+          wx:for-index="ind" 
+          wx:for-item="day"
+          data-index="{{index}}"
+          data-dindex = "{{ind}}"
+          catchtap="selectDay"
+        >
+          <view class="dayItem {{ind==item.select?'select':''}} ">{{ind+1}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="confirm">
+    <button class="btn" bindtap="onConfirm">确定</button>
+  </view>
+</view >
+<viw class="mask {{show?'show':''}}" catchtap="hidden"></viw>
