@@ -138,6 +138,10 @@ Page({
       (res)=>{
         console.log('/team/getTypeList called')
         console.log(res);
+      },
+      res => {
+        console.log('/team/getTypeList error')
+        console.log(res)
       })
   },
    // 步骤条下一步
@@ -530,7 +534,6 @@ Page({
   showOkMoldal() {
     wx.showLoading({
       title: '队伍创建中',
-
     })
     let res = request('team/new','POST',{
 
@@ -549,6 +552,14 @@ Page({
         console.log(res);
       },
       (res)=>{
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'error',
+          title: '发布失败'
+        })
+        setTimeout( function () {
+          wx.hideToast()
+        }, 2000)
         console.log('then2 called')
         console.log(res);
       }

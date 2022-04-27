@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="content" class="text-black text-bold">队伍详情</view>
+  <view slot="content" class="text-black text-bold">团队详情</view>
   <view class="text-black" slot="backText">返回</view>
 </cu-custom>
 
@@ -12,6 +12,7 @@
       <image class="cu-avatar round" src="{{team.icon}}"></image>
       <view class="margin-left-sm">
         <view class="text-lg">{{team.teamName}}</view>
+        <view class="text-sm text-gray">id：1001</view>
       </view>
     </view>
     <view class="padding-sm text-lg" bindtap="showMoreMenu">
@@ -30,13 +31,13 @@
     </view>
   </view>
 </view>
-<!-- 队伍成员 -->
+<!-- 团队成员 -->
 <view class="padding-lr-sm padding-top-sm">
   <view class="radius cu-item shadow bg-white" style="border-radius: 15rpx;">
     <view class="padding-lr-lg  padding-top">
       <view class="flex justify-between">
-        <view class="text-lg text-bold">队伍成员</view>
-        <view class="cuIcon-right line-blue text-lg"></view>
+        <view class="text-lg text-bold">团队成员</view>
+        <view class="cuIcon-right line-blue text-lg" bindtap="toMemberInfoPage"></view>
       </view>
     </view>
     <scroll-view scroll-x="true"  style="height: 150rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start padding-lr-lg margin-top-sm">
@@ -54,7 +55,7 @@
     <view class="padding-lr-lg  padding-tb-sm  bottomLine">
       <view class="text-lg text-bold text-black">基本信息</view>
     </view>
-    <view class="padding-lg">
+    <view class="padding-lg" style="transition: height 0.5s;">
       <viwe class="flex justify-start">
         <view style="min-width: 150rpx;">队长：</view>
         <view>李浩</view>
@@ -75,17 +76,17 @@
         <view>{{team.createTime}}</view>
       </view>
       <view class="margin-top flex justify-start">
-        <view style="min-width:150rpx;">队伍介绍：</view>
-        <view class="{{hideTeamAbout?'text-content':''}}" bindtap="hideTeamAbout">{{team.teamAbout}}</view>
+        <view style="min-width:150rpx;">团队介绍：</view>
+        <view class="{{hideTeamAbout?'text-content':''}}" style="transition: height 0.5s; line-height: inherit;" bindtap="hideTeamAbout">{{team.teamAbout}}</view>
       </view>
       <view class="margin-top flex justify-start">
-        <view style="min-width:150rpx;">队伍目标：</view>
-        <view class="{{hideTeamGoal?'text-content':''}}" bindtap="hideTeamGoal">{{team.goal}}</view>
+        <view style="min-width:150rpx;">团队目标：</view>
+        <view class="{{hideTeamGoal?'text-content':''}}" style="transition: height 0.5s; line-height: inherit;" bindtap="hideTeamGoal">{{team.goal}}</view>
       </view>
 
       <view class="margin-top flex justify-start">
-        <view style="min-width:150rpx;">队伍规约：</view>
-        <view class="{{hideTeamProtocol?'text-content':''}}" bindtap="hideTeamProtocol">{{team.teamProtocol}}</view>
+        <view style="min-width:160rpx;">团队规约：</view>
+        <view class="{{hideTeamProtocol?'text-content':''}}" bindtap="hideTeamProtocol" style="transition: height 0.5s; line-height: inherit;" >{{team.teamProtocol}}</view>
       </view>
     </view>
   </view>
@@ -100,7 +101,7 @@
       <view wx:if="{{team.neccessary.type=='fast'}}" class="text-long">{{team.neccessary.detail}}</view>
       <scroll-view wx:else scroll-y style="height: {{team.neccessary.detail.length>4?'320': team.neccessary.detail.length*80}}px;">
         <view wx:for="{{team.neccessary.detail}}" wx:for-item="detail" wx:key="index" class=" padding-sm borderAll {{index>0?'margin-top-sm':''}}">
-          <view >领域：{{detail.area}}</view>
+          <view >方向：{{detail.area}}</view>
           <view class="padding-top-sm">要求：{{detail.need}}</view>
         </view>
       </scroll-view>
@@ -115,8 +116,8 @@
     <button class="cu-btn mainTone-bgColor" bindtap="toApplyPage">申请加入</button>
   </view>
   <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{user=='leader'}}">
-    <button class="cu-btn mainTone-bgColor basis-sm" bindtap="toManagementPage">管理队伍</button>
-    <button class="cu-btn mainTone-bgColor basis-sm"bindtap="toTecruitPage">开始招募</button>
+    <button class="cu-btn mainTone-bgColor basis-sm" bindtap="toManagePage">管理队伍</button>
+    <button class="cu-btn mainTone-bgColor basis-sm"bindtap="toTecruitPage">招募成员</button>
   </view>
   <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{user=='member'}}">
     <button class="cu-btn mainTone-bgColor basis-sm" bindtap="">退出队伍</button>

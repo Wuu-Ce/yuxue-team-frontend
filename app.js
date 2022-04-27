@@ -2,7 +2,6 @@ const request = require("./utils/util.js").request
 
 App({
   onLaunch() {
-
     // request('/test/login','POST',{'user_id':1}).then(
     //   (res)=>{
     //     wx.setStorageSync('cookie', res.cookies[0]);
@@ -12,6 +11,7 @@ App({
     //   }
     // )
     // 环境信息
+
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight;

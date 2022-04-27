@@ -1,0 +1,58 @@
+.colorBar {
+  position: relative;
+  border-radius: 15rpx;
+}
+
+.colorBar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15rpx;
+  height: 100%;
+  border-radius: 15rpx 0 0 15rpx;
+  pointer-events: none;
+  background-color: rgb(201, 191, 211);
+}
+
+.wuutag {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  right: 10rpx;
+  height: 40rpx;
+  pointer-events: none;
+}
+
+.wuutag .item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10rpx 0 10rpx;
+  background-color: rgb(201, 191, 211);
+}
+
+.wuutag .left-box {
+  width: 8rpx;
+  height: 100%;
+  border-radius: 0 8rpx 0 0;
+  background-color: white;
+}
+
+.wuutag .right-box {
+  width: 8rpx;
+  height: 100%;
+  border-radius: 8rpx 0 0 0;
+  background-color: white;
+}
+
+.wuutag .main-box {
+  height: 100%;
+  background-color: white;
+}
+
+.wuutag .main-content {
+  border-radius: 0 0 8rpx 8rpx;
+  padding: 4rpx 10rpx 4rpx 10rpx;
+  background-color: rgb(201, 191, 211);
+}

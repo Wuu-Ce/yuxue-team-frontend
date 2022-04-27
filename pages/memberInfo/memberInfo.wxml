@@ -1,0 +1,48 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="content" class="text-black text-bold">团队成员</view>
+  <view class="text-black" slot="backText">返回</view>
+</cu-custom>
+
+<scroll-view scroll-y style="height: {{scrollH}}px;" >
+  <view style="min-height: {{scrollH}}px;" class="flex" style="flex-direction: column;">
+    <view class="padding-lr-sm padding-top-sm">
+      <view class="colorBar padding-tb padding-left-lg padding-right cu-item shadow bg-white" >
+        <view class="flex justify-between align-center solid-bottom padding-tb">
+          <view class="flex justify-start align-center">
+            <image class="cu-avatar round" src=""></image>
+            <view class="text-lg padding-left">昵称_nick_name</view>
+          </view>
+          <button class="cu-btn sm basis-xs bg-red" style="margin-right: 0;" wx:if="{{true}}">移除</button>
+        </view>
+        <view class="text-sm wuutag">
+          <view class="item">
+            <view class="left-box"></view>
+            <view class="main-box">
+              <view class="main-content">负责方向</view>
+            </view>
+            <view class="right-box"></view>
+          </view>  
+          <view class="item">
+            <view class="left-box"></view>
+            <view class="main-box">
+              <view class="main-content">队长</view>
+            </view>
+            <view class="right-box"></view>
+          </view>  
+          <view class="item">
+            <view class="left-box"></view>
+            <view class="main-box">
+              <view class="main-content">我</view>
+            </view>
+            <view class="right-box"></view>
+          </view>     
+        </view>
+        <view class="padding-tb padding-left solid-bottom text-df">擅长领域： XXX</view>
+        <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{true}}">
+          <view class="text-df">联系方式：XXX-XXXX-XXXX</view>
+          <view class="cuIcon-edit text-blue padding-right"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
