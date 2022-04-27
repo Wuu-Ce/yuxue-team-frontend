@@ -1,0 +1,109 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="content" class="text-black text-bold">团队管理</view>
+  <view class="text-black" slot="backText">返回</view>
+</cu-custom>
+
+<scroll-view scroll-y style="height: {{scrollH}}px;" >
+  <view style="min-height: {{scrollH}}px;" class="flex" style="flex-direction: column;">
+    <!-- 名称 -->
+    <view class="padding-lr-sm padding-top-sm" style="position: relative;">
+      <view class="padding radius cu-item shadow bg-white flex justify-between align-center" style="border-radius: 15rpx;">
+        <view class="flex justify-start align-center">
+          <image class="cu-avatar round" src="{{team.icon}}"></image>
+          <view class="margin-left-sm">
+            <view class="text-lg">{{team.teamName}}</view>
+            <view class="text-sm text-gray">id：1001</view>
+          </view>
+        </view>
+        <button class="cu-btn bg-red shadow-warp text-df basis-xs" style="margin-right: 0;">解散</button>
+      </view>
+    </view>
+
+    <!-- 信息管理 -->
+    <view class="padding-lr-sm padding-top">
+      <view class="padding-left padding-bottom-xs text-gray">信息更改</view>
+      <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
+        <view class="flex justify-between text-lg solid-bottom padding-bottom">
+          <view class="text-black">名称</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df">{{team.teamName}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg solid-bottom padding-tb">
+          <view class="text-black">类型</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df text-content">{{team.teamAbout}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg solid-bottom padding-tb">
+          <view class="text-black">介绍</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df text-content">{{team.teamAbout}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg solid-bottom padding-tb">
+          <view class="text-black">目标</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df text-content">{{team.goal}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg padding-top">
+          <view class="text-black">规约</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df text-content">{{team.teamProtocol}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+
+      </view>
+    </view>  
+
+    <!-- 成员管理  -->
+    <view class="padding-lr-sm padding-top">
+      <view class="padding-left padding-bottom-xs text-gray">成员管理</view>
+      <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
+        <view class="flex justify-between text-lg solid-bottom padding-bottom">
+          <view class="text-black">查看成员</view>
+          <view class="flex justify-end basis-lg">
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg solid-bottom padding-tb">
+          <view class="text-black">邀请</view>
+          <view class="flex justify-end basis-lg">
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg padding-top">
+          <view class="text-black">移除</view>
+          <view class="flex justify-end basis-lg">
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 功能设置  -->
+    <view class="padding-lr-sm padding-top">
+      <view class="padding-left padding-bottom-xs text-gray">功能设置</view>
+      <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
+        <view class="flex justify-between text-lg solid-bottom padding-bottom">
+          <view class="text-black">公告</view>
+          <view class="flex justify-end basis-lg">
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+        <view class="flex justify-between text-lg padding-top">
+          <view class="text-black">转移队长</view>
+          <view class="flex justify-end basis-lg">
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>

@@ -3,6 +3,19 @@ const request = require("./utils/util.js").request
 
 App({
   onLaunch() {
+    // 模拟登录
+    if( wx.getStorageSync('cookie') === '') {
+      const testLogin = request_nocheck('test/login','POST',{user_id: 1})
+      testLogin.then(res => {
+        wx.setStorage({
+          key: 'cookie',
+          data: res.cookies[0]
+        })
+      })      
+    }
+
+
+
     let res = request('team/new','POST',{})
     res.then(
       (res)=>{

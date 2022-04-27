@@ -1,20 +1,11 @@
-// pages/teamDetail/teamDetail.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 展示更多菜单
-    moreMenuShow: false,
-    reportModalShow: false,
-    hideTeamGoal: true,
-    hideTeamProtocol:true,
-    hideTeamAbout: true,
-
-    // 用户类型 leader; member; normal; notLogin
-    user: 'leader',
-    // 队伍信息
+    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
     team:{
       tid: '10000001',
       teamName: '予学团队',
@@ -59,82 +50,53 @@ Page({
   onLoad: function (options) {
 
   },
-  // 展示更多菜单
-  showMoreMenu() {
-    this.data.team.neccessary.detail.length
-    this.setData({
-      moreMenuShow: !this.data.moreMenuShow
-    })
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
   },
-  // 缩略队伍介绍
-  hideTeamAbout() {
-    this.setData({
-      hideTeamAbout: !this.data.hideTeamAbout
-    })
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
   },
-  // 缩略队伍目标
-  hideTeamGoal() {
-    this.setData({
-      hideTeamGoal: !this.data.hideTeamGoal
-    })
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
   },
-  // 缩略队伍规约
-  hideTeamProtocol() {
-    this.setData({
-      hideTeamProtocol: !this.data.hideTeamProtocol
-    })
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
   },
-  
-  // 举报队伍
-  reportTeam() {
-    this.setData({
-      reportModalShow: true,
-      moreMenuShow: false
-    })
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
   },
-  // 收藏
-  onClickCollect(){
-    let team = this.data.team
-    team.collected = !team.collected
-    this.setData({
-      team: team
-    })
-    if(team.collected) {
-      wx.showToast({
-        title: '收藏成功',
-        icon: 'success',
-        duration: 1000
-      })
-    } else {
-      wx.showToast({
-        title: '已取消',
-        icon: 'success',
-        duration: 1000
-      })
-    }
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
   },
-  // 跳转团队成员信息页
-  toMemberInfoPage(){
-    wx.navigateTo({
-      url: '/pages/memberInfo/memberInfo',
-    })
-  },
-  // 跳转申请加入界面
-  toApplyPage() {
-    wx.navigateTo({
-      url: 'url',
-    })
-  },
-  // 跳转管理团队界面
-  toManagePage() {
-    wx.navigateTo({
-      url: '/pages/manageTeam/manageTeam',
-    })
-  },
-  // 跳转开启招募界面
-  toTecruitPage() {
-    wx.navigateTo({
-      url: '/pages/recruitMember/recruitMember',
-    })
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })

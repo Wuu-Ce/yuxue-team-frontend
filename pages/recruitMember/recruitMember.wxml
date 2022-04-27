@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view slot="content" class="text-black text-bold">招募</view>
+  <view slot="content" class="text-black text-bold">招募成员</view>
   <view class="text-black" slot="backText">返回</view>
 </cu-custom>
 <scroll-view scroll-y style="height: {{scrollH}}px;">
@@ -8,7 +8,7 @@
       <image mode="aspectFill" class="background" src="https://w.wallhaven.cc/full/4g/wallhaven-4gq2xl.jpg"></image>
       <view class="content padding-lr-lg text-black">
         <view class="padding-lg radius cu-item bg-white text-center" style="border-radius: 15rpx;">
-          <view class="padding-bottom-lg text-xxl text-bold bottom_Line">招募队伍成员</view>
+          <view class="padding-bottom-lg text-xxl text-bold bottom_Line">招募团队成员</view>
         </view>
       </view>
     </view>
@@ -16,8 +16,14 @@
     <!-- 招募要求 -->
     <view class="padding-lr-sm padding-top-sm text-black">
       <view class="radius cu-item bg-white" style="border-radius: 15rpx;">
-        <view class="padding-lr-lg  padding-tb-sm text-lg text-bold">招募要求</view>
-        <view class="padding-lr-lg flex justify-between align-center padding-bottom bottom_Line shadow">
+        <view class="padding-lr-lg  padding-tb-sm flex justify-between text-lg">
+          <view class="text-bold">招募要求</view>
+          <view class="cuIcon-info color-text" bindtap="showTip">
+            <view wx:if="{{showTip}}" class="wuu-tip padding ">普通招募需要指明每个成员负责的方向和针对该成员的要求，每一项代表一个成员的要求。</view>
+          </view>
+          <view hidden="{{!showTip}}" class="wuu-mask" bindtap="hiddenTip"></view>
+        </view>
+        <view class="padding-lr-lg flex justify-between align-center padding-bottom bottom_Line ">
           <view class="dropdown-mask" hidden="{{!showDropDown}}" bindtap="showDropDown"></view>
           <view class="text-lg text-black">招募类型</view>
           <view class="dropdown " style="width: 200rpx;">
@@ -46,12 +52,27 @@
           show-scrollbar="true"
           fast-deceleration="true"
           >
-          <view wx:if="{{dropMenu.select.id==1}}" class="padding-lr-lg padding-tb-sm">
-            <view class="text-lg text-black">招募要求</view>
-            <textarea 
+          <view id="detailList" wx:if="{{dropMenu.select.id==1}}" class="padding-lr-lg">
+            <view class="flex justify-between padding-bottom-sm">
+              <view class="text-lg margin-top-xs text-black">招募人数</view>
+              <view class="flex justify-start align-center text-lg">
+                <view class="icon-jianhao padding-xs" bindtap="subNum"></view>
+                <input 
+                  class="margin-lr-xs numInput text-center" 
+                  type="number" 
+                  value="{{recruit.num}}" 
+                  bindinput="inputNum" 
+                  bindblur="inputNum" 
+                  bindconfirm="confirmNum" 
+                />
+                <view class="icon-jiahao padding-xs" bindtap="addNum"></view>
+              </view>
+            </view>
+            <view class="padding-top-sm text-lg text-black">说明</view>
+            <textarea
               name="recruitDetail" 
               value="{{recruit.neccessary.detail}}" 
-              placeholder="请在此输入招募要求" 
+              placeholder="说明对成员的要求，包括方向，人数，技能要求等" 
               class="normal-textarea solid-normal margin-top" 
               bindblur="bindFastDetail" 
               bindconfirm="bindFastDetail"
@@ -61,71 +82,104 @@
             <view 
               wx:for="{{recruit.neccessary.detail}}" 
               wx:for-item="detail" 
+              wx:for-index="index" 
               wx:key="index" 
-              class=" recruit-item recruit-adding {{index>0?'margin-top-sm':''}}"
+              class=" recruit-item  {{index>0?'margin-top-sm':''}} {{recruit.sub_ind<=index&&recruit.subing?'recruit-up':''}} {{recruit.add_ind-1==index&&recruit.adding?'recruit-adding':''}}"
+              style="height: 100px;"
               >
-              <view class="padding-sm bottom_Line">领域：{{detail.area}}</view>
-              <view class="padding-sm">要求：{{detail.need}}</view>
-              <view class="recruit-delete cuIcon-delete" bindtap="deleteDetail"></view>
+              <view class="flex jusify-start padding-sm bottom_Line" style="height: 50%;">
+                <view>方向：</view>
+                <input
+                  name = "role"
+                  value="{{detail.role}}"
+                  placeholder="请填写方向" 
+                  maxlength="100"
+                  class="padding-lr-sm" 
+                  style="width: 75%; font-style: inherit;"
+                  bindblur = "inputArea"
+                  bindconfirm = "inputArea"
+                  data-index="{{index}}"
+                ></input>
+              </view>
+              <view class="flex jusify-start padding-sm" style="height: 50%;">
+                <view>要求：</view>
+                <input
+                  name = "requirement"
+                  value="{{detail.requirement}}"
+                  placeholder="请填写要求" 
+                  maxlength="100"
+                  class="padding-lr-sm" 
+                  style="width: 75%;"
+                  bindblur = "inputRequirement"
+                  bindconfirm = "inputRequirement"
+                  data-index="{{index}}"
+                ></input>
+              </view>
+              <view class="recruit-delete cuIcon-delete" bindtap="deleteDetail" data-index="{{index}}"></view>
             </view>
-            <view id="addBox" class="padding-sm margin-top-sm recruit-item {{dropMenu.adding?'recruit-down':''}} text-center text-xl" bindtap="addDetail">
-              <view class="cuIcon-add"></view>
+            <view id="addBox" class="{{recruit.add_ind>0?'margin-top-sm':''}} padding-sm recruit-item text-center text-xl {{recruit.adding?'recruit-down':''}} {{recruit.subing?'recruit-up':''}}" bindtap="addDetail" style="height: 70px;">
+              <view class="cuIcon-add" ></view>
               <view class="text-lg">添加</view>
             </view>
           </view>
         </scroll-view>
-
-      </view>
-
-    </view>
-
-    <!-- 招募人数 -->
-    <view class="padding-lr-sm padding-top-sm text-black">
-      <view class="radius cu-item bg-white" style="border-radius: 15rpx;">
-        <view class="padding-lr-lg  padding-tb-sm ">
-          <view class="flex justify-between">
-            <view class="text-lg text-bold margin-top-xs">招募人数</view>
-            <view class="flex justify-start align-center text-lg">
-              <view class="icon-jianhao padding-xs" bindtap="subNum"></view>
-              <input class="margin-lr-xs numInput text-center" type="number" value="{{recruit.num}}" bindinput="inputNum" bindblur="inputNum" bindconfirm="confirmNum" />
-              <view class="icon-jiahao padding-xs" bindtap="addNum"></view>
-            </view>
-          </view>
-        </view>
-        <view class="padding-lr-lg"></view>
       </view>
     </view>
 
     <!-- 截止时间 -->
     <view class="padding-lr-sm padding-top-sm text-black">
       <view class="radius cu-item bg-white" style="border-radius: 15rpx;">
-
-        <view class="padding-lr-lg padding-tb flex justify-between {{isDeadline?'bottom_Line':''}} ">
+        <view class="padding-lr-lg padding-tb flex justify-between {{recruit.isDeadline?'bottom_Line':''}} ">
           <view class="text-lg text-bold">设置截止时间</view>
-          <switch class="blue" bindchange="switchDeadline"></switch>
+          <switch bindchange="switchDeadline"></switch>
         </view>
-        <view hidden="{{!isDeadline}}" class="padding-lr-lg  flex justify-between align-center text-lg {{isDeadline?'anime':'animeRe'}}" style="height: 120rpx;" bindtap="showDatePicker">
+        <view hidden="{{!recruit.isDeadline}}" class="padding-lr-lg  flex justify-between align-center text-lg {{recruit.isDeadline?'anime':'animeRe'}}" style="height: 120rpx;" bindtap="showDatePicker">
           <view class="text-lg padding-tb">截止日期</view>
           <view class="flex justify-end padding-tb">
-            <view>{{date}}</view>
+            <view>{{recruit.deadline}}</view>
             <text class="margin-left cuIcon-right "></text>
           </view>
         </view>
       </view>
     </view>
 
-    <view class="fill"></view>
+    <!-- 限定本校 -->
+    <view class="padding-lr-sm padding-top-sm text-black">
+      <view class="radius cu-item bg-white" style="border-radius: 15rpx;">
+        <view class="padding-lr-lg padding-tb flex justify-between {{isDeadline?'bottom_Line':''}} ">
+          <view class="text-lg text-bold">限定本校</view>
+          <switch bindchange="changeLocal"></switch>
+        </view>
+      </view>
+    </view>
 
+    <!-- 弹性盒子 -->
+    <view class="fill"></view>
     <!-- 下一步按钮 -->
     <view class="padding-lg radius margin-top-sm cu-item shadow bg-white " style="position: relative;bottom:0;">
       <view class="cu-bar">
-        <button class="cu-btn mainTone-bgColor  shadow-warp">下一步</button>
+        <button class="cu-btn mainTone-bgColor  shadow-warp" bindtap="showOkModal">开始招募</button>
       </view>
     </view>
   </view>
 </scroll-view>
 
+<!-- 完成模态框 -->
+<view class="yuxue-modal show" wx:if="{{showOkModal}}">
+  <view class="yuxue-dialog" catchtap="showOkModal">
+    <view class="cu-bar bg-white justify-center">
+      <view class="text-lg text-bold text-black text-center">提示</view>
+    </view>
+    <view class="padding">
+        <view class="text-black">确认填写信息无误，点击确认发布招募信息。</view>
+    </view>
+    <view class="text-center flex justify-between" style="height: 100rpx;">
+      <button class="padding-tb text-lg" style="width: 50%; border-right: solid 1px rgb(0, 0, 0, 0.3); border-radius: 0;" catchtap="hiddenOkModal">取消</button>
+      <button class="padding-tb text-lg" style="width: 50%; border-radius: 0;" catchtap="confirmRecruit">确认</button>
+    </view>
+  </view>
+</view>
 
 
-
+<!-- 日期选择器 -->
 <date-picker show="{{showDatePicker}}" minDate="{{nowTime}}" maxDate="{{deadline}}" bind:close="onTimeClose" bind:confirm="onTimeConfirm"></date-picker>

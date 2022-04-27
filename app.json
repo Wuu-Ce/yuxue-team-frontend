@@ -9,7 +9,9 @@
     "pages/searchCollege/searchCollege",
     "pages/message/message",
     "pages/getCode/code",
-    "pages/recruitMember/recruitMember"
+    "pages/recruitMember/recruitMember",
+    "pages/manageTeam/manageTeam",
+    "pages/memberInfo/memberInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

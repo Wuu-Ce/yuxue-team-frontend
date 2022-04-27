@@ -138,7 +138,10 @@ Component({
     onClose() {
       const that = this
       let date = that.data.selectDate
-      let detail = {date: date.year + '/' + date.month + '/' + date.day}
+      let detail = {
+        date: date.year + '/' + date.month + '/' + date.day,
+        time: new Date(date.year, date.month, date.day).getTime()
+      }
       that.setData({
         show: false,
         animation: true
@@ -153,7 +156,10 @@ Component({
     onConfirm() {
       const that = this
       let date = that.data.selectDate
-      let detail = {date: date.year + '/' + date.month + '/' + date.day}
+      let detail = {
+        date: date.year + '/' + date.month + '/' + date.day,
+        time: new Date(date.year, date.month, date.day).getTime()
+      }
       that.onClose()
       this.triggerEvent('confirm', detail)
     },

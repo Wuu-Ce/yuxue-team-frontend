@@ -1,5 +1,11 @@
-import {__formatTime} from '../../utils/util'
+import {__formatTime, request_nocheck} from '../../utils/util'
 const app = getApp()
+
+let requet_list = [
+  {compelte: false, vlaue: '招募要求'},
+  {compelte: false, vlaue: '截止时间'},
+  {compelte: false, vlaue: '限定本校'},
+]
 Page({
 
   /**
@@ -7,33 +13,35 @@ Page({
    */
   data: {
     scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
+    showOkModal: false,
+    showDatePicker: false,
     showDropDown: false,
     dropMenu:{
       select:{ id:0, value:'普通招募'},
       types: [{ id:0, value:'普通招募'}, { id:1, value:'快速招募'}],
       contentH: 120,
-      adding: false
     },
     nowTime: new Date().getTime(),
     deadline: new Date().getTime() + 15768000000*2,
-    date: '请选择日期',
-    showDatePicker: false,
-
-    getDetailHeigth: function() {
-      return Math.min(this.data.recruit.neccessary.detail.length*95+100, 600)
-    },
 
     recruit: {
+      // request 参数
+      teamID: 1,
+      isLocal: false,
+      type:0,
       num: 1,
-      deadLine: {
-        available: false,
-        data: 0,
-      },
+      isDeadline: false,
+      deadline: '请选择日期',
+      deadline_time: new Date().getTime(),
       neccessary: {
         type: 0,
         detail: []
       },
-      isDeadline: false,
+      // 状态参数
+      sub_ind: 0,
+      add_ind: 0,
+      subing: false,
+      adding: false
     }
 
   },
@@ -117,15 +125,17 @@ Page({
       wx.showToast({
         icon: 'error',
         title: '至少招募1人',
+        duration: 1000
       })
     }
-    
   },
 
   // 输入人数
   inputNum(e) {
     this.data.recruit.num = e.detail.value
   },
+
+  // 输入人数完成
   confirmNum(e) {
     if(e.detail.value>1) {
       this.data.recruit.num = e.detail.value
@@ -138,8 +148,10 @@ Page({
   },
   // 是否设置截止时间
   switchDeadline(e) {
+    let recruit = this.data.recruit
+    recruit.isDeadline = e.detail.value
     this.setData({
-      isDeadline: !this.data.isDeadline
+      recruit: recruit
     })
   },
   // 显示日期选择器
@@ -150,14 +162,20 @@ Page({
   },
   // 关闭时间选择器
   onTimeClose(e) {
+    let recruit = this.data.recruit
+    recruit.deadline_time = e.detail.time
+    recruit.deadline = e.detail.date
     this.setData({
-      date: e.detail.date
+      recruit: recruit
     })
   },
   // 日期选择器提交
   onTimeConfirm(e) {
+    let recruit = this.data.recruit
+    recruit.deadline_time = e.detail.time
+    recruit.deadline = e.detail.date
     this.setData({
-      date: e.detail.date
+      recruit: recruit
     })
   },
   // 显示下拉菜单
@@ -170,23 +188,25 @@ Page({
   onSelectDrop(e) {
     let ind = e.currentTarget.dataset.index
     let drop = this.data.dropMenu
+    let recruit = this.data.recruit
     let type = drop.types[ind]
     let neccessary = this.data.recruit.neccessary
-    
     if(type.id==neccessary.type)
     {
       this.showDropDown()
       return
     }
-      
-    else
+    else {
       neccessary.type = type.id
-
+    }
+    // 修改容器高度
     if(type.id==0) {
       drop.contentH = 120
+      recruit.num = 0
       neccessary.detail = []
     } else {
-      drop.contentH = 250
+      drop.contentH = 300
+      recruit.num = 0
       neccessary.detail = ''
     }
     this.data.recruit.neccessary = neccessary
@@ -198,54 +218,147 @@ Page({
     })
     console.log(this.data.recruit)
   },
+  // 填写方向
+  inputArea(e) {
+    let index = e.currentTarget.dataset.index
+    let recruit = this.data.recruit
+    recruit.neccessary.detail[index].role = e.detail.value
+  },
+  // 填写详细要求
+  inputRequirement(e) {
+    let index = e.currentTarget.dataset.index
+    let recruit = this.data.recruit
+    recruit.neccessary.detail[index].role = e.detail.value
+  },
   // 快速招募信息
   bindFastDetail(e) {
     this.data.recruit.neccessary.detail = e.detail.value
   },
-  // 添加领域要求 
+  // 添加详细要求 
   addDetail() {
     const that = this
     // 设置参数
     let drop = this.data.dropMenu
     let recruit = this.data.recruit
-    let newDetail = {area: '', need:''}
-    drop.contentH<350? drop.contentH += 95 : drop.contentH =400
-    drop.adding = true
+    let newDetail = {role: '', requirement:''}
+    drop.contentH<350? drop.contentH += 110 : drop.contentH++
+    recruit.num++
     recruit.neccessary.detail.push(newDetail)
-    this.setData({
+    recruit.adding = true
+    recruit.add_ind++
+    that.setData({
       dropMenu: drop,
       recruit: recruit
     })
-    drop.adding = false
     setTimeout(function() {
+      recruit.adding = false 
       that.setData({
-        dropMenu:drop
+        recruit: recruit
       })
-    }, 500)
-    setTimeout(function () {
-      wx.createSelectorQuery().select('#detailBox').boundingClientRect(function(rect) {
-        console.log('scroll called')
-        wx.pageScrollTo({
-          selector: '#addBox',
-          offsetTop: 100,
-          duration: 500,
-          success: (e) =>{
-            console.log(e)
-            console.log(rect)
-          },
-          fail: (e) => {
-            console.log('fail')
-            console.log(e)
-          },
-          complete: (e) =>{
-            console.log('complete')
-            console.log(e)
-          }
-        })
-      }).exec()
     }, 500)
 
   },
-  // scroll-view 滚动到底部
+  // 删除一项详细要求
+  deleteDetail(e) {
+    const that = this
+    let drop = this.data.dropMenu
+    let index = e.currentTarget.dataset.index
+    let recruit = this.data.recruit
+    console.log(index)
+    console.log(recruit.neccessary.detail)
+    recruit.neccessary.detail.splice(index, 1)
+    if(recruit.neccessary.detail.length<3) {
+      drop.contentH -= 110
+    }
+    that.setData({
+      
+    })
+    recruit.subing = true
+    recruit.sub_ind = index
+    recruit.add_ind--
+    that.setData({
+      dropMenu: drop,
+      recruit: recruit
+    })
+    setTimeout(function() {
+      recruit.subing = false 
+      that.setData({
+        recruit: recruit
+      })
+    }, 500)
+  },
+  // 切换校内
+  changeLocal (e) {
+    this.data.recruit.isLocal = e.detail.value
+  },
 
+  // 提交
+  confirmRecruit() {
+    this.hiddenOkModal()
+    wx.showToast({
+      icon:'loading',
+      title: '发布中',
+    })
+    let recruit = this.data.recruit
+    let requestData = {}
+    let API = ''
+    if(recruit.type == 0) {
+      API = 'recruit/leader/createNormal'
+      requestData = {
+        team_id: recruit.teamID,
+        is_local: recruit.isLocal,
+        items: recruit.neccessary.detail
+      }
+    } else {
+      API = 'recruit/leader/createFast'
+      requestData = {
+        team_id: recruit.teamID,
+        is_local: recruit.isLocal,
+        count: recruit.num,
+        requirement: recruit.neccessary.detail
+      }
+    }
+
+    console.log(recruit)
+    console.log(requestData)
+    //  请求
+    let res = request_nocheck(API, 'POST', requestData)
+    res.then(
+      e => {
+        console.log(e)
+        wx.hideToast({
+          success: (res) => {
+            console.log('发布成功')
+            console.log(res)
+          },
+        })
+      }
+    )
+  },
+
+    // 切换确认框显示状态
+  showOkModal() {
+    this.setData({
+      showOkModal: true
+    })
+  },
+
+  // 切换确认框显示状态
+  hiddenOkModal() {
+    this.setData({
+      showOkModal: false
+    })
+  },
+  // 显示提示信息
+  showTip() {
+    this.setData({
+      showTip: true
+    })
+  },
+  // 隐藏提示信息
+  hiddenTip() {
+    this.setData({
+      showTip: false
+    })
+  }
 })
