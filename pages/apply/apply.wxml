@@ -1,0 +1,4 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view class="text-black" slot="backText">申请加入</view>
+</cu-custom>
+

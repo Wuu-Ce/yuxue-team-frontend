@@ -134,6 +134,11 @@ Component({
         url: '/pages/teamDetail/teamDetail?tid=',
       })
     },
-    
+    // 跳转到申请加入界面
+    jumpToApply(){
+      wx.navigateTo({
+        url: '/pages/apply/apply?team_id=1&recruit_id=1',
+      })
+    }
   }
 })

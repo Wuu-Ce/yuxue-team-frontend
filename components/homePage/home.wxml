@@ -31,14 +31,76 @@
     <text class="text-black" style="font-size: 32rpx;">我的队伍</text>
   </view>
   <view class="flex align-center padding-top" bindtap="jumpToMessage">
-    <text class="cuIcon-comment text-black margin-right-sm" style="font-size:40rpx;"></text>
+    <text class="cuIcon-message text-black margin-right-sm " style="font-size:40rpx;"></text>
     <text class="text-black" style="font-size: 32rpx;">消息通知</text>
   </view>
-  <!-- <view class="flex align-center padding-top" bindtap="jumpToCode">
-    <text class="cuIcon-comment text-black margin-right-sm" style="font-size:40rpx;"></text>
-    <text class="text-black" style="font-size: 32rpx;">获取code</text>
-  </view> -->
 </view>
-<view class="flex bg-gray" style="height:30rpx;"></view>
+<view class="flex flex-direction margin-lr-lg margin-top padding bg-white shadow" style="border-radius: 15rpx;">
+  <view class="flex align-center padding-bottom solids-bottom" style="" bindtap="jumpToMyTeam">
+    <text class="cuIcon-favor text-black margin-right-sm" style="font-size:40rpx;"></text>
+    <text class="text-black" style="font-size: 32rpx;">我的收藏</text>
+  </view>
+  <view class="flex align-center padding-top" bindtap="contactService">
+    <text class="cuIcon-service text-black margin-right-sm " style="font-size:40rpx;"></text>
+    <text class="text-black" style="font-size: 32rpx;">联系我们</text>
+  </view>
+</view>
+<view class="flex flex-direction margin-lr-lg margin-top padding bg-white shadow" style="border-radius: 15rpx;">
+  <!-- <view class="flex align-center padding-bottom solids-bottom" bindtap="jumpToCode">
+    <text class="cuIcon-magic text-black margin-right-sm" style="font-size:40rpx;"></text>
+    <text class="text-black" style="font-size: 32rpx;">getcode</text>
+  </view> -->
+  <view class="flex align-center padding-bottom solids-bottom" bindtap="aboutUS">
+    <text class="cuIcon-magic text-black margin-right-sm" style="font-size:40rpx;"></text>
+    <text class="text-black" style="font-size: 32rpx;">关于予学</text>
+  </view>
+  <view class="flex align-center padding-top" bindtap="jumpToSettings">
+    <text class="cuIcon-settings text-black margin-right-sm" style="font-size:40rpx;"></text>
+    <text class="text-black" style="font-size: 32rpx;">设置</text>
+  </view>
+</view>
+<view class="flex bg-gray" style="height:60rpx;"></view>
+
+<!-- “需要登录”窗口 -->
+<loginRequired show="{{showLoginRequired}}"></loginRequired>
+
+<!-- 客服 modal -->
+<view class="yuxue-modal bg-white {{modalName=='contactService'?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: relative;" catchtap>
+    <view class="flex justify-center align-center">
+      <view class="content margin-lg">
+        <text class="text-black text-xl text-bold">联系我们</text>
+      </view>
+    </view>
+    <view class="flex align-center justify-center padding-lg text-black">
+      <text style="font-size:32rpx;">开发者电话/微信：</text>
+      <text style="font-size:32rpx;" user-select="true">18330205262</text>
+    </view>
+    <view class="padding-lg text-black mainTone-color1">
+      <text>开发者有时需要上课，建议先添加微信</text>
+    </view>
+    <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+      <text class="cuIcon-close" style="font-size:40rpx;"></text>
+    </view>
+  </view>
+</view>
+
+<!-- 关于予学 modal -->
+<view class="yuxue-modal bg-white {{modalName=='aboutUS'?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: relative;" catchtap>
+    <view class="flex justify-center align-center">
+      <view class="content margin-lg">
+        <text class="text-black text-xl text-bold">关于予学</text>
+      </view>
+    </view>
+    <view class="flex align-center justify-center padding-lr padding-bottom-lg text-black">
+      <text>予学团队致力于使用计算机技术解决大学校园内存在的需求、痛点问题，不足之处我们会不断改善，产品/技术交流，请添加微信：<text user-select="true">18330205262</text></text>
+    </view>
+    <!-- 右上角的关闭按钮 -->
+    <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+      <text class="cuIcon-close" style="font-size:40rpx;"></text>
+    </view>
+  </view>
+</view>
 
 

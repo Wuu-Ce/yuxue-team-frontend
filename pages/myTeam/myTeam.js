@@ -8,7 +8,7 @@ Page({
    */
   data: {
     tabCur: 0,
-    listData: {from:'myTeam',topTabCur:1},
+    listData: {from:'myTeam'},  // 再加一个参数，用于表示请求的是哪个列表
     swiperContainerH: 0,
   },
 
@@ -29,7 +29,6 @@ Page({
   // 选择标签
   tabSelect(e) {
     let listData = this.data.listData
-    listData.topTabCur = e.currentTarget.dataset.id;
     this.setData({
       tabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id - 1) * 60,

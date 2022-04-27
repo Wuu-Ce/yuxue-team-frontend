@@ -9,7 +9,11 @@
     "pages/searchCollege/searchCollege",
     "pages/message/message",
     "pages/getCode/code",
-    "pages/recruitMember/recruitMember"
+    "pages/recruitMember/recruitMember",
+    "pages/settings/settings",
+    "pages/signInTel/signInTel",
+    "pages/signIn/signIn",
+    "pages/apply/apply"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -19,7 +23,8 @@
     "navigationStyle": "custom"
   },
   "usingComponents": {
-    "cu-custom": "/utils/colorui/components/cu-custom"
+    "cu-custom": "/utils/colorui/components/cu-custom",
+    "loginRequired": "/components/loginRequired/loginRequired"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

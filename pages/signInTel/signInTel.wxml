@@ -1,0 +1,25 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="content" class="text-black">手机号登录</view>
+</cu-custom>
+
+<!-- <view class="container flex flex-direction justify-center align-center"> -->
+  <form class="form-item flex flex-direction justify-center align-center radius" style="width:100vw;height:80vh;" catchsubmit="formSubmit" catchreset="formReset">
+    <view class="flex flex-direction padding-lr padding-tb-sm bg-white radius" style="width:100vw;">
+      <view class="bar-item flex align-center solid-bottom" style="width:100%">
+        <view class="action margin-right-xl" style="white-space:nowrap">手机号</view>
+        <input name="phoneNumber" placeholder="请输入手机号" placeholder-class="text-grey" type="number" style="flex-grow:1" bindinput="setPhoneNum" />
+        <view class="getCodeText text-black" bindtap="getCode">{{countDownNum?countDownNum:'获取验证码'}}</view>
+      </view>
+      <view class="bar-item flex align-center " style="width:100%">
+        <view class="action margin-right-xl" style="white-space:nowrap">验证码</view>
+        <input name="verificationCode" placeholder="请输入验证码" placeholder-class="text-grey" type="number" style="flex-grow:1" />
+      </view>
+    </view>
+    <!-- <view class="cu-btn mainTone-bgColor flex padding-lg align-center text-white round shadow"  style="animation-delay: 0.1s;width:80%;" bindtap="jumpToSignTel">
+        <text class="text-bold">登录</text>
+      </view> -->
+    <view class="margin-top-xl">
+      <button class="mainTone-bgColor round" type="primary" form-type="submit" style="width:80%;">登录</button>
+    </view>
+  </form>
+<!-- </view> -->

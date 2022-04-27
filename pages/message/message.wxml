@@ -1,28 +1,17 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
   <view class="text-black" slot="backText">消息通知</view>
 </cu-custom>
-<!-- 顶部tab -->
-<view class="flex bg-white solids-bottom" style="height:50px;width:100%;">
-  <!-- 来自队伍 -->
-  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="0">
-    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
-      <text class="text-black" style="font-size: {{tabCur==0?'35rpx':'32rpx'}};">团队</text>
-    </view>
-    <view class="margin-tb-sm margin-lr-lg round {{tabCur==0?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+
+<!-- 标题导航栏 -->
+<view class="bg-white nav text-grey text-center">
+  <view class="cu-item {{0==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="0" style="height: {{NavHeight}}px;">
+    <text>来自团队</text>
   </view>
-  <!-- 来自个人 -->
-  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="1">
-    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
-      <text class="text-black" style="font-size: {{tabCur==1?'35rpx':'32rpx'}};;">个人</text>
-    </view>
-    <view class="margin-tb-sm margin-lr-lg round {{tabCur==1?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+  <view class="cu-item {{1==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="1" style="height: {{NavHeight}}px;">
+    <text>来自个人</text>
   </view>
-  <!-- 来自系统 -->
-  <view class="flex flex-direction" style="flex-grow: 1;" bindtap="changeTab" data-id="2">
-    <view class="flex flex-direction align-center justify-center" style="flex-grow:1;width:100%;">
-      <text class="text-black" style="font-size: {{tabCur==2?'35rpx':'32rpx'}};;">系统</text>
-    </view>
-    <view class="margin-tb-sm margin-lr-lg round {{tabCur==2?'mainTone-bgColor1':''}}" style="height: 6rpx;"></view>
+  <view class="cu-item {{2==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="2" style="height: {{NavHeight}}px;">
+    <text>来自系统</text>
   </view>
 </view>
 <scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
@@ -130,7 +119,7 @@
   </view>
 <!-- 来自个人 -->
   <!-- 我创建的队伍收到加入申请 -->
-  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solid-bottom">
+  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
@@ -214,3 +203,5 @@
     </view>
   </view>
 </scroll-view>
+
+<loginRequired show="{{showLoginRequired}}"></loginRequired>

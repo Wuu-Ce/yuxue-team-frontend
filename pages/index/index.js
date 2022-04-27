@@ -1,7 +1,7 @@
 // index.js
 // 获取应用实例
 const app = getApp()
-
+const checkCookieValid = require("../../utils/util.js").checkCookieValid
 Page({
   data: {
     motto: 'Hello World',
@@ -73,7 +73,6 @@ Page({
   // 底部tab切换
   changetab(e){
     var tabindex = e.currentTarget.dataset.tabindex;
-    console.log()
     if(tabindex!=this.data.tabCur){
       this.setData({
         tabCur: parseInt(tabindex)
@@ -83,7 +82,6 @@ Page({
 
   // 跳转到发布页
   jumpToIssue(){
-    // this.pageSwitch(2);
     wx.navigateTo({
       url: '/pages/createTeam/createTeam',
     })
@@ -96,9 +94,9 @@ Page({
   },
 
   // 模态框
-  showModal(e) {
+  showModal(modalName) {
     this.setData({
-      modalName: 'DialogModal2'
+      modalName: modalName
     })
   },
   hideModal(e) {
@@ -107,8 +105,7 @@ Page({
     })
   }, 
   onAccuseTeam(){
-    console.log('aaa')
-    this.showModal();
+    this.showModal('accuse');
   },
   // 选择举报选项
   chooseAccuseOption(e){

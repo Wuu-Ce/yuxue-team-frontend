@@ -1,4 +1,4 @@
-// pages/getCode/code.js
+const request_nocheck = require("../../utils/util.js").request_nocheck
 Page({
 
   /**
@@ -33,6 +33,15 @@ Page({
     this.setData({
       codes: []
     })
+    var p = request_nocheck('test/code','POST',codes);
+    p.then(
+      (res)=>{
+        console.log(res);
+      },
+      (res)=>{
+        console.log(res);
+      }
+    )
   }
   
 })

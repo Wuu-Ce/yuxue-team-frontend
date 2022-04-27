@@ -10,11 +10,11 @@
     </view>
     <!-- <text wx:if="{{team.category<6}}" class="cu-tag bg-{{categroyList[team.category].color}} light text-sm text-bold radius">{{categroyList[team.category].name}}</text> -->
     <view class="more margin-left margin-right-sm" style="position:relative;">
-      <view class="moreArea padding-lr-xs radius {{collectButtonShow?'bg-gray':''}}">
+      <view class="moreArea padding-xs radius {{collectButtonShow?'bg-gray':''}}">
         <text class="cuIcon-more text-grey" style="font-size:45rpx" catchtap="onClickMore"></text>
       </view>
       <!-- 收藏、举报 -->
-      <view wx:if="{{collectButtonShow}}" class="flex justify-around align-center bg-black text-white radius" style="position:absolute;top:65rpx;right:-60rpx;width:260rpx;z-index:1000">
+      <view wx:if="{{collectButtonShow}}" class="flex justify-around align-center bg-black text-white radius" style="position:absolute;top:70rpx;right:-60rpx;width:260rpx;z-index:1000">
         <view class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickCollect">
           <text class="cuIcon-{{collected?'favorfill text-yellow':'favor'}} margin-right-xxs"></text>
           <text class="">收藏</text>
@@ -44,7 +44,7 @@
   </view>
   <!-- 四、申请加入 -->
   <view class="flex justify-end align-center margin-top-sm">
-    <view class="cu-btn flex align-center -white round shadow"  style="animation-delay: 0.1s;background-color: #F3F4EE;">
+    <view class="cu-btn flex align-center -white round shadow"  style="animation-delay: 0.1s;background-color: #F3F4EE;" bindtap="jumpToApply">
       <!-- <image src="https://qiniu.freespace.yuxue0824.com/%E6%88%91%E7%9A%84.png" mode="aspectFill" style="height:35rpx;width:35rpx;"></image>
       <text class="cuIcon-add" style="font-size: 30rpx;"></text> -->
       <text class="text-bold" style="letter-spacing:4rpx;color:#6E6E6C">申请加入</text>

@@ -1,4 +1,4 @@
-const request_nocheck = require("../../utils/util.js").request_nocheck
+const request = require("../../utils/util.js").request
 Component({
   /**
    * 组件的属性列表
@@ -25,14 +25,14 @@ Component({
       if(from=="index"){  // 表示在“首页”中请求队伍列表
         // 以某种条件，向后端请求列表
         var topTabCur = this.properties.listData.topTabCur;
-        var res = request_nocheck('team/list','POST',{type:2})
+        var res = request('team/list','POST',{type:2})
         res.then(
           (res)=>{
-            console.log(res);
+            // console.log(res);
             var teamList = res.data.data;
           },
           (res)=>{
-            console.log(res);
+            // console.log(res);
           }
         )
         this.setData({

@@ -1,1 +1,8 @@
-@import '/app.wxss'
+@import '/app.wxss';
+
+.tabbar {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
