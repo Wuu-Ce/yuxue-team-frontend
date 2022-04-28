@@ -1,4 +1,10 @@
-// pages/teamDetail/teamDetail.js
+import {
+  request,
+  getClass,
+  classification,
+  __formatTime
+} from "../../utils/util"
+const app = getApp()
 Page({
 
   /**
@@ -9,46 +15,54 @@ Page({
     moreMenuShow: false,
     reportModalShow: false,
     hideTeamGoal: true,
-    hideTeamProtocol:true,
+    hideTeamProtocol: true,
     hideTeamAbout: true,
 
     // 用户类型 leader; member; normal; notLogin
-    user: 'leader',
+    relation: 3,
     // 队伍信息
-    team:{
-      tid: '10000001',
-      teamName: '予学团队',
-      createTime: '2022年3月24日',
+    team: {
+      //id
+      team_id: 1,
+      name: '予学团队',
+      createTime: new Date().getTime(),
+      description: '',
       icon: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg',
       classification: ['竞赛', '计算机'],
-      customClass: '微信小程序应用开发大赛',
-      
-      neccessary: {
-        // type: 'fast',
-        // detail: '测试文本，测试文本。测试文本，测试文本。测试文本，测试文本。测试文本，测试文本。测试文本，测试文本。',
-        type: 'normal',
-        detail: [
-          {area: '计算机-前端', num: 2, need: '能使用微信开发者工具制作小程序'},
-          {area: '绘画，UI设计', num: 2,need: '有绘画基础，能制作插图、UI'},
-          {area: '数据库', num: 2, need: '能够熟练操作数据库'},
-          {area: '计算机-前端', num: 2, need: '能开发web页面'},
-        ],
-        num: 4,
-      },
+      type: 1,
+      typeinfo: '',
+      announce: '',
       goal: '上线第一个月增长5000名用户',
-      teamAbout: '很多同学在竞赛、项目等组队时会遇到选人上的困难，很难遇到一群志同道合的人共同去做一件事。而即便是熟人组队的项目，往往也很难凑齐一个项目所需的各个方向的技能，这个时候就需要跨领域，甚至跨专业的组队。',
-      teamProtocol: '团队成员相互配合，按时、按标准完成任务',
-      members: [
-        {name: '李浩', icon:  'https://team.test.yuxue0824.com/static/avatar/user/20.jpg'},
-        {name: '张锋', icon:  'https://team.test.yuxue0824.com/static/avatar/user/1.jpg'},
-        {name: '王东强', icon:  'https://team.test.yuxue0824.com/static/avatar/user/3.jpg'},
-        {name: '李艳', icon:  'https://team.test.yuxue0824.com/static/avatar/user/9.jpg'},
-        {name: '吴卫', icon:  'https://team.test.yuxue0824.com/static/avatar/user/6.jpg'},
-        {name: '熊锋', icon:  'https://team.test.yuxue0824.com/static/avatar/user/12.jpg'},
-        {name: '单一鸣', icon:  'https://team.test.yuxue0824.com/static/avatar/user/4.jpg'},
-
+      rule: '',
+      members: [],
+    },
+    recruit: {
+      count: 2,
+      count_available: 2,
+      is_available: 0,
+      is_local: 0,
+      items: [{
+          is_available: true,
+          recruit_id: 9,
+          requirement: "下雨知道打伞",
+          ritem_id: 20,
+          role: "撑伞",
+          time: null,
+        },
+        {
+          is_available: true,
+          recruit_id: 9,
+          requirement: "手机没电知道充电",
+          ritem_id: 21,
+          role: "充电",
+          time: null,
+        }
       ],
-      collected: false,
+      recruit_id: 9,
+      team_id: 2,
+      time: 1650444860,
+      type: 1,
+
     }
 
   },
@@ -57,11 +71,145 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+    const team_id = parseInt(options.team_id)
+    // 队伍详情
+    this.getTeamDetail(team_id)
+    // 用户与团队关系
+    this.getRelation(team_id)
+    // 招募
+    this.getRecruit(team_id)
 
+  },
+  onShow() {
+
+  },
+  // 获取队伍详情
+  getTeamDetail(team_id) {
+    const that = this
+    const classRes = []
+    let teamInfo = {}
+    const getInfo = () => {
+      if (getClass(teamInfo.field_id, classification, classRes, 0)) {
+        classRes.shift()
+        teamInfo.classification = classRes
+        teamInfo.createtime = __formatTime(teamInfo.createtime * 1000, "Y年M月D日")
+      }
+    }
+    const rest = request('/team/detail', 'POST', {
+      team_id: team_id
+    })
+    rest.then(
+      res => {
+        const data = res.data.data
+        if (res.data.code === 0) {
+          teamInfo = data
+          getInfo()
+          that.setData({
+            team: teamInfo
+          })
+          console.log(teamInfo)
+        }
+      },
+      res => {
+        wx.showToast({
+          icon: 'error',
+          title: '加载失败',
+          duration: 2000
+        })
+        console.log(res)
+      })
+  },
+  // 用户与队员关系接口
+  getRelation(team_id) {
+    const that = this
+    const relation = request('/team/relation', 'POST', {
+      team_id: team_id
+    })
+    relation.then(
+      res => {
+
+        const data = res.data.data
+        if (data.status === -1) {
+          wx.showToast({
+            icon: 'error',
+            title: '队伍不存在',
+            duration: 2000
+          })
+        }
+        // that.setData({
+        //   relation: data.status
+        // })
+      },
+      res => {
+        wx.showToast({
+          icon: 'error',
+          title: '加载失败',
+          duration: 2000
+        })
+        console.log(res)
+      }
+    )
+  },
+  // 获取招募详情
+  getRecruit(team_id) {
+    const that = this
+    const recruit = request('/recruit/listOfTeam', 'POST', {team_id: team_id})
+    recruit.then(
+      res => {
+        const type0 = {
+          count: 3,
+          count_available: 3,
+          is_available: 1,
+          is_local: 0,
+          recruit_id: 10,
+          requirement: 'qwq',
+          team_id: 2,
+          time: 1650445033,
+          type: 0
+        }
+        const type1 = {
+          count: 2,
+          count_available: 1,
+          is_available: 1,
+          is_local: 1,
+          recruit_id: 10,
+          team_id: 2,
+          time: 1650445033,
+          type: 1,
+          items: [ {
+            is_available: true,
+            recruit_id: 11,
+            requirement: "手机没电知道充电",
+            role: "充电",
+            time: null,
+          },
+          {
+            is_available: false,
+            recruit_id: 12,
+            requirement: "下雨知道打伞",
+            role: "撑伞",
+            time: null,
+          }
+        ]
+          
+        }
+        that.setData({
+          recruit: type1
+        })
+      },
+      res => {
+        wx.showToast({
+          icon: 'error',
+          title: '加载失败',
+          duration: 2000
+        })
+        console.log(res)
+      }
+    )
   },
   // 展示更多菜单
   showMoreMenu() {
-    this.data.team.neccessary.detail.length
     this.setData({
       moreMenuShow: !this.data.moreMenuShow
     })
@@ -84,7 +232,7 @@ Page({
       hideTeamProtocol: !this.data.hideTeamProtocol
     })
   },
-  
+
   // 举报队伍
   reportTeam() {
     this.setData({
@@ -93,13 +241,13 @@ Page({
     })
   },
   // 收藏
-  onClickCollect(){
+  onClickCollect() {
     let team = this.data.team
     team.collected = !team.collected
     this.setData({
       team: team
     })
-    if(team.collected) {
+    if (team.collected) {
       wx.showToast({
         title: '收藏成功',
         icon: 'success',
@@ -114,9 +262,9 @@ Page({
     }
   },
   // 跳转团队成员信息页
-  toMemberInfoPage(){
+  toMemberInfoPage() {
     wx.navigateTo({
-      url: '/pages/memberInfo/memberInfo',
+      url: '/pages/memberInfo/memberInfo?team_id=' + this.data.team.team_id,
     })
   },
   // 跳转申请加入界面
@@ -128,13 +276,13 @@ Page({
   // 跳转管理团队界面
   toManagePage() {
     wx.navigateTo({
-      url: '/pages/manageTeam/manageTeam',
+      url: '/pages/manageTeam/manageTeam?team_id=' + this.data.team.team_id,
     })
   },
   // 跳转开启招募界面
   toTecruitPage() {
     wx.navigateTo({
-      url: '/pages/recruitMember/recruitMember',
+      url: '/pages/recruitMember/recruitMember?team_id=' + this.data.team.team_id,
     })
   }
 })

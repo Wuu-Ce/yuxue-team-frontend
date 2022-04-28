@@ -1,6 +1,6 @@
 /* 底部线 */
 .bottomLine {
-  border-bottom: solid 4rpx rgba(15, 117, 201, 0.5);
+  border-bottom: solid 4rpx rgb(201, 191, 211);
 }
 
 /* 首行缩进 */
@@ -9,11 +9,69 @@
   text-align: left;
 }
 
-/* 四面边框 */
-.borderAll {
-  background-color: rgba(171, 209, 240, 0.1);
-  border: solid 2rpx rgba(15, 117, 201, 0.3);
-  border-radius: 20rpx;
+.recruit-item {
+  position: relative;
+  border-radius: 15rpx;
+  background-color: rgb(201, 191, 211);
+  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5);
+}
+.recruit-item-disable {
+  position: relative;
+  border-radius: 15rpx;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1),-10rpx -10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 限定本校tag */
+.wuutag {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  right: 10rpx;
+  height: 40rpx;
+  pointer-events: none;
+}
+
+.wuutag .item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10rpx 0 10rpx;
+  background-color: rgb(201, 191, 211);
+}
+
+.wuutag .left-box {
+  width: 8rpx;
+  height: 100%;
+  border-radius: 0 8rpx 0 0;
+  background-color: white;
+}
+
+.wuutag .right-box {
+  width: 8rpx;
+  height: 100%;
+  border-radius: 8rpx 0 0 0;
+  background-color: white;
+}
+
+.wuutag .main-box {
+  height: 100%;
+  background-color: white;
+}
+
+.wuutag .main-content {
+  border-radius: 0 0 8rpx 8rpx;
+  padding: 4rpx 10rpx 4rpx 10rpx;
+  background-color: rgb(201, 191, 211);
+}
+
+.finishText {
+  color: rgb(235, 235, 234);
+  position: absolute;
+  bottom: 0;
+  right: 60rpx;
+  font-style: italic;
+  pointer-events: none;
 }
 
 /* 捕捉点击容器 */
