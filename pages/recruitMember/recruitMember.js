@@ -1,4 +1,4 @@
-import {__formatTime, request_nocheck} from '../../utils/util'
+import {__formatTime, request} from '../../utils/util'
 const app = getApp()
 
 let requet_list = [
@@ -42,14 +42,18 @@ Page({
       add_ind: 0,
       subing: false,
       adding: false
-    }
-
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let recruit = this.data.recruit
+    recruit.teamID = parseInt(options.team_id) 
+    this.setData({
+      recruit: recruit 
+    })
     const now = new Date().getTime()
     this.setData({
       nowTime: now,
@@ -61,14 +65,15 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    const team_id = this.data.recruit.teamID
+    this.getRelation(team_id)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -105,6 +110,45 @@ Page({
   onShareAppMessage: function () {
 
   },
+    // 用户与队员关系接口
+    getRelation(team_id) {
+      const relation = request('/team/relation', 'POST', {
+        team_id: team_id
+      })
+      relation.then(
+        res => {
+          const data = res.data.data
+          if (data.status === -1) {
+            wx.showToast({
+              icon: 'error',
+              title: '队伍不存在',
+              duration: 2000
+            })
+          }
+        
+          if(data.status !== 3) {
+            wx.showToast({
+              icon: 'error',
+              title: '您不是队长！',
+              duration: 2000,
+            })
+            setTimeout(function() {
+              wx.navigateBack({
+                delta: 1,
+              })
+            },2000)
+          }
+        },
+        res => {
+          wx.showToast({
+            icon: 'error',
+            title: '加载失败',
+            duration: 2000
+          })
+          console.log(res)
+        }
+      )
+    },
   // 增加招募人数
   addNum() {
     let recruit = this.data.recruit
@@ -186,11 +230,12 @@ Page({
   },
   // 下拉菜单选中
   onSelectDrop(e) {
-    let ind = e.currentTarget.dataset.index
+    const ind = e.currentTarget.dataset.index
     let drop = this.data.dropMenu
     let recruit = this.data.recruit
     let type = drop.types[ind]
     let neccessary = this.data.recruit.neccessary
+    recruit.type = type.id
     if(type.id==neccessary.type)
     {
       this.showDropDown()
@@ -205,7 +250,7 @@ Page({
       recruit.num = 0
       neccessary.detail = []
     } else {
-      drop.contentH = 300
+      drop.contentH = 320
       recruit.num = 0
       neccessary.detail = ''
     }
@@ -228,7 +273,7 @@ Page({
   inputRequirement(e) {
     let index = e.currentTarget.dataset.index
     let recruit = this.data.recruit
-    recruit.neccessary.detail[index].role = e.detail.value
+    recruit.neccessary.detail[index].requirement = e.detail.value
   },
   // 快速招募信息
   bindFastDetail(e) {
@@ -302,15 +347,15 @@ Page({
     let recruit = this.data.recruit
     let requestData = {}
     let API = ''
-    if(recruit.type == 0) {
-      API = 'recruit/leader/createNormal'
+    if(recruit.type === 0) {
+      API = '/recruit/leader/createNormal'
       requestData = {
         team_id: recruit.teamID,
         is_local: recruit.isLocal,
         items: recruit.neccessary.detail
       }
     } else {
-      API = 'recruit/leader/createFast'
+      API = '/recruit/leader/createFast'
       requestData = {
         team_id: recruit.teamID,
         is_local: recruit.isLocal,
@@ -318,20 +363,42 @@ Page({
         requirement: recruit.neccessary.detail
       }
     }
+    if(recruit.isDeadline) {
+      requestData.expire_time = recruit.deadline_time / 1000
+    }
 
     console.log(recruit)
     console.log(requestData)
     //  请求
-    let res = request_nocheck(API, 'POST', requestData)
+    let res = request(API, 'POST', requestData)
     res.then(
       e => {
         console.log(e)
         wx.hideToast({
           success: (res) => {
-            console.log('发布成功')
-            console.log(res)
+            wx.showToast({
+              icon: 'success',
+              title: '发布成功',
+              duration: 2000,
+            })
+            setTimeout(function() {
+              wx.navigateBack({
+                delta: 1,
+              })
+            },2000)
           },
         })
+      },
+      e => {
+        wx.hideToast()
+        let message = ''
+         message= e.code === 40105 ? '有未结束的招募': '发布失败'
+        wx.showToast({
+          icon: 'error',
+          title: message,
+          duration: 2000
+        })
+        console.log(e)
       }
     )
   },

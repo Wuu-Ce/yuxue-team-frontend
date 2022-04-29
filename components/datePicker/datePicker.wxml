@@ -45,4 +45,4 @@
     <button class="btn" bindtap="onConfirm">确定</button>
   </view>
 </view >
-<viw class="mask {{show?'show':''}}" catchtap="hidden"></viw>
+<view class="mask {{show?'show':''}}" catchtap="onHidden"></view>

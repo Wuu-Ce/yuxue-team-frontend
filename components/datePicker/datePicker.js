@@ -10,7 +10,7 @@ Component({
       type: String,
       value: 'range'
     },
-    value:  {
+    value:  {  
       type: String,
       value: '',
       observer: {

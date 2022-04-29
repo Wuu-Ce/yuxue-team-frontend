@@ -1,4 +1,5 @@
-import {request, request_nocheck} from '../../utils/util.js'
+import { request, classification } from '../../utils/util.js'
+const CONFIG = require("../../config.js")
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
 let teamable = [false, false, false, false, false]
@@ -12,18 +13,13 @@ Page({
   data: {
     // 步骤条步骤
     step: 0,
-    stepList: [{
-      name: '队伍信息',
-      fined: false,
-    }, {
-      name: '确认',
-      fined: false,
-    }, ],
+    stepList: [{name: '队伍信息',fined: false,}, {name: '确认',fined: false,}],
     // 选中分类
     cur: 0,
     inds: [-1, -1, -1, -1],
     curClass: {},
     classTitle: '',
+    classArrayTemp: [],
     classArray: [],
     nowTag: '',
 
@@ -66,62 +62,7 @@ Page({
     showOkModal: false,
 
     // 分类 
-    class: {
-      edit: false, name: '分类',
-      nextClass:[{
-        id:0, edit: false, name: '竞赛',
-        nextClass: [
-          {id:0, edit: false, name: '工科', nextClass:[
-            {edit: true, name: '数学建模', input:'', tip: '竞赛名称' },
-            {edit: true, name: '程序设计',input:'', tip: '竞赛名称'},
-            {edit: true, name: '机器人',   input:'', tip: '竞赛名称'},
-            {edit: true, name: '工程机械',input:'', tip: '竞赛名称'},
-            {edit: true, name: '土木建筑',input:'', tip: '竞赛名称'},
-            {edit: true, name: '大数据',   input:'', tip: '竞赛名称'},
-          ]},
-          {id:1, edit: false, name: '工业&创意设计', nextClass:[
-            {edit: true, name: '外语',input:'', tip: '竞赛名称'},
-            {edit: true, name: '演讲主持&辩论',input:'', tip: '竞赛名称'},
-            {edit: true, name: '模特',   input:'', tip: '竞赛名称'},
-            {edit: true, name: '歌舞书画&摄影',input:'', tip: '竞赛名称'},
-            {edit: true, name: '体育',input:'', tip: '竞赛名称'},
-            {edit: true, name: '科技文化艺术节',   input:'', tip: '竞赛名称'},
-          ]},
-          {id:2, edit: false, name: '理科', input:'', tip: '竞赛名称'},
-          {id:3, edit: false, name: '商科', input:'', tip: '竞赛名称'},
-          {id:4, edit: false, name: '综合', input:'', tip: '竞赛名称'},
-        ],},
-     {
-        id:1, edit: true,name: '考证', input:'', tip:'请输入 证书名称'
-      }, 
-      {
-        id:2, edit: true, name: '创业', input:'', tip:'创业方向'
-      },
-      {
-        id:3, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'
-      },
-      {
-        id:4, edit: true,name: '兴趣', input:'', tip:'请输入兴趣类型'
-      },
-      {
-        id:5, edit: true,name: '学习', input:'', tip:'请输入学习内容'
-      },
-    ] 
-    },
-    // 年级
-    grades: [
-      { id:0, value:"大一"}, 
-      { id:1, value:"大二"}, 
-      { id:2, value:"大三"}, 
-      { id:3, value:"大四"}, 
-      { id:4, value:"研一"}, 
-      { id:5, value:"研二"}
-    ],
-    selectGrade: {id:[0], value:"大一"},
-    // 年级必要性
-    gradeNecessary: false,
-    // 展示年级选择组件
-    showGradePicker: false,
+    class: classification,
     // 容器高度
     scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar - 90,
   },
@@ -133,7 +74,7 @@ Page({
     this.setData({
       curClass: this.data.class
     })
-    let res = request_nocheck('team/getTypeList','POST',{})
+    let res = request('/team/getTypeList','POST',{})
     res.then(
       (res)=>{
         console.log('/team/getTypeList called')
@@ -297,20 +238,23 @@ Page({
     let inds = this.data.inds
     let curClass = this.data.curClass
     let classTitle = this.data.classTitle
-    let classArray = this.data.classArray
+    let classArray = this.data.classArrayTemp
     const index = e.currentTarget.dataset.index
     // 设置显示的分类数组
+    if(curClass===[])
+      curClass = this.data.class
     curClass = curClass.nextClass[index]
     inds[cur++] = index
-    if(cur>1)
+    if(cur<=1)
+      this.data.team.type = curClass.id
+    else
       classTitle+= ' - '
     classTitle += curClass.name
     classArray.push(curClass.name)
-
     that.setData({
       selected: index,
       classTitle: classTitle,
-      classArray: classArray
+      classArrayTemp: classArray
     })
     // 动画
     that.setData({
@@ -348,11 +292,11 @@ Page({
     if(curClass.edit) {
       curClass.input = ''
     }
-    this.data.classArray.pop()
+    this.data.classArrayTemp.pop()
     // 修改选中值
     this.setData({
       selected: inds[--cur],
-      classArray: this.data.classArray
+      classArrayTemp: this.data.classArrayTemp
     })
     inds[cur] = -1;
     // 修改所在分类
@@ -362,7 +306,6 @@ Page({
         classTitle+= ' - '
       classTitle += curClass.name
     }
-
     //  动画
     this.setData({
       animationST: 'slide-top',
@@ -384,63 +327,44 @@ Page({
   
   // 确认分类
   modalOK() {
-    let inds = this.data.inds
-    let cur = this.data.cur
     let classTitle = this.data.classTitle
-    let curClass = this.data.class.nextClass[inds[0]]
-    let curClassification = this.data.team.type
+    let curClass = this.data.curClass
+    const team = this.data.team
     let showClass = []
     // 设置展示的分类
     showClass.push(classTitle)
-    // 一级分类
-    curClassification.id = curClass.id
-    curClassification.name = curClass.name
-    // 判定年级是否必须
-    if(curClass.id<2) {
-      this.setData({
-        gradeNecessary: true,
-        showGradePicker: true
-      })
-      this.data.leader.grade = this.data.selectGrade.value
-    } else {
-      this.setData({
-        gradeNecessary: false,
-        showGradePicker: false
-      })
-    }
-    leaderable[1] = true
-    // 次级分类
-    curClassification.subcategories = []
-    for(let i=1; i<cur; i++) {
-      curClass = curClass.nextClass[inds[i]]
-      curClassification.subcategories.push(curClass.name)
-    }
-    // 名称
+
+    team.field_id = curClass.id
+    team.typeinfo = curClass.input
+
     if(curClass.edit) {
-      this.setData({
-        nowTag: curClass.input
-      })
-      curClassification.subcategories.push(curClass.input)
+      if(curClass.input === '') {
+        wx.showToast({
+          icon: 'error',
+          title: '请输入名称',
+          duration: 2000
+        })
+        return
+      }
       showClass.push(curClass.input)
     }
     this.setData({
+      nowTag: curClass.input,
       showClassModal: false,
       classSelected: true,
       showClass: showClass,
+      classArray: this.data.classArrayTemp
     })
   },
   // 提交队伍信息
   submitTeamInfo(e) {
-    const that = this
     let success = true
-    let unfinish = ''
     for(let i=0; i<teamable.length; i++) {
       if(!teamable[i]) {
         success = false
         unfinish += ((i+1).toString()+ ' ')
       }
     }
-    console.log(this.data.stepList)
     if(success) {
       let steps = this.data.stepList
       steps[this.data.step].fined = true
@@ -455,15 +379,6 @@ Page({
         icon: 'error',
         duration: 2000
       })
-      // this.setData({
-      //   showWarningModal: true,
-      //   warningText: unfinish + '还未完成'
-      // })
-      // setTimeout( function() {
-      //   that.setData({
-      //     showWarningModal: false
-      //   })
-      // }, 2000)
     }
   },
   // 输入队长名称
@@ -488,92 +403,95 @@ Page({
       leaderable[2] = true
     }
   },
-  // 展示/隐藏年级选择
-  bindGradePicker(e) {
-    this.setData({
-      showGradePicker: e.detail.value
-    })
-    if(!e.detail.value) {
-      this.data.leader.grade = ''
-    } else {
-      this.data.leader.grade = this.data.selectGrade.value
-    }
-  },
 
-  submitLeaderInfo(e) {
-    let unfinish = ''
-    const that = this
-    for(let i=0; i<leaderable.length; i++) {
-      if(!leaderable[i]) {
-        unfinish += (i+1).toString() + ' '
-      }
-    }
-    if(unfinish.length) {
-      //error
-      this.setData({
-        showWarningModal: true,
-        warningText: unfinish + '还未完成'
-      })
-      setTimeout( function() {
-        that.setData({
-          showWarningModal: false
-        })
-      }, 2000)
-    } else {
-      // success
-      this.data.stepList[1].fined = true
-      this.setData({
-        selectGrade: this.data.selectGrade,
-        leader: this.data.leader,
-        stepList: this.data.stepList
-      })
-      this.nextStep()
-    }
-  },
   // 展示完成模态框
   showOkMoldal() {
+    const that = this
     wx.showLoading({
       title: '队伍创建中',
     })
-    let res = request('team/new','POST',{
-
-    })
+    const team = this.data.team
+    const request_data = {
+      field_id: team.field_id,
+      type: team.type,
+      typeinfo: team.typeinfo,
+      goal: team.goal,
+      name: team.name,
+      description: team.description,
+      rule: team.rule
+    }
+    console.log(request_data)
+    let res = request('/team/new','POST',request_data)
     res.then(
       (res)=>{
-        console.log('then1 called')
-        wx.hideLoading({
-          success: (res) => {console.log(res)},
+        const team_id = res.data.data.team_id
+        if(res.data.code===0) {
+          this.setData({
+            team_id: team_id,
         })
-        this.data.stepList[1].fined = true
-        this.setData({
-          showOkModal: true,
-          stepList: this.data.stepList
-        })
-        console.log(res);
+        that.upLoadLogo(team_id)
+        } else {
+          wx.showToast({
+            icon: 'error',
+            title: '创建失败',
+            duration: 2000
+          })
+        }
+        
       },
-      (res)=>{
+      res=>{
+        console.log(res)
         wx.hideLoading()
         wx.showToast({
           icon: 'error',
-          title: '发布失败'
+          title: '创建失败',
+          duration: 2000
         })
-        setTimeout( function () {
-          wx.hideToast()
-        }, 2000)
-        console.log('then2 called')
-        console.log(res);
       }
     )
 
   },
-  // 跳转到首页
-  redictToHome() {
-    wx.redirectTo({
-      url: '/pages/index/index',
+
+  // 上传logo
+  upLoadLogo(team_id) { 
+    const that = this
+    const image = this.data.team.icon
+    const request_data ={
+      file: image,
+      team_id: team_id
+    }
+    var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url
+    console.log(request_data)
+    wx.uploadFile({
+      filePath: request_data.file,
+      name: 'file',
+      formData: {
+        'team_id': request_data.team_id
+      },
+      url: root_url + '/upload/avatar/team',
+      success (res) {
+        wx.hideLoading()
+        that.data.stepList[1].fined = true
+        that.setData({
+          showOkModal: true,
+          stepList: that.data.stepList
+      })
+      },
+      fail (res) {
+        wx.showToast({
+          icon: 'error',
+          title: '上传logo失败',
+          duration: 2000
+        })
+      }
     })
   },
 
-  // 上传logo
-  upLoadLogo() {},
+    // 跳转到详情页
+  redictToHome() {
+    wx.redirectTo({
+      url: '/pages/teamDetail/teamDetail?team_id=' +this.data.team_id ,
+    })
+  },
 
 })

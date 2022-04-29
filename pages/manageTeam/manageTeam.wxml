@@ -72,13 +72,13 @@
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg solid-bottom padding-tb">
+        <view class="flex justify-between text-lg solid-bottom padding-tb" bindtap="showInviteModal">
           <view class="text-black">邀请</view>
           <view class="flex justify-end basis-lg">
-            <text class="cuIcon-right padding-left-sm text-black"></text>
+            <text class="cuIcon-right padding-left-sm text-black" ></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg padding-top">
+        <view class="flex justify-between text-lg padding-top"bindtap="showMemberPop" data-type="deleteMember">
           <view class="text-black">移除</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
@@ -96,7 +96,7 @@
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg padding-top">
+        <view class="flex justify-between text-lg padding-top" bindtap="showMemberPop" data-type="changeLeader">
           <view class="text-black">转移队长</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
@@ -107,3 +107,5 @@
 
   </view>
 </scroll-view>
+
+<member-select show="{{showMemberPop}}" type="{{popType}}"></member-select>

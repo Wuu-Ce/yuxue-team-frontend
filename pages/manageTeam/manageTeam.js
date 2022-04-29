@@ -1,3 +1,9 @@
+import {
+  request,
+  getClass,
+  classification,
+  __formatTime
+} from "../../utils/util"
 const app = getApp()
 Page({
 
@@ -5,6 +11,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 组件展示
+    showMemberPop: false,
+    popType: '',
+
     scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
     team:{
       tid: '10000001',
@@ -48,7 +58,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const team_id = parseInt(options.team_id)
   },
 
   /**
@@ -98,5 +108,56 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+    // 获取队伍详情
+    getTeamDetail(team_id) {
+      const that = this
+      const classRes = []
+      let teamInfo = {}
+      const getInfo = () => {
+        if (getClass(teamInfo.field_id, classification, classRes, 0)) {
+          classRes.shift()
+          teamInfo.classification = classRes
+          teamInfo.createtime = __formatTime(teamInfo.createtime * 1000, "Y年M月D日")
+        }
+      }
+      const rest = request('/team/detail', 'POST', {
+        team_id: team_id
+      })
+      rest.then(
+        res => {
+          const data = res.data.data
+          if (res.data.code === 0) {
+            teamInfo = data
+            getInfo()
+            that.setData({
+              team: teamInfo
+            })
+            console.log(teamInfo)
+          }
+        },
+        res => {
+          wx.showToast({
+            icon: 'error',
+            title: '加载失败',
+            duration: 2000
+          })
+          console.log(res)
+        })
+    },
+    // 展示队伍面板
+    showMemberPop(e) {
+      console.log(e)
+      const type = e.currentTarget.dataset.type
+      console.log('showMemberPop called')
+      this.setData({
+        showMemberPop: true,
+        popType: type
+      })
+    },
+    hiddenMemberPop(e) {
+      this.setData({
+        showMemberPop: false
+      }) 
+    }
 })

@@ -170,9 +170,78 @@ const request = (url, method, data) => {
   })
 };
 
+/**
+ * 分类检索函数，返回true找到分类，res为找到的分类
+ */
+const getClass = (field_id, classification, res, deep) => {
+  if(res.length<=deep)
+    res.push(classification.name)
+  else
+    res[deep ] = classification.name
+  deep++
+  if(classification.edit && classification.id === field_id)
+    return true
+
+  if( typeof classification.nextClass === 'object')
+    for(let key of classification.nextClass) 
+      if(getClass(field_id, key, res, deep))
+        return true
+
+  return false
+}
+
+/**
+ * 待完善
+ * 完整分类列表暂存，后续保存到后端
+ */
+const classification = {
+  edit: false, name: '分类',
+  nextClass:[{
+    id:1, edit: false, name: '竞赛',
+    nextClass: [
+      {edit: false, name: '工科', nextClass:[
+        { id: 7,  edit: true, name: '数学建模', input:'', tip: '竞赛名称' },
+        { id: 8, edit: true, name: '程序设计',input:'', tip: '竞赛名称'},
+        { id: 9,  edit: true, name: '机器人',   input:'', tip: '竞赛名称'},
+        { id: 10,  edit: true, name: '工程机械',input:'', tip: '竞赛名称'},
+        { id: 11,  edit: true, name: '土木建筑',input:'', tip: '竞赛名称'},
+        { id: 12,  edit: true, name: '大数据',   input:'', tip: '竞赛名称'},
+      ]},
+      {edit: false, name: '工业&创意设计', nextClass:[
+        { id: 13,  edit: true, name: '外语',input:'', tip: '竞赛名称'},
+        { id: 14,  edit: true, name: '演讲主持&辩论',input:'', tip: '竞赛名称'},
+        { id: 15,  edit: true, name: '模特',   input:'', tip: '竞赛名称'},
+        { id: 16,  edit: true, name: '歌舞书画&摄影',input:'', tip: '竞赛名称'},
+        { id: 17,  edit: true, name: '体育',input:'', tip: '竞赛名称'},
+        { id: 18,  edit: true, name: '科技文化艺术节',   input:'', tip: '竞赛名称'},
+      ]},
+      { edit: false, name: '理科', input:'', tip: '竞赛名称'},
+      { edit: false, name: '商科', input:'', tip: '竞赛名称'},
+      { edit: false, name: '综合', input:'', tip: '竞赛名称'},
+    ],},
+ {
+     id: 2,  edit: true,name: '考证', input:'', tip:'请输入 证书名称'
+  }, 
+  {
+    id: 3, edit: true, name: '创业', input:'', tip:'创业方向'
+  },
+  {
+    id: 4, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'
+  },
+  {
+    id: 5, edit: true,name: '兴趣', input:'', tip:'请输入兴趣类型'
+  },
+  {
+    id: 6, edit: true,name: '学习', input:'', tip:'请输入学习内容'
+  },
+] };
+
+
 module.exports = {
   request,
   __formatTime,
   formatTime,
-  checkCookieValid
+  checkCookieValid,
+  getClass,
+  classification
 }
