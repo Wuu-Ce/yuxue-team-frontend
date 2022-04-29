@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3334974 */
-  src: url('//at.alicdn.com/t/font_3334974_qigq5gcgwy.woff2?t=1650184764158') format('woff2'),
-       url('//at.alicdn.com/t/font_3334974_qigq5gcgwy.woff?t=1650184764158') format('woff'),
-       url('//at.alicdn.com/t/font_3334974_qigq5gcgwy.ttf?t=1650184764158') format('truetype');
+  src: url('//at.alicdn.com/t/font_3334974_fvek21ua30p.woff2?t=1650254404002') format('woff2'),
+       url('//at.alicdn.com/t/font_3334974_fvek21ua30p.woff?t=1650254404002') format('woff'),
+       url('//at.alicdn.com/t/font_3334974_fvek21ua30p.ttf?t=1650254404002') format('truetype');
 }
 
 .iconfont {
@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-exit:before {
+.icon-exit::before {
   content: "\e62e";
 }
 
@@ -75,7 +75,7 @@
   position: relative;
   text-align: center;
   font-size: 32rpx;
-  padding: 30rpx 0 0 0 ;
+  padding: 30rpx 0 30rpx 0 ;
 }
 
 .members .title {
@@ -141,7 +141,8 @@
   width: 120rpx;
   color:rgb(255, 255, 255);
   background-color: rgb(253, 70, 70);
-  box-shadow: 10rpx 10rpx 10rpx 8rpx rgba(253, 70, 70, 0.315);
+  padding: 10rpx 20rpx 10rpx 20rpx;
+  box-shadow: 8rpx 8rpx 20rpx 8rpx rgba(253, 70, 70, 0.315);
 }
 
 .mask {

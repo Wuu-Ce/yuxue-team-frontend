@@ -192,6 +192,7 @@ const getClass = (field_id, classification, res, deep) => {
 }
 
 /**
+ * 待完善
  * 完整分类列表暂存，后续保存到后端
  */
 const classification = {

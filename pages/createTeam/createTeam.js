@@ -1,4 +1,5 @@
 import { request, classification } from '../../utils/util.js'
+const CONFIG = require("../../config.js")
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
 let teamable = [false, false, false, false, false]
@@ -423,15 +424,10 @@ Page({
     let res = request('/team/new','POST',request_data)
     res.then(
       (res)=>{
-        console.log(res)
-        wx.hideLoading()
-        this.data.stepList[1].fined = true
         const team_id = res.data.data.team_id
         if(res.data.code===0) {
           this.setData({
             team_id: team_id,
-            showOkModal: true,
-            stepList: this.data.stepList
         })
         that.upLoadLogo(team_id)
         } else {
@@ -455,35 +451,47 @@ Page({
     )
 
   },
-  // 跳转到详情页
-  redictToHome() {
-    wx.redirectTo({
-      url: '/pages/teamDetail/teamDetail?team_id=' +this.data.team_id ,
-    })
-  },
 
   // 上传logo
   upLoadLogo(team_id) { 
+    const that = this
     const image = this.data.team.icon
-    const requst_data ={
+    const request_data ={
       file: image,
       team_id: team_id
     }
-    const imgChange = request('/upload/avatar/team', 'POST', requst_data)
-    imgChange.then(
-      res => {
-        console.log(res)
-
+    var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url
+    console.log(request_data)
+    wx.uploadFile({
+      filePath: request_data.file,
+      name: 'file',
+      formData: {
+        'team_id': request_data.team_id
       },
-      res => {
+      url: root_url + '/upload/avatar/team',
+      success (res) {
+        wx.hideLoading()
+        that.data.stepList[1].fined = true
+        that.setData({
+          showOkModal: true,
+          stepList: that.data.stepList
+      })
+      },
+      fail (res) {
         wx.showToast({
           icon: 'error',
           title: '上传logo失败',
           duration: 2000
         })
-        console.log(res)
       }
-    )
+    })
+  },
+
+    // 跳转到详情页
+  redictToHome() {
+    wx.redirectTo({
+      url: '/pages/teamDetail/teamDetail?team_id=' +this.data.team_id ,
+    })
   },
 
 })

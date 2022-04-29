@@ -174,8 +174,8 @@
         <view class="text-black">确认填写信息无误，点击确认发布招募信息。</view>
     </view>
     <view class="text-center flex justify-between" style="height: 100rpx;">
-      <button class="padding-tb text-lg" style="width: 50%; border-right: solid 1px rgb(0, 0, 0, 0.3); border-radius: 0;" catchtap="hiddenOkModal">取消</button>
-      <button class="padding-tb text-lg" style="width: 50%; border-radius: 0;" catchtap="confirmRecruit">确认</button>
+      <button class="padding-tb text-lg bg-white" style="width: 50%; border-right: solid 1px rgb(0, 0, 0, 0.3); border-radius: 0;" catchtap="hiddenOkModal">取消</button>
+      <button class="padding-tb text-lg bg-white" style="width: 50%; border-radius: 0;" catchtap="confirmRecruit">确认</button>
     </view>
   </view>
 </view>

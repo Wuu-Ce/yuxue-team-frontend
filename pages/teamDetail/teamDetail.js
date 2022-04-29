@@ -36,7 +36,7 @@ Page({
       rule: '',
       members: [],
     },
-    recruit: {
+    recruit: [{
       count: 2,
       count_available: 2,
       is_available: 0,
@@ -63,7 +63,7 @@ Page({
       time: 1650444860,
       type: 1,
 
-    }
+    }]
 
   },
 
@@ -128,7 +128,6 @@ Page({
     })
     relation.then(
       res => {
-
         const data = res.data.data
         if (data.status === -1) {
           wx.showToast({
@@ -137,9 +136,9 @@ Page({
             duration: 2000
           })
         }
-        // that.setData({
-        //   relation: data.status
-        // })
+        that.setData({
+          relation: data.status
+        })
       },
       res => {
         wx.showToast({
@@ -157,46 +156,47 @@ Page({
     const recruit = request('/recruit/listOfTeam', 'POST', {team_id: team_id})
     recruit.then(
       res => {
-        const type0 = {
-          count: 3,
-          count_available: 3,
-          is_available: 1,
-          is_local: 0,
-          recruit_id: 10,
-          requirement: 'qwq',
-          team_id: 2,
-          time: 1650445033,
-          type: 0
-        }
-        const type1 = {
-          count: 2,
-          count_available: 1,
-          is_available: 1,
-          is_local: 1,
-          recruit_id: 10,
-          team_id: 2,
-          time: 1650445033,
-          type: 1,
-          items: [ {
-            is_available: true,
-            recruit_id: 11,
-            requirement: "手机没电知道充电",
-            role: "充电",
-            time: null,
-          },
-          {
-            is_available: false,
-            recruit_id: 12,
-            requirement: "下雨知道打伞",
-            role: "撑伞",
-            time: null,
-          }
-        ]
+        // const type0 = {
+        //   count: 3,
+        //   count_available: 3,
+        //   is_available: 1,
+        //   is_local: 0,
+        //   recruit_id: 10,
+        //   requirement: 'qwq',
+        //   team_id: 2,
+        //   time: 1650445033,
+        //   type: 0
+        // }
+        // const type1 = {
+        //   count: 2,
+        //   count_available: 1,
+        //   is_available: 1,
+        //   is_local: 1,
+        //   recruit_id: 10,
+        //   team_id: 2,
+        //   time: 1650445033,
+        //   type: 1,
+        //   items: [ {
+        //     is_available: true,
+        //     recruit_id: 11,
+        //     requirement: "手机没电知道充电",
+        //     role: "充电",
+        //     time: null,
+        //   },
+        //   {
+        //     is_available: false,
+        //     recruit_id: 12,
+        //     requirement: "下雨知道打伞",
+        //     role: "撑伞",
+        //     time: null,
+        //   }
+        // ]
           
-        }
+        // }
         that.setData({
-          recruit: type1
+          recruit: res.data.data
         })
+        console.log(res)
       },
       res => {
         wx.showToast({

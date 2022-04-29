@@ -26,10 +26,10 @@ Component({
   data: {
     animation: false,
     members: [
-      {icon: '', name: 'name'},
-      {icon: '', name: 'name'},
-      {icon: '', name: 'name'},
-      {icon: '', name: 'name'}
+      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'}
     ],
 
   },
@@ -50,10 +50,10 @@ Component({
           if (res.data.code === 0) {
             teamInfo = data.members
             teamInfo = [
-              {icon: '', name: 'name'},
-              {icon: '', name: 'name'},
-              {icon: '', name: 'name'},
-              {icon: '', name: 'name'}
+              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'},
+              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', name: 'name'}
             ]
             that.setData({
               members: teamInfo
