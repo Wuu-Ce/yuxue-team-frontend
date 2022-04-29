@@ -29,7 +29,7 @@ Page({
 
     // 返回结果-队伍信息
     team: {
-      icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
+      icon: '',
       name: '',
       field_id: 0,
       type: {},
@@ -64,7 +64,7 @@ Page({
     // 分类 
     class: classification,
     // 容器高度
-    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar - 90,
+    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar - 80,
   },
 
   /**
@@ -74,16 +74,17 @@ Page({
     this.setData({
       curClass: this.data.class
     })
-    let res = request('/team/getTypeList','POST',{})
-    res.then(
-      (res)=>{
-        console.log('/team/getTypeList called')
-        console.log(res);
-      },
-      res => {
-        console.log('/team/getTypeList error')
-        console.log(res)
-      })
+    // let res = request('/team/getTypeList','POST',{})
+    // res.then(
+    //   (res)=>{
+    //     console.log('/team/getTypeList called')
+    //     console.log(res);
+    //   },
+    //   res => {
+    //     console.log('/team/getTypeList error')
+    //     console.log(res)
+    //   })
+      teamable = [false, false, false, false, false]
   },
    // 步骤条下一步
   nextStep() {
@@ -169,7 +170,7 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         wx.getImageInfo({
-          src: res.tempFilePaths[0],
+          src: res.tempFilePaths[0].path,
           success (res) {
             console.log(res)
           }
@@ -362,7 +363,7 @@ Page({
     for(let i=0; i<teamable.length; i++) {
       if(!teamable[i]) {
         success = false
-        unfinish += ((i+1).toString()+ ' ')
+        break
       }
     }
     if(success) {
@@ -455,32 +456,43 @@ Page({
   // 上传logo
   upLoadLogo(team_id) { 
     const that = this
-    const image = this.data.team.icon
-    const request_data ={
-      file: image,
-      team_id: team_id
-    }
+    const imagePath = this.data.team.icon
     var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url
     console.log(request_data)
     wx.uploadFile({
-      filePath: request_data.file,
+      url: root_url + '/upload/avatar/team',
+      filePath: imagePath,
       name: 'file',
       formData: {
-        'team_id': request_data.team_id
+        'team_id': team_id
       },
-      url: root_url + '/upload/avatar/team',
+      header: {
+        'Content-Type': 'multipart/form-data; charset=utf-8',
+        'cookie': cookie
+      },
       success (res) {
+        console.log('success')
+        console.log(res)
         wx.hideLoading()
-        that.data.stepList[1].fined = true
-        that.setData({
-          showOkModal: true,
-          stepList: that.data.stepList
-      })
+        if(res.data.code==0) {
+          wx.showToast({
+            icon: 'error',
+            title: '更换成功',
+            duration: 2000
+        })
+        } else {
+          wx.showToast({
+            icon: 'error',
+            title: '更换失败',
+            duration: 2000
+          })
+        }
       },
       fail (res) {
+        wx.hideLoading()
         wx.showToast({
           icon: 'error',
-          title: '上传logo失败',
+          title: res.message,
           duration: 2000
         })
       }

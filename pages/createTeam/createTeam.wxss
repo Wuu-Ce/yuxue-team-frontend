@@ -1,3 +1,13 @@
+.mainContainer {
+  display: flex;
+  flex-flow: column;
+}
+.fill {
+  height: 10%;
+  flex-basis: auto;
+  flex-shrink: 10;
+  flex-grow: 1;
+}
 /* 卡片标题下方横线 */
 .card-bottomLine {
   border-bottom: solid 3rpx rgba(0, 0, 0, 0.15);

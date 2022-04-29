@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "member-select": "/components/members/members"
+    "member-select": "/components/members/members",
+    "input-modal": "/components/inputModal/inputModal"
   }
 }

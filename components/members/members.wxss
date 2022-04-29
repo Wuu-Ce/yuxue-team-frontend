@@ -1,3 +1,5 @@
+@import "/app.wxss";
+
 @font-face {
   font-family: "iconfont"; /* Project id 3334974 */
   src: url('//at.alicdn.com/t/font_3334974_fvek21ua30p.woff2?t=1650254404002') format('woff2'),
@@ -76,6 +78,7 @@
   text-align: center;
   font-size: 32rpx;
   padding: 30rpx 0 30rpx 0 ;
+  border-bottom: solid 2rpx  rgba(0, 0, 0, 0.123);
 }
 
 .members .title {
@@ -105,7 +108,7 @@
   }
 }
 
-.wuu-picker .select {
+.members .select {
   background-color: #f0ebe5;
   animation: selectday 0.5s;
   /* border: solid 2rpx rgb(219, 219, 209);
@@ -115,8 +118,10 @@
 .members .item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 20rpx 40rpx 20rpx 40rpx;
+  padding: 20rpx 60rpx 20rpx 60rpx;
+  border: solid 2rpx  rgba(0, 0, 0, 0.123);
   color: #000;
 }
 
@@ -140,9 +145,27 @@
 .members .btn {
   width: 120rpx;
   color:rgb(255, 255, 255);
-  background-color: rgb(253, 70, 70);
+  background-color: rgb(224, 121, 121);
   padding: 10rpx 20rpx 10rpx 20rpx;
-  box-shadow: 8rpx 8rpx 20rpx 8rpx rgba(253, 70, 70, 0.315);
+  border-radius: 15rpx;
+  box-shadow: 4rpx 4rpx 20rpx 4rpx rgba(211, 125, 125, 0.315);
+}
+.members .btn-confirm {
+  font-size: 32rpx;
+  width: 60%;
+  letter-spacing: 40rpx;
+  text-indent: 40rpx;
+  background-color: #f0ebe5;
+  border-radius: 100rpx;
+}
+.members .confirm {
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-top: solid 2rpx  rgba(0, 0, 0, 0.123);
 }
 
 .mask {

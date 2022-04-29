@@ -3,65 +3,111 @@
   <view class="text-black" slot="backText">返回</view>
 </cu-custom>
 
-<scroll-view scroll-y style="height: {{scrollH}}px;" >
+<scroll-view scroll-y style="height: {{scrollH}}px;">
   <view style="min-height: {{scrollH}}px;" class="flex" style="flex-direction: column;">
     <!-- 名称 -->
     <view class="padding-lr-sm padding-top-sm" style="position: relative;">
       <view class="padding radius cu-item shadow bg-white flex justify-between align-center" style="border-radius: 15rpx;">
         <view class="flex justify-start align-center">
-          <image class="cu-avatar round" src="{{team.icon}}"></image>
+          <image class="cu-avatar round" src="{{team.avatar}}"></image>
           <view class="margin-left-sm">
-            <view class="text-lg">{{team.teamName}}</view>
-            <view class="text-sm text-gray">id：1001</view>
+            <view class="text-lg">{{team.name}}</view>
+            <view class="text-sm text-gray">id：{{team.team_id}}</view>
           </view>
         </view>
-        <button class="cu-btn bg-red shadow-warp text-df basis-xs" style="margin-right: 0;">解散</button>
+        <button class="cu-btn bg-blue shadow text-df basis-sm" style="margin-right: 0;" bindtap="chooseImage">更换logo</button>
       </view>
     </view>
 
     <!-- 信息管理 -->
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">信息更改</view>
-      <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="flex justify-between text-lg solid-bottom padding-bottom">
+      <view class="padding shadow bg-white" style="border-radius: 15rpx;">
+        <view 
+          class="flex justify-between text-lg solid-bottom padding-bottom" 
+          bindtap="inputText"
+          data-type="input"
+          data-title="名称"
+          data-value="{{team.name}}"
+        >
           <view class="text-black">名称</view>
           <view class="flex justify-end basis-lg">
-            <view class="text-gray text-df">{{team.teamName}}</view>
+            <view class="text-gray text-df">{{team.name}}</view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg solid-bottom padding-tb">
+        <view class="flex justify-between text-lg solid-bottom padding-tb" bindtap="showClassModal">
           <view class="text-black">类型</view>
-          <view class="flex justify-end basis-lg">
-            <view class="text-gray text-df text-content">{{team.teamAbout}}</view>
+          <view class="flex justify-end basis-lg align-center">
+            <view class="text-gray text-df text-content text-right">
+              <scroll-view scroll-x="true" style="height: 50rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start">
+                <view class=" flex justify-start">
+                  <view wx:for="{{team.classification}}" wx:key="index">{{index>0?'-':''}}
+                    <view class="cu-tag line-blue round text-blue margin-right-xs">{{item}}</view>
+                  </view>
+                </view>
+              </scroll-view>
+            </view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg solid-bottom padding-tb">
+          <view 
+          class="flex justify-between text-lg solid-bottom padding-tb" 
+          bindtap="inputText"
+          data-type="textarea"
+          data-title="介绍"
+          data-value="{{team.description}}"
+        >
           <view class="text-black">介绍</view>
           <view class="flex justify-end basis-lg">
-            <view class="text-gray text-df text-content">{{team.teamAbout}}</view>
+            <view class="text-gray text-df text-content">{{team.description}}</view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg solid-bottom padding-tb">
+        <view 
+          class="flex justify-between text-lg solid-bottom padding-tb" 
+          bindtap="inputText"
+          data-type="textarea"
+          data-title="目标"
+          data-value="{{team.goal}}"
+        >
           <view class="text-black">目标</view>
           <view class="flex justify-end basis-lg">
             <view class="text-gray text-df text-content">{{team.goal}}</view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg padding-top">
+        <view 
+          class="flex justify-between text-lg padding-tb"
+          bindtap="inputText"
+          data-type="textarea"
+          data-title="规约"
+          data-value="{{team.rule}}"
+        >
           <view class="text-black">规约</view>
           <view class="flex justify-end basis-lg">
-            <view class="text-gray text-df text-content">{{team.teamProtocol}}</view>
+            <view class="text-gray text-df text-content">{{team.rule}}</view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-
+        <view 
+          class="flex justify-between text-lg padding-top"
+          bindtap="inputText"
+          data-type="textarea"
+          data-title="公告"
+          data-value="{{team.announce}}"
+        >
+          <view class="text-black">公告</view>
+          <view class="flex justify-end basis-lg">
+            <view class="text-gray text-df text-content">{{team.announce?team.announce: '无公告'}}</view>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
+          </view>
+        </view>
       </view>
-    </view>  
-
+      <view wx:if="{{textChanged}}" class="margin-right-sm shadow bg-white show-save text-center">
+        <button class="cu-btn text-df round margin bg-yellow" bindtap="updateTeamInfo">保存</button>
+      </view>
+    </view>
     <!-- 成员管理  -->
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">成员管理</view>
@@ -75,10 +121,10 @@
         <view class="flex justify-between text-lg solid-bottom padding-tb" bindtap="showInviteModal">
           <view class="text-black">邀请</view>
           <view class="flex justify-end basis-lg">
-            <text class="cuIcon-right padding-left-sm text-black" ></text>
+            <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg padding-top"bindtap="showMemberPop" data-type="deleteMember">
+        <view class="flex justify-between text-lg padding-top" bindtap="showMemberPop" data-type="deleteMember">
           <view class="text-black">移除</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
@@ -90,12 +136,6 @@
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">功能设置</view>
       <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="flex justify-between text-lg solid-bottom padding-bottom">
-          <view class="text-black">公告</view>
-          <view class="flex justify-end basis-lg">
-            <text class="cuIcon-right padding-left-sm text-black"></text>
-          </view>
-        </view>
         <view class="flex justify-between text-lg padding-top" bindtap="showMemberPop" data-type="changeLeader">
           <view class="text-black">转移队长</view>
           <view class="flex justify-end basis-lg">
@@ -104,8 +144,74 @@
         </view>
       </view>
     </view>
-
+    <view class="padding-lr-sm padding-top">
+      <button class="cu-btn lg margin bg-red padding" style="width: 100%;border-radius: 15rpx;">解散团队</button>
+    </view>
+    
   </view>
 </scroll-view>
 
+<!-- 成员管理组件 -->
 <member-select show="{{showMemberPop}}" type="{{popType}}"></member-select>
+
+<!-- 文本输入组件 -->
+<input-modal 
+  show="{{inputShow}}" 
+  title="{{inputTitle}}" 
+  type="{{inputType}}" 
+  value="{{inputValue}}" 
+  bind:confirm = "inputConfirm"
+></input-modal>
+
+<!-- 分类选择模态框 -->
+<view class="yuxue-modal {{showClassModal?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" catchtap="true" style="margin-top:200rpx;">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">分类</view>
+    </view>
+    <!-- 提示栏 -->
+    <view class="padding justify-start">
+      <view wx:if="{{curClass.name === class.name}}" class="animation-{{animationST}} animation-{{reverse?'reverse':''}} text-lg">请选择分类</view>
+        <view wx:else class="animation-{{cur==1? animationSR:''}} flex justify-start text-lg align-center" bindtap="toPreClass">
+          <text class="flex-sub cuIcon-back text-black" style="width: 10%;"></text>
+          <scroll-view scroll-x="true"  style="height: 50rpx; width: 90%; white-space: nowrap;" enable-flex="true" class="flex justify-start">
+            <view wx:for="{{classArrayTemp}}" wx:key="index" >
+              <text class="text-center padding-lr-xs" wx:if="{{index>0}}">-</text>
+              <view class="cu-tag line-blue round text-blue">{{item}}</view>
+            </view>
+          </scroll-view>
+        </view>
+    </view>
+    <!-- 分类选择-输入名称-->
+    <view wx:if="{{curClass.edit}}" class="padding animation-{{animationSR}} animation-{{!reverse?'':'reverse'}}" style="height: 500rpx;">
+      <view class="text-left">
+        <view class="padding-bottom text-blue">{{curClass.tip}}：</view>
+        <!-- 二十五个字 -->
+          <textarea placeholder="{{curClass.tip}}，不超过25字" 
+          class="padding solids radius" 
+          style="width: 100%;"
+          bindblur = "bindClassInput"
+          bindconfirm = "bindClassInput"
+          confirm-type="done"
+          maxlength="25"
+          fixed
+          ></textarea>
+      </view>
+    </view>
+    <!-- 分类选择 -->
+    <scroll-view wx:else scroll-y style="height: 600rpx;">
+      <view class="animation-{{reverse?'':animationSR}} ">
+        <view class="text-left animation-{{selected==index?animationSL:(selected>index? animationST:animationSB)}} animation-{{reverse?'reverse':''}}" wx:for="{{curClass.nextClass}}" wx:key="index" bindtap="getNextClass" data-index="{{index}}">
+          <label class="padding {{index==0?'solids-top':''}} solids-bottom flex justify-between align-center flex-sub">
+            <view class="flex-sub">{{item.name}}</view>
+            <text class="cuIcon-right"></text>
+          </label>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="flex solids-top text-center" wx:if="{{curClass.edit}}" style="height: 100rpx;">
+      <view class="padding-tb text-lg text-grey solids-right" style="width: 50%;" bindtap="hideModal">取消</view>
+      <view class="padding-tb text-lg mainTone-color1" style="width: 50%;" bindtap="modalOK">确认</view>
+    </view>
+  </view>
+</view>

@@ -6,24 +6,46 @@
     <view class="title" wx:if="{{type==='deleteMember'}}">移除队员</view>
     <view class="exit icon-exit iconfont" catchtap="onClose"></view>
   </view>
-  <scroll-view scroll-y class="content">
+  <scroll-view scroll-y class="content" style="max-height: 800rpx;">
     <view 
       wx:for="{{members}}" 
       wx:key="index"
       wx:for-index="index" 
       wx:for-item="member"
-      class="item {{index===select?'select':''}}"
+      class="item {{index==select&&type==='changeLeader'?'select':''}}"
       bindtap="SelectItem"
-      data-index="index"
+      data-index="{{index}}"
     >
       <view class="left">
         <image class="icon" src="{{member.avatar}}"></image>
-        <view class="name">{{member.name}}</view>
+        <view class="name">{{member.nickname}}</view>
       </view>
       <view wx:if="{{type==='deleteMember'}}" class="right">
-        <button class="btn" bindtap="DeleteMember">移除</button>
+        <button class="btn" bindtap="bindRemove" data-index="{{index}}">移除</button>
       </view>
     </view>
   </scroll-view>
+  <view wx:if="{{type==='changeLeader'}}" class="confirm">
+    <button class="btn-confirm" bindtap="bindChange">确定</button>
+  </view>
 </view>
 <view class="mask {{show?'show':''}}" catchtap="hidden"></view>
+
+<!-- 确认 -->
+<view class="yuxue-modal show" wx:if="{{showOkModal}}">
+  <view class="yuxue-dialog">
+    <view class="padding">
+      <viwe wx:if="{{type==='leaderChange'}}" class="padding text-center text-lg text-black">转移队长</viwe>
+      <viwe wx:else class="padding text-center text-lg text-black text-bold">移除队员</viwe>
+      <view class="text-center padding-top">
+        <image class="round" style="width: 40px; height: 40px;" src="{{selectMember.avatar}}"></image>
+      </view>
+      <view class="text-center">{{type=="changeLeader"?'要将队长转让给':'要移除'}}{{selectMember.nickname}}吗?</view>
+    </view>
+    <view class="solids-top text-center flex" style="height: 100rpx;">
+      <button class="padding-tb text-lg basis-df solid-right" style="width: 100%;" bindtap="hiddenOkModal">取消</button>
+      <button wx:if="{{type=='changeLeader'}}" class="padding-tb text-lg basis-df" style="width: 100%;" bindtap="changeLeader">确认</button>
+      <button wx:else class="padding-tb text-lg basis-df" style="width: 100%;" bindtap="removeMember">确认</button>
+    </view>
+  </view>
+</view>

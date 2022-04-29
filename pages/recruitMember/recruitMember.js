@@ -42,6 +42,7 @@ Page({
       add_ind: 0,
       subing: false,
       adding: false
+      
     },
   },
 

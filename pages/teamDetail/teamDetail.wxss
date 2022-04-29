@@ -1,3 +1,13 @@
+.mainContainer {
+  display: flex;
+  flex-flow: column;
+}
+.fill {
+  height: 10%;
+  flex-basis: auto;
+  flex-shrink: 10;
+  flex-grow: 1;
+}
 /* 底部线 */
 .bottomLine {
   border-bottom: solid 4rpx rgb(201, 191, 211);

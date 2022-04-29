@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
     // 展示更多菜单
     moreMenuShow: false,
     reportModalShow: false,
@@ -270,7 +271,7 @@ Page({
   // 跳转申请加入界面
   toApplyPage() {
     wx.navigateTo({
-      url: 'url',
+      url: '/pages/apply/apply?team_id' + this.data.team.team_id,
     })
   },
   // 跳转管理团队界面

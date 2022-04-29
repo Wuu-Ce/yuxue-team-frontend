@@ -7,3 +7,17 @@
   -webkit-box-orient: vertical;
   word-break: break-all;  /*强制英文单词自动换行*/
 }
+@keyframes Save{
+  from {
+    transform: translateY(-40px)scaleY(0.2);
+  }
+  to {
+    transform: translateY(0) scaleY(1);
+  }
+}
+.show-save {
+  animation: Save 0.5s;
+  transition: height 0.5s;
+  border-radius: 0 0 15rpx 15rpx;
+  margin-left: 40%;
+}
