@@ -10,6 +10,7 @@
   border-radius: 10rpx;
   box-sizing: border-box;
 }
+
 .normal-textarea {
   position: relative;
   width: 100%;

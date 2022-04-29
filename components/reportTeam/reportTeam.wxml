@@ -1,6 +1,6 @@
 <!-- 举报 modal框 -->
-<view class="yuxue-modal bg-white {{show?'show':''}}">
-  <view class="yuxue-dialog">
+<view class="yuxue-modal bg-white {{show?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: absolute;" catchtap>
     <view class="flex justify-center align-center">
       <view class="content margin-lg">
         <text class="text-black text-xl text-bold">举报该队伍</text>
@@ -9,7 +9,7 @@
     <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
       <view wx:for="{{accuseOptions}}" 
       class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" 
-      style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" 
+      style="border:1rpx solid {{item.selected?'rgba(0,129,255, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption"
       data-id="{{item.id}}"
       wx:key="index"
       >{{item.name}}</view>
@@ -26,9 +26,15 @@
     <view class="padding-lg text-black">
       <text>举报后我们会重新审核这支团队的信息，如果有更详细的证据，请发送给客服，感谢你帮助我们维持良好的网络环境</text>
     </view>
-    <view class="flex solids-top">
-      <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view>
-      <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;" bindtap="report">提交</view>
+    <view class="flex">
+      <!-- <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view> -->
+      <view class="flex justify-center align-center padding-bottom mainTone-color1 text-lg" style="flex-grow:1;" bindtap="reportTeam">提交</view>
+    </view>
+    <!-- <view class="cu-btn mainTone-bgColor flex padding-lg align-center text-white round shadow"  style="animation-delay: 0.1s;width:80%;" bindtap="reportTeam">
+      <text class="text-bold">提交</text>
+    </view> -->
+    <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+      <text class="cuIcon-close" style="font-size:40rpx;"></text>
     </view>
   </view>
 </view>

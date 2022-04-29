@@ -13,7 +13,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}]
   },
 
   /**

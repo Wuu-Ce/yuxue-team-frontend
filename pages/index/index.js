@@ -18,7 +18,6 @@ Page({
     topTabList: [{index: 0,name: '兴趣'},{index: 1,name: '竞赛'},{index: 2,name: '创意'},{index: 3,name: '创业'},{index: 4,name: '学习'},{index: 5,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
-
     accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}]
   },
 
@@ -79,21 +78,23 @@ Page({
       })
     }
   },
+  // 搜索团队
+  searchTeam(){
 
+  },
+  // 设置筛选
+  setFilter(){
+    this.setData({
+
+    })
+  },
   // 跳转到发布页
   jumpToIssue(){
     wx.navigateTo({
       url: '/pages/createTeam/createTeam',
     })
   },
-  // 跳转到搜索页
-  jumpToSearchTeam(){
-    wx.navigateTo({
-      url: '/pages/searchTeam/searchTeam',
-    })
-  },
-
-  // 模态框
+  // 显示/隐藏模态框
   showModal(modalName) {
     this.setData({
       modalName: modalName
@@ -104,6 +105,7 @@ Page({
       modalName: null
     })
   }, 
+  // 举报模态框
   onAccuseTeam(){
     this.showModal('accuse');
   },

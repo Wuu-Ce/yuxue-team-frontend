@@ -10,12 +10,12 @@
 <view wx:if="{{tabCur==0}}">
   <view  class="flex flex-direction padding-top-sm padding-bottom-xxs padding-lr-lg bg-white search" style="z-index:500;">
     <!-- 搜索 -->
-    <view class="flex align-center padding-lr-sm padding-tb-xxs round bg-gray" style="flex-grow:1;" bindtap="jumpToSearchTeam">
+    <view class="flex align-center padding-lr-sm padding-tb-xxs round bg-gray" style="flex-grow:1;" >
       <text class="cuIcon-search margin-right-sm text-grey"></text>
-      <input type="text" placeholder="搜索队伍、分类、团队介绍" disabled="true" placeholder-class="text-sm text-grey" placeholder-style="letter-spacing:2rpx;" style="width:100%;"></input>
+      <input type="text" 	confirm-type="search" placeholder="根据团队ID、名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindconfirm="searchTeam"></input>
     </view>
     <!-- 顶部tab -->
-    <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" >
+    <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" style="position: relative;">
       <!-- tabs -->
       <scroll-view scroll-x class="nav flex" enable-flex="true" scroll-with-animation scroll-left="{{scrollLeft}}" style="flex-grow:0;height:55rpx;width:95%;">
         <view class="padding-lr" style="display: inline-block;height:100%;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key="index" bindtap="topTabSelect" data-id="{{index}}">
@@ -27,9 +27,10 @@
         </view>
       </scroll-view>
       <!-- 分类 -->
-      <view class="flex padding-xs shadow" style="flex-shrink: 0;">
+      <view class="flex padding-xs shadow" style="flex-shrink: 0;" bindtap="setFilter">
         <text class="cuIcon-apps" style="font-size:32rpx;"></text>
       </view>
+      <view class=""></view>
     </view>
   </view>
   <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="350" bindchange="topTabChange">
@@ -70,50 +71,9 @@
   </view>
 </view>
 
-<!-- 举报 modal框 -->
-<view class="yuxue-modal bg-white {{modalName=='accuse'?'show':''}}">
-  <view class="yuxue-dialog">
-    <view class="flex justify-center align-center">
-      <view class="content margin-lg">
-        <text class="text-black text-xl text-bold">举报该队伍</text>
-      </view>
-    </view>
-    <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
-      <view wx:for="{{accuseOptions}}" wx:key="id" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
-    </view>
-    <view class="flex padding-lr-lg padding-tb-xs">
-      <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" fixed="true" maxlength="-1"></textarea>
-    </view>
-    <view class="padding-lg text-black">
-      <text>举报后我们会重新审核这支团队的信息，如果有更详细的证据，请发送给客服，感谢你帮助我们维持良好的网络环境</text>
-    </view>
-    <view class="flex solids-top">
-      <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view>
-      <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">提交</view>
-    </view>
-  </view>
-</view>
-
 <!-- 登录 modal框 -->
-<view class="yuxue-modal bg-white {{modalName=='signIn'?'show':''}}">
-  <view class="yuxue-dialog">
-    <view class="flex justify-center align-center">
-      <view class="content margin-lg">
-        <text class="text-black text-xl text-bold">举报该队伍</text>
-      </view>
-    </view>
-    <view class="flex padding-lr-lg justify-around margin-bottom-sm text-black">
-      <view wx:for="{{accuseOptions}}" wx:key="id" class="round padding-lr padding-tb-xs {{item.selected?'mainTone-color1':''}}" style="border:1rpx solid {{item.selected?'rgba(17,110,105, 0.9)':'rgba(0, 0, 0, 0.1)'}}" catchtap="chooseAccuseOption" data-id="{{item.id}}">{{item.name}}</view>
-    </view>
-    <view class="flex padding-lr-lg padding-tb-xs">
-      <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入举报理由" plackholder-class="text-grey" fixed="true" maxlength="-1"></textarea>
-    </view>
-    <view class="padding-lg text-black">
-      <text>举报后我们会重新审核这支团队的信息，如果有更详细的证据，请发送给客服，感谢你帮助我们维持良好的网络环境</text>
-    </view>
-    <view class="flex solids-top">
-      <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view>
-      <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">提交</view>
-    </view>
-  </view>
-</view>
+<loginRequired show="{{modalName=='login'?true:false}}"></loginRequired>
+<!-- 举报 modal框 -->
+<reportTeam show="{{modalName=='accuse'?true:false}}"></reportTeam>
+
+

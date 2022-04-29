@@ -1,1 +1,32 @@
 /* pages/apply/apply.wxss */
+
+/* 首行缩进 */
+.text-long{
+  text-indent: 50rpx;
+  text-align: left;
+}
+
+/* 四面边框 */
+.borderAll {
+  background-color: rgba(171, 209, 240, 0.1);
+  border: solid 2rpx rgba(15, 117, 201, 0.3);
+  border-radius: 20rpx;
+}
+
+.normal-input {
+  position: relative;
+  height: 68rpx;
+  -webkit-overflow-scrolling: touch;
+  /* border-radius: 10rpx; */
+  /* box-sizing: border-box; */
+}
+
+.normal-textarea {
+  position: relative;
+  width: 100%;
+  height: 180rpx;
+  -webkit-overflow-scrolling: touch;
+  /* border-radius: 10rpx; */
+  /* padding: 20rpx 20rpx 20rpx 20rpx; */
+  /* box-sizing: border-box; */
+}

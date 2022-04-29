@@ -1,4 +1,4 @@
-<!-- 举报 modal框 -->
+<!-- 登录 modal框 -->
 <view class="yuxue-modal bg-white {{show?'show':''}}" bindtap="hideModal">
   <view class="yuxue-dialog" style="position: relative;" catchtap>
     <view class="flex justify-center align-center">

@@ -52,6 +52,7 @@ Page({
     }else{
       request('/auth/sendSMSCode','POST',{'tel':phoneNumber}).then(
         (res)=>{
+          console.log(res);
           this.countDown();
           this.setData({
             getCode: true

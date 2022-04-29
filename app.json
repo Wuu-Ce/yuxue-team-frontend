@@ -26,7 +26,8 @@
   },
   "usingComponents": {
     "cu-custom": "/utils/colorui/components/cu-custom",
-    "loginRequired": "/components/loginRequired/loginRequired"
+    "loginRequired": "/components/loginRequired/loginRequired",
+    "reportTeam": "/components/reportTeam/reportTeam"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

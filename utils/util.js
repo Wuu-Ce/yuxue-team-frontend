@@ -103,7 +103,6 @@ const checkCookieValid = () =>{
       },
       data: {},
       success(res){
-        console.log(res);
         if(res.statusCode==200){
           if(res.data.code===0){  // 表示cookie有效
             resolve(true);

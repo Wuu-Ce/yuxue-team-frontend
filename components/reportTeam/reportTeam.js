@@ -33,8 +33,9 @@ Component({
         accuseOptions: accuseOptions
       })
     },
-    report() {
+    reportTeam() {
       console.log("report called")
+      this.hideModal();
     }
 
   }
