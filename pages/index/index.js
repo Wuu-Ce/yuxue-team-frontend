@@ -17,7 +17,7 @@ Page({
 
     listData: {from:'index',topTabCur:1},
     topTabCur: 0,  // 当前的顶部tab
-    topTabList: [{index: 0,name: '兴趣'},{index: 1,name: '竞赛'},{index: 2,name: '创意'},{index: 3,name: '创业'},{index: 4,name: '学习'},{index: 5,name: '考证'}],
+    topTabList: [{id: 1,name: '兴趣'},{id: 2,name: '竞赛'},{id: 3,name: '创意'},{id: 4,name: '创业'},{id: 5,name: '学习'},{id: 6,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
     accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}],
@@ -54,17 +54,37 @@ Page({
     // 请求队伍列表
     this.getTeamList();
   },
-
-  // 获取offset和limit
-
+  // 顶部tab切换
+  topTabSelect(e) {
+    this.setData({
+      teamList: [],
+      topTabCur: e.currentTarget.dataset.id,
+      scrollLeft: (e.currentTarget.dataset.id-1)*60,
+    })
+    this.getTeamList();
+  },
+  swiperChange(e){
+    var current = e.detail.current;
+    console.log(current);
+    this.setData({
+      teamList: [],
+      topTabCur: current,
+      scrollLeft: (current-1)*60,
+    })
+    this.getTeamList();
+  },
+  stopTouchMove(){
+    return false
+  },
+  // 请求团队列表
   getTeamList(){
     this.setData({
       isLoad: true
     })
     var key = this.data.key;
     var page = this.data.page;
-    var topTabCur = this.data.topTabCur;
-    var data = {key:key,type:topTabCur,limit:10,page:page};
+    var type = this.data.topTabCur+1;
+    var data = {key:key,type:type,limit:10,page:page};
     var that = this;
     request('/recruit/listTeam','POST',data).then(
       (res)=>{
@@ -83,8 +103,8 @@ Page({
   refresh(){
     var key = this.data.key;
     var page = this.data.page;
-    var topTabCur = this.data.topTabCur;
-    var data = {key:key,type:topTabCur,limit:10,page:page};
+    var type = this.data.topTabCur+1;
+    var data = {key:key,type:type,limit:10,page:page};
     var that = this;
     request('/recruit/listTeam','POST',data).then(
       (res)=>{
@@ -102,27 +122,7 @@ Page({
       }
     )
   },
-  // 顶部tab切换
-  topTabSelect(e) {
-    this.setData({
-      teamList: [],
-      topTabCur: e.currentTarget.dataset.id,
-      scrollLeft: (e.currentTarget.dataset.id-1)*60,
-    })
-    this.getTeamList();
-  },
-  topTabChange(e){
-    var current = e.detail.current;
-    this.setData({
-      teamList: [],
-      topTabCur: current,
-      scrollLeft: (current-1)*60,
-    })
-    this.getTeamList();
-  },
-  stopTouchMove(){
-    return false
-  },
+  
   // 底部tab切换
   changetab(e){
     var tabindex = e.currentTarget.dataset.tabindex;

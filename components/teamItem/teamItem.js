@@ -130,6 +130,7 @@ Component({
     },
     //  跳转到队伍详情页
     jumpToTeamDetailPage() {
+      console.log(this.data.team.team_id);
       wx.navigateTo({
         url: '/pages/teamDetail/teamDetail?team_id=' + this.data.team.team_id,
       })

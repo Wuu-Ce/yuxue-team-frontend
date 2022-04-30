@@ -33,7 +33,7 @@
       <view class=""></view>
     </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0" bindchange="topTabChange" circular="true">
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0" bindchange="swiperChange" circular="true">
     <swiper-item wx:for="{{topTabList}}" wx:key="index" catchtouchmove="stopTouchMove">
       <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh">
         <view wx:if="{{isLoad}}" class="cu-load loading"></view>
