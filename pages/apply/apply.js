@@ -11,7 +11,7 @@ Page({
     recruit_id: 0,
     team_id: 0,
     team: {},
-    reruit: {},
+    recruit: {},
     select: -1,
     selectItem: {},
 
@@ -48,7 +48,6 @@ Page({
       })
       rest.then(
         res => {
-          console.log(res)
           const data = res.data.data
           if (res.data.code === 0) {
             teamInfo = data
@@ -122,9 +121,10 @@ Page({
   apply() {
     // 检验
     const that = this
-    const recruit = this.data.reruit
+    const recruit = this.data.recruit
     const apply = this.data.apply
     const select = this.data.select
+    const selectItem = this.data.selectItem
     if(recruit.type ==1&& select == -1){
       wx.showToast({
         icon: 'error',
@@ -139,7 +139,6 @@ Page({
         title: '输入未完成',
         duration: 2000
       })
-      console.log(apply)
       return
     }
     // 请求
@@ -147,15 +146,17 @@ Page({
       title: '发送申请',
     })
     let request_data = {
-      recruit_id: that.data.recruit_id,
       reason: apply.reason,
       contact: apply.contact
     }
     if(recruit.type == 1) {
-       request_data.ritem_id = select
+       request_data.ritem_id = selectItem.ritem_id
+    } else {
+      request_data.recruit_id = that.data.recruit_id
     }
+    console.log(recruit)
     console.log(request_data)
-    const res = request('/recruit/detail', 'POST', request_data)
+    const res = request('/recruit/user/apply', 'POST', request_data)
     res.then( 
       res => {
         wx.hideLoading()
@@ -175,6 +176,11 @@ Page({
       },
       res => {
         console.log(res)
+        wx.showToast({
+          icon: 'error',
+          title: res.message,
+          duration: 2000
+        })
       }
     )
   }
