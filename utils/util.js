@@ -192,8 +192,10 @@ const getClass = (field_id, classification, res, deep) => {
     res[deep ] = classification.name
   deep++
   if(classification.edit && classification.id === field_id)
+  {
+    res.splice(deep, res.length-1)
     return true
-
+  }
   if( typeof classification.nextClass === 'object')
     for(let key of classification.nextClass) 
       if(getClass(field_id, key, res, deep))
