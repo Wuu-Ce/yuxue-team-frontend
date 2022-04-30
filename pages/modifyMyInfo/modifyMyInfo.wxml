@@ -6,7 +6,7 @@
   <view class="flex padding-lr padding-tb-sm justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">头像</view>
     <view class="flex align-center" bindtap="chooseImage">
-      <view class="cu-avatar radius margin-right-sm lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+      <view class="cu-avatar radius margin-right-sm lg" style="background-image:url({{avatar}});"></view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
   </view>
@@ -14,39 +14,43 @@
   <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
     <view class="flex align-center text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">昵称</view>
     <!-- 昵称的显示框 -->
-    <view wx:if="{{!editName}}" class="flex align-center" bindtap="editName">
-      <view class="padding-right-sm">R.T</view>
+    <view wx:if="{{!editName}}" class="flex align-center" bindtap="changeName">
+      <view class="padding-right-sm">{{nickname}}</view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
     <!-- 昵称的编辑框 -->
     <view wx:else class="flex align-center padding-left-lg" style="flex-grow: 1;">
-      <input class="margin-right-sm" style="flex-grow: 1;" type="text" placeholder="输入昵称"  />
-      <button class="cu-btn bg-green" style="width:120rpx;height: 60rpx;white-space: nowrap;" bindtap="saveName">保存</button>
+      <input class="margin-right-sm" style="flex-grow: 1;" type="text" value="{{nickname}}" placeholder="请输入昵称" 	confirm-type="done" bindinput="editName" maxlength="15" />
+      <view class="mainTone-bgColor padding-lr-sm padding-tb-xs" style="white-space: nowrap;border-radius:10rpx;" bindtap="saveName">保存</view>
     </view>
   </view>
   <!-- 个人介绍 -->
   <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">个人介绍</view>
-    <view class="flex align-center" bindtap="editIntroduction" data-modalname="editIntroduction">
-      <view class="margin-right-sm line-ellipsis-2" style="">
-        <text style="text-align: center;">所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。所有悔暗都留给过往，从遇见你开始，凛冬散净，星河长明。</text>
+    <view class="flex align-center" bindtap="changeDescription" data-modalname="editDescription">
+      <view class="margin-right-sm line-ellipsis-2">
+        <text style="text-align: center;">{{description?description:'未填'}}</text>
       </view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
     <!-- 个人介绍编辑框 -->
-    <view class="yuxue-modal bg-white {{modalName=='editIntroduction'?'show':''}}">
-      <view class="yuxue-dialog">
+    <view class="yuxue-modal bg-white {{modalName=='editDescription'?'show':''}}" bindtap="hideModal">
+      <view class="yuxue-dialog" style="position: relative;" catchtap>
         <view class="flex justify-center align-center">
           <view class="content margin-lg">
-            <text class="text-black text-xl ">个人介绍</text>
+            <text class="text-black text-xl text-bold">个人介绍</text>
           </view>
         </view>
         <view class="flex padding-lr-lg padding-bottom-sm">
-          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入个人介绍" plackholder-class="text-grey" auto-focus="true" fixed="true" maxlength="-1"></textarea>
+          <textarea class="flex padding text-black radius bg-gray" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" value="{{description?description:''}}" placeholder="请输入个人介绍" plackholder-class="text-grey" fixed="true" maxlength="40" bindinput="editDescription"></textarea>
         </view>
         <view class="flex ">
-          <view class="flex justify-center align-center padding-tb text-gray text-lg " style="flex-grow:1;" bindtap="hideModal">取消</view>
-          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">保存</view>
+          <!-- <view class="flex justify-center align-center padding-tb text-gray text-lg " style="flex-grow:1;" bindtap="hideModal">取消</view> -->
+          <view class="flex justify-center align-center padding-bottom mainTone-color1 text-lg" style="flex-grow:1;" bindtap="saveDescription">保存</view>
+        </view>
+        <!-- 右上角的关闭按钮 -->
+        <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+          <text class="cuIcon-close" style="font-size:40rpx;"></text>
         </view>
       </view>
     </view>
@@ -56,7 +60,7 @@
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">学校</view>
     <view class="flex align-center" bindtap="jumpToSearchCollege">
       <view class="margin-right-sm">
-        <text user-select="true">长安大学</text>
+        <text user-select="true">{{school?school.school_name:'未填'}}</text>
       </view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
@@ -64,26 +68,26 @@
   <!-- 专业 -->
   <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">专业</view>
-    <view class="flex align-center" bindtap="editMajor" data-modalname="editMajor">
+    <view class="flex align-center" bindtap="changeMajor" data-modalname="editMajor">
       <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
-        <text user-select="true">软件工程</text>
+        <text user-select="true">{{major?major:'未填'}}</text>
       </view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
     <!-- 专业编辑框 -->
-    <view class="yuxue-modal bg-white {{modalName=='editMajor'?'show':''}}">
-      <view class="yuxue-dialog">
+    <view class="yuxue-modal bg-white {{modalName=='editMajor'?'show':''}}" bindtap="hideModal">
+      <view class="yuxue-dialog" catchtap>
         <view class="flex justify-center align-center">
           <view class="content margin-lg">
             <text class="text-black text-xl">专业</text>
           </view>
         </view>
         <view class="flex padding-lr-lg padding-bottom-sm">
-          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请输入专业名称" plackholder-class="text-grey" auto-focus="true" fixed="true" maxlength="-1"></textarea>
+          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" value="{{major?major:''}}" placeholder="请输入专业" plackholder-class="text-grey" fixed="true" maxlength="25" bindinput="editMajor"></textarea>
         </view>
         <view class="flex ">
           <view class="flex justify-center align-center padding-tb text-gray text-lg " style="flex-grow:1;" bindtap="hideModal">取消</view>
-          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">保存</view>
+          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;" bindtap="savaMajor">保存</view>
         </view>
       </view>
     </view>
@@ -91,26 +95,26 @@
   <!-- 擅长领域 -->
   <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">擅长领域</view>
-    <view class="flex align-center" bindtap="editSkilled" data-modalname="editSkilled">
+    <view class="flex align-center" bindtap="changeSkill" data-modalname="editSkill">
       <view class="margin-right-sm line-ellipsis-2">
-        <text user-select="true">小程序开发，网络爬虫</text>
+        <text user-select="true">{{skill?skill:'未填'}}</text>
       </view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
     <!-- 擅长领域编辑框 -->
-    <view class="yuxue-modal bg-white {{modalName=='editSkilled'?'show':''}}">
-      <view class="yuxue-dialog">
+    <view class="yuxue-modal bg-white {{modalName=='editSkill'?'show':''}}" bindtap="hideModal">
+      <view class="yuxue-dialog" catchtap>
         <view class="flex justify-center align-center">
           <view class="content margin-lg">
             <text class="text-black text-xl">擅长领域</text>
           </view>
         </view>
         <view class="flex padding-lr-lg padding-bottom-sm">
-          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" placeholder="请描述你所擅长的领域，方便其他人在组队的时候找到你" plackholder-class="text-grey" fixed="true" maxlength="-1"></textarea>
+          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" value="{{skill?skill:''}}" placeholder="请描述你所擅长的领域，方便其他人在组队的时候找到你" plackholder-class="text-grey" fixed="true" maxlength="40" bindinput="editSkill"></textarea>
         </view>
         <view class="flex ">
           <view class="flex justify-center align-center padding-tb text-gray text-lg " style="flex-grow:1;" bindtap="hideModal">取消</view>
-          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;">保存</view>
+          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;" bindtap="saveSkill">保存</view>
         </view>
       </view>
     </view>

@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "teamList": "/components/teamList/teamList"
+    "teamList": "/components/teamList/teamList",
+    "teamItem": "/components/teamItem/teamItem"
   }
 }

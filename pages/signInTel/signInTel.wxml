@@ -1,7 +1,7 @@
 <cu-custom bgColor="bg-white" isBack="true">
   <view slot="content" class="text-black">手机号登录</view>
 </cu-custom>
-
+<!-- <view style="width:100vw;height:500rpx;background-image: url(https://qiniu.freespace.yuxue0824.com/teamBackground.png);background-repeat:no-repeat;background-size:contain;"></view> -->
 <!-- <view class="container flex flex-direction justify-center align-center"> -->
   <form class="form-item flex flex-direction justify-center align-center radius" style="width:100vw;height:80vh;" catchsubmit="formSubmit" catchreset="formReset">
     <view class="flex flex-direction padding-lr padding-tb-sm bg-white radius" style="width:100vw;">

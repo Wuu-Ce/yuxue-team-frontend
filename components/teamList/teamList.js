@@ -21,8 +21,8 @@ Component({
   lifetimes: {
     attached: function() {
       // 在组件实例进入页面节点树时执行
-      var from = this.properties.listData.from;
-      if(from=="index"){  // 表示在“首页”中请求队伍列表
+      var listData = this.properties.listData;
+      if(listData.from=="index"){  // 表示在“首页”中请求队伍列表
         // 以某种条件，向后端请求列表
         var topTabCur = this.properties.listData.topTabCur;
         var res = request('team/list','POST',{type:2})
@@ -120,8 +120,10 @@ Component({
           ]
         })
       }
-      else if(from=="myTeam"){  // 表示在“我的队伍”中请求队伍列表
+      else if(listData.from=="myTeam"){  // 表示在“我的队伍”中请求队伍列表
         // 以某种条件，向后端请求列表
+        console.log(listData);
+        // request()
         this.setData({
           teamList: [
             {

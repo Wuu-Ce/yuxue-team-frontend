@@ -33,10 +33,14 @@
       <view class=""></view>
     </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="350" bindchange="topTabChange">
-    <swiper-item wx:for="{{topTabList}}" wx:key="index">
-      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true">
-        <teamList listData="{{listData}}" bindaccuseteam="onAccuseTeam" ></teamList> <!-- 队伍列表 -->
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0" bindchange="topTabChange" circular="true">
+    <swiper-item wx:for="{{topTabList}}" wx:key="index" catchtouchmove="stopTouchMove">
+      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh">
+        <view wx:if="{{isLoad}}" class="cu-load loading"></view>
+        <!-- 队伍列表 -->
+        <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
+          <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam"></teamItem>
+        </view> 
       </scroll-view>
     </swiper-item>
   </swiper>
