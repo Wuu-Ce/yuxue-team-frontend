@@ -2,7 +2,7 @@ const request = require("./utils/util.js").request
 
 App({
   onLaunch() {
-    request('/test/login','POST',{'user_id':6}).then(
+    request('/test/login','POST',{'user_id':2}).then(
       (res)=>{
         wx.setStorageSync('cookie', res.cookies[0]);
         console.log(res)

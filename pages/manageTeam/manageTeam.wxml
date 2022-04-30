@@ -190,6 +190,7 @@
           <textarea placeholder="{{curClass.tip}}，不超过25字" 
           class="padding solids radius" 
           style="width: 100%;"
+          bindinput="bindClassInput"
           bindblur = "bindClassInput"
           bindconfirm = "bindClassInput"
           confirm-type="done"

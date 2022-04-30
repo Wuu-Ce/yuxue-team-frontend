@@ -10,11 +10,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 上个页面数据
+    prevPage: {},    
+    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
     // 组件展示
     showMemberPop: false,
     popType: '',
-
-    scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
+    // 队伍信息副本
+    teamCopy: {},
     team: {
       team_id: '10000001',
       name: '予学团队',
@@ -31,10 +34,6 @@ Page({
     inputType: 'input',
     inputValue: '',
     textChanged: false,
-    // 上个页面数据
-    prevPage: {},
-
-
     // 动画类型
     animation: '',
     animationST: '',
@@ -57,7 +56,6 @@ Page({
     // 展示分类
     classSelected: false,
     showClass: [],
-
   },
 
   /**
@@ -72,6 +70,7 @@ Page({
       this.setData({
         prevPage: prevPage,
         team: team,
+        teamCopy: team,
         curClass: this.data.class
       })
   },
@@ -126,12 +125,12 @@ Page({
   // 更新队伍信息
   updateTeamInfo() {
     const that = this
-    const prevPage = this.data.prevPage
+    const prevPage = that.data.prevPage
     wx.showToast({
       icon: 'loading',
       title: '保存中'
     })
-    const team = this.data.team
+    const team = that.data.team
     const request_data = {
       team_id: team.team_id,
       type: team.type,
@@ -167,6 +166,9 @@ Page({
           icon: 'error',
           title: '保存失败',
           duration: 1000
+        })
+        that.setData({
+          team: teamCopy
         })
       }
     )
