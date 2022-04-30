@@ -87,7 +87,6 @@ const __formatTime = (time, format) => {
 
 // 对团队列表中的内容进行处理
 const processTeamList = (teamList) => {
-  console.log(teamList);
   // var newList = [];
   for(let i=0;i<teamList.length;i++){
     var team = teamList[i];
@@ -210,8 +209,11 @@ const getClass = (field_id, classification, res, deep) => {
  */
 const classification = {
   edit: false, name: '分类',
-  nextClass:[{
-    id:1, edit: false, name: '竞赛',
+  nextClass:[
+    {
+      id: 1, edit: true,name: '兴趣', input:'', tip:'请输入兴趣类型'
+    },{
+    id:2, edit: false, name: '竞赛',
     nextClass: [
       {edit: false, name: '工科', nextClass:[
         { id: 7,  edit: true, name: '数学建模', input:'', tip: '竞赛名称' },
@@ -233,21 +235,17 @@ const classification = {
       { edit: false, name: '商科', input:'', tip: '竞赛名称'},
       { edit: false, name: '综合', input:'', tip: '竞赛名称'},
     ],},
- {
-     id: 2,  edit: true,name: '考证', input:'', tip:'请输入 证书名称'
-  }, 
-  {
-    id: 3, edit: true, name: '创业', input:'', tip:'创业方向'
-  },
-  {
-    id: 4, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'
-  },
-  {
-    id: 5, edit: true,name: '兴趣', input:'', tip:'请输入兴趣类型'
-  },
-  {
-    id: 6, edit: true,name: '学习', input:'', tip:'请输入学习内容'
-  },
+    {
+      id: 3, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'
+    },
+    {
+      id: 4, edit: true, name: '创业', input:'', tip:'创业方向'
+    },
+    {
+      id: 5, edit: true,name: '学习', input:'', tip:'请输入学习内容'
+    },{
+      id: 6,  edit: true,name: '考证', input:'', tip:'请输入 证书名称'
+   }, 
 ] };
 
 
