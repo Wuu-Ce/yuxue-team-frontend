@@ -42,7 +42,7 @@
         <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white flex justfy-start align-center" style="border-radius: 15rpx;">
           <view class="text-lg text-black" style="width: 25%;">队伍logo</view>
           <view  class="flex jutify-between" style="width: 50%;">
-            <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.icon}}" alt="logo"></image>
+            <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.avatar}}" alt="logo"></image>
           </view>
           <button class="cu-btn text-sm shadow-wrap mainTone-bgColor" style="width: 25%;" bindtap="chooseImage">选择图片</button>
         </view>
@@ -136,7 +136,7 @@
         <view class="padding-top ">
           <view class="flex justify-start text-black align-center">
             <view style="min-width: 160rpx;">队伍标志：</view>
-            <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.icon}}"></image>
+            <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.avatar}}"></image>
           </view>
           <view class="flex justify-start text-black padding-top">
             <view style="min-width: 160rpx;">队伍名称：</view>

@@ -323,13 +323,20 @@ Page({
       // 选择图片的来源
       sourceType: ['album', 'camera'],
       success: function (res) {
-        console.log(res)
         const team = that.data.team
-        team.avatar = res.tempFilePaths[0]
-        that.setData({
-          team: team,
+        console.log(quality)
+        wx.compressImage({
+          src: res.tempFiles[0].path, // 图片路径
+          quality: 1, // 压缩质量
+          success: (res1) => {
+            console.log(res1)
+            team.avatar = res1.tempFilePath
+            that.upLoadLogo()
+          },
+          fail: (res1) => {
+            console.log(res1)
+          }
         })
-        that.upLoadLogo()
       },
       fail: function (res) {
         console.log('fail', res)
@@ -338,28 +345,37 @@ Page({
   },
   // 上传logo
   upLoadLogo() {
+    const prevPage = this.data.prevPage
+    const that = this
+    const team = that.data.team
     const cookie = wx.getStorageSync('cookie')
-    const team_id = this.data.team.team_id
-    const imagePath = this.data.team.avatar
     var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url
     wx.uploadFile({
       url: root_url + '/upload/avatar/team',
-      filePath: imagePath,
+      filePath: team.avatar,
       name: 'file',
       formData: {
-        'team_id': team_id
+        'team_id': team.team_id
       },
       header: {
         'Content-Type': 'multipart/form-data; charset=utf-8',
         'cookie': cookie
       },
       success(res) {
-        console.log()
-        console.log(res)
         wx.hideLoading()
-        if (res.data.code == 0) {
+        const data = JSON.parse(res.data)
+        console.log(data)
+
+        if (data.code == 0) {
+          team.avatar = data.data.avatar
+          that.setData({
+            team: team
+          })
+          prevPage.setData({
+            team: team
+          })
           wx.showToast({
-            icon: 'error',
+            icon: 'success',
             title: '更换成功',
             duration: 2000
           })

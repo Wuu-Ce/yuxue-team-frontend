@@ -29,7 +29,7 @@ Page({
 
     // 返回结果-队伍信息
     team: {
-      icon: '',
+      avatar: '',
       name: '',
       field_id: 0,
       type: {},
@@ -169,30 +169,23 @@ Page({
       // 选择图片的来源
       sourceType: ['album', 'camera'],
       success: function (res) {
-        wx.getImageInfo({
-          src: res.tempFilePaths[0].path,
-          success (res) {
-            console.log(res)
-          }
-        })
-        wx.openDocument({
-          filePath: 'res.tempFilePaths[0]',
-          success:(res)=>{
-            console.log(res)
-          },
-          fail: (res) => {
-            console.log("open fail", res)
-          }
-        })
-        console.log(res)
         const team = that.data.team
-        team.icon = res.tempFilePaths[0]
-        that.setData({
-          team: team,
+        wx.compressImage({
+          src: res.tempFiles[0].path, // 图片路径
+          quality: 1, // 压缩质量
+          success: (res1) => {
+            team.avatar = res1.tempFilePath
+            that.setData({
+              team: team
+            })
+          },
+          fail: (res1) => {
+            console.log(res1)
+          }
         })
       },
       fail: function (res) {
-        console.log('fail', res)
+        console.log(res)
       },
     })
   },
@@ -456,9 +449,9 @@ Page({
   // 上传logo
   upLoadLogo(team_id) { 
     const that = this
-    const imagePath = this.data.team.icon
+    const cookie = wx.getStorageSync('cookie')
+    const imagePath = this.data.team.avatar
     var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url
-    console.log(request_data)
     wx.uploadFile({
       url: root_url + '/upload/avatar/team',
       filePath: imagePath,
@@ -467,23 +460,20 @@ Page({
         'team_id': team_id
       },
       header: {
-        'Content-Type': 'multipart/form-data; charset=utf-8',
+        'Content-Type': 'application/json; charset=utf-8',
         'cookie': cookie
       },
       success (res) {
-        console.log('success')
-        console.log(res)
         wx.hideLoading()
-        if(res.data.code==0) {
-          wx.showToast({
-            icon: 'error',
-            title: '更换成功',
-            duration: 2000
-        })
+        const data = JSON.parse(res.data)
+        if(data.code==0) {
+          that.setData({
+            showOkModal: true
+          })
         } else {
           wx.showToast({
             icon: 'error',
-            title: '更换失败',
+            title: '创建失败',
             duration: 2000
           })
         }

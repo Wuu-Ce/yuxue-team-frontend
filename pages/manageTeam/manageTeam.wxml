@@ -136,7 +136,7 @@
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">功能设置</view>
       <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="flex justify-between text-lg padding-top" bindtap="showMemberPop" data-type="changeLeader">
+        <view class="flex justify-between text-lg" bindtap="showMemberPop" data-type="changeLeader">
           <view class="text-black">转移队长</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
