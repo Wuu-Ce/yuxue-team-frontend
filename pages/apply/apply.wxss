@@ -1,5 +1,13 @@
-/* pages/apply/apply.wxss */
-
+.mainContainer {
+  display: flex;
+  flex-flow: column;
+}
+.fill {
+  height: 10%;
+  flex-basis: auto;
+  flex-shrink: 10;
+  flex-grow: 1;
+}
 /* 首行缩进 */
 .text-long{
   text-indent: 50rpx;
@@ -37,13 +45,20 @@
   background-color: rgb(201, 191, 211);
   box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5);
 }
+.recruit-item-select {
+  background-color: rgb(192, 191, 211) !important;
+  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(192, 191, 211, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(192, 191, 211, 0.5);
+}
 .recruit-item-disable {
   position: relative;
   border-radius: 15rpx;
   background-color: rgb(255, 255, 255);
   box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1),-10rpx -10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1);
 }
-
+/* 底部线 */
+.bottomLine {
+  border-bottom: solid 4rpx rgb(201, 191, 211);
+}
 /* 限定本校tag */
 .wuutag {
   position: absolute;
@@ -85,4 +100,28 @@
   border-radius: 0 0 8rpx 8rpx;
   padding: 4rpx 10rpx 4rpx 10rpx;
   background-color: rgb(201, 191, 211);
+}
+.finishText {
+  color: rgb(235, 235, 234);
+  position: absolute;
+  bottom: 0;
+  right: 60rpx;
+  font-style: italic;
+  pointer-events: none;
+}
+
+.colorBar {
+  position: relative;
+}
+
+.colorBar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 15rpx;
+  height: 100%;
+  border-radius:  0 15rpx 15rpx 0 ;
+  pointer-events: none;
+  background-color: rgb(135, 129, 141);
 }

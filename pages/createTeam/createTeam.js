@@ -330,7 +330,6 @@ Page({
 
     team.field_id = curClass.id
     team.typeinfo = curClass.input
-
     if(curClass.edit) {
       if(curClass.input === '') {
         wx.showToast({
@@ -373,28 +372,6 @@ Page({
         icon: 'error',
         duration: 2000
       })
-    }
-  },
-  // 输入队长名称
-  bindLeaderName(e) {
-    this.data.leader.leaderName = e.detail.value
-    if(e.detail.value.length) {
-      leaderable[0] = true
-    }
-  },
-  // 选择年级
-  gradeChange(e) {
-    const ind = e.detail.value[0]
-    this.data.leader.grade = this.data.grades[ind].value
-    this.data.selectGrade.value = this.data.grades[ind].value
-    this.data.selectGrade.id[0] = this.data.grades[ind].id
-    leaderable[1] = true
-  },
-  // 输入队长介绍
-  bindLeaderInfo(e) {
-    this.data.leader.leaderInfo = e.detail.value
-    if(e.detail.value.length) {
-      leaderable[2] = true
     }
   },
 

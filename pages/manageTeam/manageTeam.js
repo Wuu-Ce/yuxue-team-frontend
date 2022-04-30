@@ -324,7 +324,6 @@ Page({
       sourceType: ['album', 'camera'],
       success: function (res) {
         const team = that.data.team
-
         wx.compressImage({
           src: res.tempFiles[0].path, // 图片路径
           quality: 1, // 压缩质量

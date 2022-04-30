@@ -2,80 +2,82 @@
   <view class="text-black" slot="backText">申请加入</view>
 </cu-custom>
 
-<view class="flex justify-center align-center bg-white margin-sm padding-lg" style="min-height:300rpx;flex-grow:1;border-radius: 15rpx;">
-  <view class="flex flex-direction align-center">
-    <view class="cu-avatar round margin-bottom-xs" style="background-image:url(https://team.test.yuxue0824.com/static/avatar/team/8.jpg);width:100rpx;height:100rpx;font-size:1.5em;"></view>
-    <view class="margin-bottom-xs"><text class="text-black text-bold" style="font-size: 32rpx;">iParking团队</text></view>
-    <view class="" style="text-align: center;">本产品基于高精度室内外无缝定位、智能云锁、地图街景，位置指纹匹配技术等多种信息技术，基于手机APP为用户提供停车诱导车位服务。</view>
-  </view>
-</view>
-<!-- 招募需求-->
-<view class="padding-lr-sm padding-top-sm">
-  <view class="radius cu-item shadow bg-white text-black" style="border-radius: 15rpx;">
-    <view class="padding-lr-lg  padding-tb-sm bottomLine">
-      <view class="text-lg text-bold">招募</view>
+<scroll-view scroll-y style="height: {{scrollH}}px;">
+  <view style="min-height: {{scrollH}}px;" class="mainContainer">
+    <view class="flex justify-center align-center bg-white margin-sm padding-lg" style="min-height:300rpx;flex-grow:1;border-radius: 15rpx;">
+      <view class="flex flex-direction align-center">
+        <view class="cu-avatar round margin-bottom-xs" style="background-image:url({{team.avatar}});width:100rpx;height:100rpx;font-size:1.5em;"></view>
+        <view class="margin-bottom-xs"><text class="text-black text-bold" style="font-size: 32rpx;">{{team.name}}</text></view>
+        <view class="" style="text-align: center;">{{team.description}}</view>
+      </view>
     </view>
-    <view wx:if="{{recruit.length === 0}}" class="padding-lg">
-      <view class="text-lg text-center">无进行中的招募</view>
-    </view>
-    <view wx:else style="min-height: 200rpx; position: relative;">
-      <!-- 限定本校tag -->
-      <view wx:if="{{recruit.is_local}}" class="text-sm wuutag">
-        <view class="item">
-          <view class="left-box"></view>
-          <view class="main-box">
-            <!-- 限定本校tag -->
-            <view class="main-content">限制本校</view>
+    <!-- 招募需求-->
+    <view class="padding-lr-sm padding-top-sm">
+      <view class="radius cu-item shadow bg-white text-black" style="border-radius: 15rpx;">
+        <view class="padding-lr-lg  padding-tb-sm bottomLine">
+          <view class="text-lg text-bold">招募</view>
+        </view>
+        <view style="min-height: 200rpx; position: relative;">
+          <!-- 限定本校tag -->
+          <view wx:if="{{recruit.is_local}}" class="text-sm wuutag">
+            <view class="item">
+              <view class="left-box"></view>
+              <view class="main-box">
+                <view class="main-content">限制本校</view>
+              </view>
+              <view class="right-box"></view>
+            </view>
           </view>
-          <view class="right-box"></view>
+          <view wx:if="{{recruit.type==0}}" class="padding-lg">
+            <view class="flex justify-between align-end padding-top">
+              <view class="flex justify-start">
+                <view style="min-width: 150rpx;">目前需求：</view>
+                <view>{{recruit.count_available}}人</view>
+              </view>
+              <view class="flex justify-start">
+                <view style="min-width: 150rpx;">招募总人数：</view>
+                <view>{{recruit.count}}人</view>
+              </view>
+            </view>
+            <view class="flex justify-start padding-top">
+              <view style="min-width: 150rpx;">说明：</view>
+              <view>{{recruit.requirement}}</view>
+            </view>
+          </view>
+          <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{recruit.items.length>4?'350': recruit.items.length*120 + 30}}px;">
+            <view class="padding-top-xs">
+              <view wx:for="{{recruit.items}}" wx:for-item="detail" wx:key="index" class=" padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} {{select==index?'colorBar recruit-item-select':''}} margin-top margin-lr {{recruit.items.length-1==index?'margin-bottom':''}}" bindtap="SelectIteam" data-index="{{index}}">
+                <view>方向：{{detail.role}}</view>
+                <view class="padding-top-sm">要求：{{detail.requirement}}</view>
+                <view wx:if="{{!detail.is_available}}" class="text-sl finishText text-bold">已完成</view>
+              </view>
+            </view>
+          </scroll-view>
+          <view wx:if="{{recruit.items.length>4}}" class="text-center cuIcon-unfold padding-top-xs"></view>
         </view>
       </view>
-      <view wx:if="{{recruit.type==0}}" class="padding-lg">
-        <view class="flex justify-between align-end padding-top">
-          <view class="flex justify-start">
-            <view style="min-width: 150rpx;">目前需求：</view>
-            <view>{{recruit.count_available}}人</view>
-          </view>
-          <view class="flex justify-start">
-            <view style="min-width: 150rpx;">招募总人数：</view>
-            <view>{{recruit.count}}人</view>
-          </view>
-        </view>
-        <view class="flex justify-start padding-top">
-          <view style="min-width: 150rpx;">说明：</view>
-          <view>{{recruit.requirement}}</view>
-        </view>
+    </view>
+
+    <!-- 申请理由 -->
+    <view class="margin-sm padding-tb padding-lr bg-white shadow" style="border-radius: 15rpx;">
+      <view class="text-lg text-black text-bold">申请理由</view>
+      <textarea name="reason" value="{{apply.reason}}" placeholder="请输入申请理由" class="normal-textarea margin-top-sm" bindinput="enterReason" bindblur="enterReason" bindconfirm="enterReason"></textarea>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class=" margin-sm padding-tb-sm padding-lr bg-white shadow" style="border-radius: 15rpx;">
+      <view class="flex justify-start align-center">
+        <view class="text-lg text-black text-bold" style="width: 25%;">联系方式</view>
+        <input name="teamName" placeholder="请输入联系方式，以便于队长联系你" value="{{apply.contact}}" class="normal-input padding-lr-sm" style="width: 75%;" maxlength="20" bindinput="enterContact" bindblur="enterContact" bindconfirm="enterContact"></input>
       </view>
-      <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{recruit.items.length>4?'350': recruit.items.length*120 + 30}}px;">
-        <view class="padding-top-xs">
-          <view wx:for="{{recruit.items}}" wx:for-item="detail" wx:key="index" class=" padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} margin-top margin-lr {{recruit.items.length-1==index?'margin-bottom':''}}">
-            <view>方向：{{detail.role}}</view>
-            <view class="padding-top-sm">要求：{{detail.requirement}}</view>
-            
-            <view wx:if="{{!detail.is_available}}" class="text-sl finishText text-bold">已完成</view>
-          </view>
-        </view>
-      </scroll-view>
-      <view wx:if="{{recruit.items.length>4}}" class="text-center cuIcon-unfold padding-top-xs"></view>
+    </view>
+    <!-- 弹性盒子 -->
+    <view class="fill"></view>
+    <!-- 申请 -->
+    <view class="padding-top">
+      <view class="bg-white padding-lg flex jsutify-center">
+        <button class="mainTone-bgColor round" style="width:80%;" bindtap="apply">申请加入</button>
+      </view>
     </view>
   </view>
-</view>
-
-<!-- 申请理由 -->
-<view class="margin-sm padding-tb padding-lr bg-white shadow" style="border-radius: 15rpx;">
-  <view class="text-lg text-black text-bold">申请理由</view>
-  <textarea name="teamAbout" value="{{team.teamAbout}}" placeholder="请输入申请理由" class="normal-textarea margin-top-sm" bindblur="enterReason" bindconfirm="enterReason"></textarea>
-</view>
-
-<!-- 联系方式 -->
-<view class=" margin-sm padding-tb-sm padding-lr bg-white shadow" style="border-radius: 15rpx;">
-  <view class="flex justify-start align-center">
-    <view class="text-lg text-black text-bold" style="width: 25%;">联系方式</view>
-    <input name="teamName" placeholder="请输入联系方式，以便于队长联系你" value="{{team.name}}" class="normal-input padding-lr-sm" style="width: 75%;" bindblur="enterContact" bindconfirm="enterContact"></input>
-  </view>
-</view>
-
-<!-- 申请 -->
-<view class="margin-tb-lg">
-  <button class="mainTone-bgColor round" type="primary" form-type="submit" style="width:80%;">申请加入</button>
-</view>
+</scroll-view>

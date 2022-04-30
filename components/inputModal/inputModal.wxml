@@ -11,6 +11,7 @@
           value="{{value}}"
           class="padding-lr-sm " 
           style="width: 80%; margin-left:10%;"
+          bindinput="onBlur"
           bindblur = "onBlur"
           bindconfirm = "onConfirm"
         />
@@ -23,6 +24,7 @@
           class="margin-top" 
           style="width: 80%; margin-left:10%;"
           maxlength="200"
+          bindinput="onBlur"
           bindblur = "onBlur"
           bindconfirm = "onConfirm"
         ></textarea>

@@ -72,7 +72,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
     const team_id = parseInt(options.team_id)
     // 队伍详情
     this.getTeamDetail(team_id)
@@ -157,43 +156,7 @@ Page({
     const recruit = request('/recruit/listOfTeam', 'POST', {team_id: team_id})
     recruit.then(
       res => {
-        // const type0 = {
-        //   count: 3,
-        //   count_available: 3,
-        //   is_available: 1,
-        //   is_local: 0,
-        //   recruit_id: 10,
-        //   requirement: 'qwq',
-        //   team_id: 2,
-        //   time: 1650445033,
-        //   type: 0
-        // }
-        // const type1 = {
-        //   count: 2,
-        //   count_available: 1,
-        //   is_available: 1,
-        //   is_local: 1,
-        //   recruit_id: 10,
-        //   team_id: 2,
-        //   time: 1650445033,
-        //   type: 1,
-        //   items: [ {
-        //     is_available: true,
-        //     recruit_id: 11,
-        //     requirement: "手机没电知道充电",
-        //     role: "充电",
-        //     time: null,
-        //   },
-        //   {
-        //     is_available: false,
-        //     recruit_id: 12,
-        //     requirement: "下雨知道打伞",
-        //     role: "撑伞",
-        //     time: null,
-        //   }
-        // ]
-          
-        // }
+        console.log(res)
         that.setData({
           recruit: res.data.data
         })
@@ -271,7 +234,7 @@ Page({
   // 跳转申请加入界面
   toApplyPage() {
     wx.navigateTo({
-      url: '/pages/apply/apply?team_id' + this.data.team.team_id,
+      url: '/pages/apply/apply?team_id=' + this.data.team.team_id +'&recruit_id='  + this.data.recruit[0].recruit_id,
     })
   },
   // 跳转管理团队界面
