@@ -1,6 +1,7 @@
 // pages/user/home/home.js
 const app = getApp()
 const checkCookieValid = require('../../utils/util.js').checkCookieValid
+const request = require("../../utils/util.js").request
 Component({
   /**
    * 组件的属性列表
@@ -19,7 +20,44 @@ Component({
 
   lifetimes: {
     attached: function() {
-      
+      request('/info/detail','POST',{}).then(
+        (res)=>{
+          console.log(res);
+          this.setData({
+            avatar: res.data.data.avatar,
+            nickname: res.data.data.nickname,
+            description: res.data.data.description,
+            school: res.data.data.school,
+            major: res.data.data.major,
+            skill: res.data.data.skill,
+            grade: res.data.data.grade
+          })
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
+    }
+  },
+  pageLifetimes:{
+    show(){
+      request('/info/detail','POST',{}).then(
+        (res)=>{
+          console.log(res);
+          this.setData({
+            avatar: res.data.data.avatar,
+            nickname: res.data.data.nickname,
+            description: res.data.data.description,
+            school: res.data.data.school,
+            major: res.data.data.major,
+            skill: res.data.data.skill,
+            grade: res.data.data.grade
+          })
+        },
+        (error)=>{
+          console.log(error);
+        }
+      )
     }
   },
 

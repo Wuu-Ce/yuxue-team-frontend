@@ -1,3 +1,9 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
   <view class="text-black" slot="backText">搜索学校</view>
 </cu-custom>
+<view class="flex align-center padding bg-white">
+  <text class="text-black" style="font-size:32rpx;">学校名称：</text>
+  <input class="flex" style="flex-grow:1" type="text" placeholder="请输入学校名称" focus="true" confirm-type="search" bindinput="search" />
+  <view class="mainTone-color1" bindtap="deleteSchool">删除学校</view>
+</view>
+<view wx:for="{{schoolList}}" class="padding-lr padding-tb-sm bg-white" bindtap="chooseSchool" data-school_id="{{item.school_id}}">{{item.school_name}}</view>

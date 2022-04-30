@@ -74,16 +74,16 @@ Page({
     this.setData({
       curClass: this.data.class
     })
-    let res = request('/team/getTypeList','POST',{})
-    res.then(
-      (res)=>{
-        console.log('/team/getTypeList called')
-        console.log(res);
-      },
-      res => {
-        console.log('/team/getTypeList error')
-        console.log(res)
-      })
+    // let res = request('/team/getTypeList','POST',{})
+    // res.then(
+    //   (res)=>{
+    //     console.log('/team/getTypeList called')
+    //     console.log(res);
+    //   },
+    //   res => {
+    //     console.log('/team/getTypeList error')
+    //     console.log(res)
+    //   })
   },
    // 步骤条下一步
   nextStep() {

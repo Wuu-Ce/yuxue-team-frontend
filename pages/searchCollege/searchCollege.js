@@ -1,4 +1,4 @@
-// pages/searchCollege/searchCollege.js
+const request = require("../../utils/util.js").request
 Page({
 
   /**
@@ -14,53 +14,45 @@ Page({
   onLoad: function (options) {
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  search(e){
+    console.log(e);
+    var key = e.detail.value;
+    request("/enum/school",'POST',{key:key}).then(
+      (res)=>{
+        console.log(res);
+        this.setData({
+          schoolList: res.data.data
+        })
+      },
+      (error)=>{
+        console.log(error);
+        if(error.code===20103){
+          this.setData({
+            schoolList: []
+          })
+        }
+      }
+    )
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  // 选择学校，同时传给后端
+  chooseSchool(e){
+    var school_id = e.currentTarget.dataset.school_id;
+    console.log(school_id);
+    request('/info/update','POST',{school_id:school_id}).then(
+      (res)=>{
+        wx.navigateBack({
+          delta:1
+        })
+      },
+      (error)=>{
+        wx.showToast({
+          title: '保存失败',
+          icon: 'error'
+        })
+      }
+    )
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  deleteSchool(){
+    
   }
 })

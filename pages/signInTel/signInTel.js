@@ -55,7 +55,8 @@ Page({
           console.log(res);
           this.countDown();
           this.setData({
-            getCode: true
+            getCode: true,
+            exist: res.data.data.exist
           })
         },
         ()=>{
@@ -125,24 +126,17 @@ Page({
         'tel': phoneNumber,
         'code': verificationCode,
       }
-      request('/auth/register','POST',data).then(
+      var url = this.data.exist?'/auth/login':'/auth/register';
+      request(url,'POST',data).then(
         (res)=>{
           console.log(res);
           wx.setStorage({
             key: 'cookie',
             data: res.cookies[0],
           })
-          // wx.setStorage({
-          //   key: 'uid',
-          //   data: res.data.data.uid,
-          // })
-          // wx.setStorage({
-          //   key: 'identity',
-          //   data: identity,   
-          // })
-          // wx.navigateBack({
-          //   delta: 0,
-          // })
+          wx.navigateBack({
+            delta: 0,
+          })
         },
         (error)=>{
           console.log(error);

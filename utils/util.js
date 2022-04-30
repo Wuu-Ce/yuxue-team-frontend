@@ -85,6 +85,18 @@ const __formatTime = (time, format) => {
   }
 }
 
+// 对团队列表中的内容进行处理
+const processTeamList = (teamList) => {
+  console.log(teamList);
+  // var newList = [];
+  for(let i=0;i<teamList.length;i++){
+    var team = teamList[i];
+    // console.log(team);
+    team.createtime = __formatTime(team.createtime*1000,"Y年M月D日");
+  }
+  return teamList
+}
+
 // 检查cookie是否有效
 // 使用一些功能时，需要查验cookie的有效性，若未登录或登录到期，则为无效。比如使用如下功能时：创建团队、申请加入。
 // 有效：resolve(true) ，无效：resolve(false)，否则 reject（表示请求失败，比如网络问题）
@@ -243,5 +255,6 @@ module.exports = {
   formatTime,
   checkCookieValid,
   getClass,
-  classification
+  classification,
+  processTeamList
 }

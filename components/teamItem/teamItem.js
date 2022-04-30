@@ -131,7 +131,7 @@ Component({
     //  跳转到队伍详情页
     jumpToTeamDetailPage() {
       wx.navigateTo({
-        url: '/pages/teamDetail/teamDetail?team_id=' + 4,
+        url: '/pages/teamDetail/teamDetail?team_id=' + this.data.team.team_id,
       })
     },
     // 跳转到申请加入界面

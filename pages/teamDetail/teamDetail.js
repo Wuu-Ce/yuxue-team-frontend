@@ -270,7 +270,7 @@ Page({
   // 跳转申请加入界面
   toApplyPage() {
     wx.navigateTo({
-      url: 'url',
+      url: '/pages/apply/apply',
     })
   },
   // 跳转管理团队界面

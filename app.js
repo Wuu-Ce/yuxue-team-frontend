@@ -4,8 +4,8 @@ App({
   onLaunch() {
     request('/test/login','POST',{'user_id':1}).then(
       (res)=>{
-        wx.setStorageSync('cookie', res.cookies[0]);
-        console.log(res)
+        // wx.setStorageSync('cookie', res.cookies[0]);
+        // console.log(res)
       },
       (error)=>{
         console.log(error.message);

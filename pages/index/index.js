@@ -1,7 +1,9 @@
 // index.js
 // 获取应用实例
-const app = getApp()
-const checkCookieValid = require("../../utils/util.js").checkCookieValid
+const app = getApp();
+const checkCookieValid = require("../../utils/util.js").checkCookieValid;
+const request = require("../../utils/util.js").request;
+const processTeamList = require("../../utils/util.js").processTeamList;
 Page({
   data: {
     motto: 'Hello World',
@@ -18,7 +20,12 @@ Page({
     topTabList: [{index: 0,name: '兴趣'},{index: 1,name: '竞赛'},{index: 2,name: '创意'},{index: 3,name: '创业'},{index: 4,name: '学习'},{index: 5,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
-    accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}]
+    accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}],
+    // 偏移量
+    page: 1,
+    // 搜索框中输入的关键字
+    key: "",
+    refreshing: false
   },
 
   onLoad: function(options) {
@@ -39,35 +46,82 @@ Page({
         )
       }
     )
-  
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
       })
     }
+    // 请求队伍列表
+    this.getTeamList();
   },
-  onShow: function(options){
 
+  // 获取offset和limit
+
+  getTeamList(){
+    this.setData({
+      isLoad: true
+    })
+    var key = this.data.key;
+    var page = this.data.page;
+    var topTabCur = this.data.topTabCur;
+    var data = {key:key,type:topTabCur,limit:10,page:page};
+    var that = this;
+    request('/recruit/listTeam','POST',data).then(
+      (res)=>{
+        console.log(res);
+        var teamList = processTeamList(res.data.data);
+        that.setData({
+          isLoad: false,
+          teamList: teamList
+        })
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  },
+  refresh(){
+    var key = this.data.key;
+    var page = this.data.page;
+    var topTabCur = this.data.topTabCur;
+    var data = {key:key,type:topTabCur,limit:10,page:page};
+    var that = this;
+    request('/recruit/listTeam','POST',data).then(
+      (res)=>{
+        console.log(res);
+        this.setData({
+          refreshing: false
+        })
+        var teamList = processTeamList(res.data.data);
+        that.setData({
+          teamList: teamList
+        })
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
   },
   // 顶部tab切换
   topTabSelect(e) {
-    var listData = this.data.listData;
-    listData.topTabCur = e.currentTarget.dataset.id;
     this.setData({
+      teamList: [],
       topTabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60,
-      listData: listData
     })
+    this.getTeamList();
   },
   topTabChange(e){
     var current = e.detail.current;
-    var listData = this.data.listData;
-    listData.topTabCur = current;
     this.setData({
+      teamList: [],
       topTabCur: current,
       scrollLeft: (current-1)*60,
-      listData: listData
     })
+    this.getTeamList();
+  },
+  stopTouchMove(){
+    return false
   },
   // 底部tab切换
   changetab(e){
@@ -107,6 +161,7 @@ Page({
   }, 
   // 举报模态框
   onAccuseTeam(){
+    console.log("jubao");
     this.showModal('accuse');
   },
   // 选择举报选项
