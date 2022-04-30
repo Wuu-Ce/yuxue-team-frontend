@@ -72,10 +72,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-<<<<<<< HEAD
-=======
-    console.log(options);
->>>>>>> rt_test
     const team_id = parseInt(options.team_id)
     // 队伍详情
     this.getTeamDetail(team_id)

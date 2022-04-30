@@ -84,11 +84,8 @@ Page({
     //     console.log('/team/getTypeList error')
     //     console.log(res)
     //   })
-<<<<<<< HEAD
       teamable = [false, false, false, false, false]
-=======
 
->>>>>>> rt_test
   },
    // 步骤条下一步
   nextStep() {
