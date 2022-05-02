@@ -1,3 +1,13 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
   <view class="text-black" slot="backText">设置</view>
 </cu-custom>
+
+<view class="flex justify-between align-center padding bg-white margin-top solid-bottom" style="width:100%;" bindtap="logOut">
+  <view class="text-black" style="font-size: 32rpx;">退出登录</view>
+  <text class="cuIcon-right"></text>
+</view>
+<!-- 绑定或解绑微信 -->
+<view class="flex justify-between align-center padding bg-white" style="width:100%;" bindtap="bindWechat">
+  <view class="text-black" style="font-size: 32rpx;">{{bind?'解绑微信':'绑定微信'}}</view>
+  <text class="cuIcon-right"></text>
+</view>

@@ -21,14 +21,30 @@ Page({
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
     accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}],
-    // 偏移量
-    page: 1,
-    // 搜索框中输入的关键字
-    key: "",
-    refreshing: false
+    page: 1, // 页号
+    key: "", // 搜索框中输入的关键字
+    refreshing: false,  // scroll-view是否处于下拉刷新状态
+    showBottomLoading: false  // 是否显示底部的加载图标
   },
 
   onLoad: function(options) {
+    // 判断是否登录，若登录，把缓存中ifLogin设为true，若未登录，把缓存中ifLogin设为false
+    checkCookieValid().then(
+      (res)=>{
+        if(res){
+          wx.setStorage({
+            key: "ifLogin",
+            data: true
+          })
+        }else{
+          wx.setStorage({
+            key: "ifLogin",
+            data: false
+          })
+        }
+      },
+      (error)=>{}
+    )
     // 修改列表容器swiper的高度
     const that = this;
     const query = wx.createSelectorQuery()
@@ -46,83 +62,110 @@ Page({
         )
       }
     )
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true
-      })
-    }
     // 请求队伍列表
     this.getTeamList();
+  },
+  // 搜索团队
+  searchTeam(e){
+    var value = e.detail.value;
+    this.data.key = value;
+    this.getTeamList()
   },
   // 顶部tab切换
   topTabSelect(e) {
     this.setData({
+      showBottomLoading: false,
       teamList: [],
       topTabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id-1)*60,
     })
     this.getTeamList();
   },
-  swiperChange(e){
-    var current = e.detail.current;
-    console.log(current);
-    this.setData({
-      teamList: [],
-      topTabCur: current,
-      scrollLeft: (current-1)*60,
-    })
-    this.getTeamList();
-  },
+
+  // 禁止滑动swiper
   stopTouchMove(){
     return false
   },
-  // 请求团队列表
+  // 请求团队列表并setData(teamList)
+  requestTeamList(){
+    var key = this.data.key;
+    var page = this.data.page;
+    var type = this.data.topTabCur + 1;
+    var data = {key:key,type:type,limit:10,page:page};
+    return new Promise((resolve,reject)=>{
+      request('/recruit/listTeam','POST',data).then(
+        (res)=>{
+          var teamList = processTeamList(res.data.data);
+          resolve(teamList)
+        },
+        (error)=>{
+          wx.showToast({
+            title: '请求失败',
+            icon: 'error'
+          })
+          reject(error)
+        }
+      )
+    })
+  },
+  // 获取团队列表，把请求的过程放到了requestTeamList函数中
   getTeamList(){
     this.setData({
-      isLoad: true
+      isLoad: true,
+      page: 1
     })
-    var key = this.data.key;
-    var page = this.data.page;
-    var type = this.data.topTabCur+1;
-    var data = {key:key,type:type,limit:10,page:page};
     var that = this;
-    request('/recruit/listTeam','POST',data).then(
-      (res)=>{
-        console.log(res);
-        var teamList = processTeamList(res.data.data);
+    this.requestTeamList().then(
+      (teamList)=>{
         that.setData({
+          teamList: teamList,
           isLoad: false,
-          teamList: teamList
         })
       },
-      (error)=>{
-        console.log(error);
-      }
-    )
-  },
-  refresh(){
-    var key = this.data.key;
-    var page = this.data.page;
-    var type = this.data.topTabCur+1;
-    var data = {key:key,type:type,limit:10,page:page};
-    var that = this;
-    request('/recruit/listTeam','POST',data).then(
-      (res)=>{
-        console.log(res);
+      ()=>{
         this.setData({
-          refreshing: false
+          isLoad: false
         })
-        var teamList = processTeamList(res.data.data);
+        
+      }
+    );
+  },
+  // 下拉刷新
+  refresh(){
+    this.setData({
+      page: 1
+    })
+    var that = this;
+    this.requestTeamList().then(
+      (teamList)=>{
         that.setData({
-          teamList: teamList
+          teamList: teamList,
         })
       },
-      (error)=>{
-        console.log(error);
-      }
+      ()=>{}
     )
+    this.setData({
+      refreshing: false
+    })
   },
-  
+  // 触底加载新页
+  loadNewPage(){
+    this.setData({
+      showBottomLoading: true,
+      isBottomLoading: true,
+    })
+    this.data.page += 1;
+    var that = this;
+    this.requestTeamList().then(
+      (teamList)=>{
+        that.setData({
+          teamList: this.data.teamList.concat(teamList),
+          isBottomLoading: false,
+        })
+      },
+      ()=>{}
+    );
+  },
   // 底部tab切换
   changetab(e){
     var tabindex = e.currentTarget.dataset.tabindex;
@@ -132,10 +175,6 @@ Page({
       })
     }
   },
-  // 搜索团队
-  searchTeam(){
-
-  },
   // 设置筛选
   setFilter(){
     this.setData({
@@ -144,9 +183,14 @@ Page({
   },
   // 跳转到发布页
   jumpToIssue(){
-    wx.navigateTo({
-      url: '/pages/createTeam/createTeam',
-    })
+    var ifLogin = wx.getStorageSync('ifLogin');
+    if(ifLogin){
+      wx.navigateTo({
+        url: '/pages/myTeam/myTeam',
+      })
+    }else{
+      this.showModal('login')
+    }
   },
   // 显示/隐藏模态框
   showModal(modalName) {

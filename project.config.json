@@ -49,12 +49,12 @@
     "useStaticServer": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.22.1",
+  "libVersion": "2.23.4",
   "appid": "wx3eb2d913f4be5a1d",
   "projectname": "JNJH",
-  "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "condition": {}
 }

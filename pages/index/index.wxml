@@ -12,7 +12,7 @@
     <!-- 搜索 -->
     <view class="flex align-center padding-lr-sm padding-tb-xxs round bg-gray" style="flex-grow:1;" >
       <text class="cuIcon-search margin-right-sm text-grey"></text>
-      <input type="text" 	confirm-type="search" placeholder="根据团队ID、名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindconfirm="searchTeam"></input>
+      <input type="text" 	confirm-type="search" placeholder="根据团队ID、名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindinput="searchTeam"></input>
     </view>
     <!-- 顶部tab -->
     <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" style="position: relative;">
@@ -33,14 +33,17 @@
       <view class=""></view>
     </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0" bindchange="swiperChange" circular="true">
+  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0"  circular="true">
     <swiper-item wx:for="{{topTabList}}" wx:key="index" catchtouchmove="stopTouchMove">
-      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh">
+      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh" bindscrolltolower="loadNewPage" wx:if="{{topTabCur+1==item.id}}">
+        <!-- 下拉刷新 -->
         <view wx:if="{{isLoad}}" class="cu-load loading"></view>
         <!-- 队伍列表 -->
         <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
           <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam"></teamItem>
         </view> 
+        <!-- 触底加载新页 -->
+        <view wx:if="{{showBottomLoading}}" class="cu-load bg-gray {{isBottomLoading?'loading':'over'}}"></view>
       </scroll-view>
     </swiper-item>
   </swiper>

@@ -1,7 +1,9 @@
-<view class="flex flex-direction justify-end" style="background-image: url(https://qiniu.freespace.yuxue0824.com/backImage2.png);background-repeat:no-repeat;background-size:contain;height:600rpx;">
-  <view class="flex flex-direction align-center margin-lg shadow bg-white" style="border-radius: 40rpx;position:relative;box-shadow: 0rpx 0rpx 40rpx 0rpx rgb(211, 213, 229);">
+<view class="flex flex-direction justify-end" style="background-image: url(https://team.test.yuxue0824.com/static/backimage/2.webp);background-repeat:no-repeat;background-size:contain;height:600rpx;">
+  <view class="flex flex-direction align-center margin-lg shadow bg-white" style="border-radius: 40rpx;position:relative;box-shadow: 0rpx 0rpx 40rpx 0rpx rgb(211, 213, 229);min-height: 286rpx;">
     <!-- 头像 -->
-    <view class="cu-avatar round xl" style="background-image:url({{avatar}});position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;"></view>
+    <view class="cu-avatar round xl" style="background-image:url({{avatar}});position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;" bindtap="clickAvatar">
+      <view wx:if="{{!ifLogin}}" class="padding-lr-xs padding-tb-xxs text-sm mainTone-bgColor round" style="position:absolute;bottom:-10rpx;">点击登录</view>
+    </view>
     <!-- 头像占位框 -->
     <view style="height: 64rpx;"></view>
     <!-- 昵称 -->
@@ -32,7 +34,7 @@
 <view class="flex flex-direction margin-lg padding bg-white shadow" style="border-radius: 15rpx;">
   <view class="flex align-center padding-bottom solids-bottom" style="" bindtap="jumpToMyTeam">
     <text class="cuIcon-my text-black margin-right-sm" style="font-size:40rpx;"></text>
-    <text class="text-black" style="font-size: 32rpx;">我的队伍</text>
+    <text class="text-black" style="font-size: 32rpx;">我的团队</text>
   </view>
   <view class="flex align-center padding-top" bindtap="jumpToMessage">
     <text class="cuIcon-message text-black margin-right-sm " style="font-size:40rpx;"></text>
@@ -66,7 +68,7 @@
 <view class="flex bg-gray" style="height:60rpx;"></view>
 
 <!-- “需要登录”窗口 -->
-<loginRequired show="{{showLoginRequired}}"></loginRequired>
+<loginRequired show="{{showLoginRequired}}" bindrefreshInfo="getMyInfo" bindrefreshIfLogin="refreshIfLogin"></loginRequired>
 
 <!-- 客服 modal -->
 <view class="yuxue-modal bg-white {{modalName=='contactService'?'show':''}}" bindtap="hideModal">
@@ -76,13 +78,13 @@
         <text class="text-black text-xl text-bold">联系我们</text>
       </view>
     </view>
-    <view class="flex align-center justify-center padding-lg text-black">
+    <view class="flex align-center justify-center padding-lg margin-bottom-lg text-black">
       <text style="font-size:32rpx;">开发者电话/微信：</text>
       <text style="font-size:32rpx;" user-select="true">18330205262</text>
     </view>
-    <view class="padding-lg text-black mainTone-color1">
+    <!-- <view class="padding-lg text-black mainTone-color1">
       <text>开发者有时需要上课，建议先添加微信</text>
-    </view>
+    </view> -->
     <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
       <text class="cuIcon-close" style="font-size:40rpx;"></text>
     </view>
@@ -98,7 +100,7 @@
       </view>
     </view>
     <view class="flex align-center justify-center padding-lr padding-bottom-lg text-black">
-      <text>予学组队小程序为在校大学生提供竞赛、兴趣、创业、学习、创意、考证六大类型的组队服务，帮助大学生快速、高效的组建一支优质团队。</text>
+      <text>予学组队小程序为在校大学生提供竞赛、兴趣、创业、学习、创意、考证六大类型的组队服务，帮助大学生快速、高效的组建团队。</text>
     </view>
     <!-- 右上角的关闭按钮 -->
     <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
@@ -106,5 +108,25 @@
     </view>
   </view>
 </view>
+
+<!-- 使用微信头像和昵称 modal框 -->
+<view class="yuxue-modal bg-white {{modalName=='useWechatInfo'?'show':''}}">
+  <view class="yuxue-dialog" style="position: relative;" catchtap>
+    <view class="flex justify-center align-center">
+      <view class="content margin-lg">
+        <text class="text-black text-xl text-bold">使用微信头像和昵称</text>
+      </view>
+    </view>
+    <view class="flex flex-direction align-center justify-center" style="min-height: 200rpx;">
+      <view class="cu-btn mainTone-bgColor flex margin-top-lg margin-bottom-xl padding-lg align-center text-white round shadow "  style="animation-delay: 0.1s;width:80%;" bindtap="useWechatInfo">
+        <text class="text-bold">点击使用微信头像和昵称</text>
+      </view>
+    </view>
+    <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+      <text class="cuIcon-close" style="font-size:40rpx;"></text>
+    </view>
+  </view>
+</view>
+
 
 

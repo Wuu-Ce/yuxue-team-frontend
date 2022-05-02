@@ -1,23 +1,22 @@
 <!-- 登录 modal框 -->
-<view class="yuxue-modal bg-white {{show?'show':''}}" bindtap="hideModal">
+<view class="yuxue-modal bg-white {{show?'show':''}}">
   <view class="yuxue-dialog" style="position: relative;" catchtap>
     <view class="flex justify-center align-center">
       <view class="content margin-lg">
         <text class="text-black text-xl text-bold">需要登录</text>
       </view>
     </view>
-    <!-- <view class="margin-bottom-sm">首次使用小程序需要先通过手机号注册</view> -->
-    <view class="flex flex-direction align-center justify-center">
-      <view class="cu-btn bg-green flex margin-bottom padding-lg align-center text-white round shadow "  style="animation-delay: 0.1s;width:80%;" bindtap="getcode">
+    <view class="flex flex-direction align-center justify-center" style="min-height: 300rpx;">
+      <view class="cu-btn bg-green flex margin-bottom padding-lg align-center text-white round shadow "  style="animation-delay: 0.1s;width:80%;" bindtap="wechatLogin">
         <text class="text-bold">微信登录</text>
       </view>
       <view class="cu-btn mainTone-bgColor flex padding-lg align-center text-white round shadow"  style="animation-delay: 0.1s;width:80%;" bindtap="jumpToSignTel">
         <text class="text-bold">手机号登录</text>
       </view>
     </view>
-    <view class="padding-lg text-black">
-      <text>首次使用小程序需要先通过手机号进行注册</text>
-    </view>
+    <!-- <view class="padding-lg text-black">
+      <text>首次使用小程序需要先通过手机号注册</text>
+    </view> -->
     <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
       <text class="cuIcon-close" style="font-size:40rpx;"></text>
     </view>

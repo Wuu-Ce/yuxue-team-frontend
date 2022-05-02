@@ -1,16 +1,16 @@
-const request = require("./utils/util.js").request
-
+const createTeam = require("./test.js").createTeam
+const createFastRecruit = require("./test.js").createFastRecruit
 App({
   onLaunch() {
-    request('/test/login','POST',{'user_id':7}).then(
-      (res)=>{
-        wx.setStorageSync('cookie', res.cookies[0]);
-        console.log(res)
-      },
-      (error)=>{
-        console.log(error.message);
-      }
-    )
+    // request('/test/login','POST',{'user_id':7}).then(
+    //   (res)=>{
+    //     wx.setStorageSync('cookie', res.cookies[0]);
+    //     console.log(res)
+    //   },
+    //   (error)=>{
+    //     console.log(error.message);
+    //   }
+    // )
 
     // 环境信息
     wx.getSystemInfo({
@@ -25,6 +25,17 @@ App({
         }
       }
     })
+    // 创建团队
+    // for(let i=0;i<20;i++){
+    //   createTeam(1,1,'jfdoadi','jdfioa','jfdoa','jdfoai','djfioa')
+    // }
+
+    // 发布招募
+    // for(let i=0;i<20;i++){
+    //   createFastRecruit(i+14,false,3,'jfodaijo')
+    // }
+
+// 14-33
   },
   globalData: {
     userInfo: null,

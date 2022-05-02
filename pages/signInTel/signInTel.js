@@ -33,12 +33,9 @@ Page({
       return;
     }
     if(!phoneNumber){
-      wx.showModal({
-        title: "请输入手机号",
-        showCancel: false,
-        success:(res)=>{
-          return
-        }
+      wx.showToast({
+        title: '请输入手机号',
+        icon: 'error'
       })
     }else if(phoneNumber&&phoneNumber.length!=11){
       wx.showModal({
@@ -52,7 +49,9 @@ Page({
     }else{
       request('/auth/sendSMSCode','POST',{'tel':phoneNumber}).then(
         (res)=>{
-          console.log(res);
+          wx.showToast({
+            title: '验证码已发送',
+          })
           this.countDown();
           this.setData({
             getCode: true,
@@ -129,17 +128,58 @@ Page({
       var url = this.data.exist?'/auth/login':'/auth/register';
       request(url,'POST',data).then(
         (res)=>{
-          console.log(res);
-          wx.setStorage({
-            key: 'cookie',
-            data: res.cookies[0],
-          })
-          wx.navigateBack({
-            delta: 0,
+          wx.setStorageSync('cookie',res.cookies[0]);
+          wx.setStorageSync('ifLogin', true);
+          wx.showModal({
+            title: '绑定微信',
+            content: '绑定微信后，以后便可使用微信直接登录',
+            cancelText: '不绑定',
+            cancelColor: '#aaaaaa',
+            confirmText: '绑定',
+            confirmColor: '#0081ff',
+            success(res){
+              if(res.confirm){
+                var that = this;
+                wx.getUserProfile({
+                  lang: "zh_CN",
+                  desc: "您的信息将用于账号与微信的绑定",
+                  success(res){
+                    var avatar = res.userInfo.avatarUrl;
+                    var nickname = res.userInfo.nickName;
+                    wx.login({
+                      success(res){
+                        if(res.code){
+                          request('/auth/wx/bind','POST',{code:res.code,avatar:avatar,nickname:nickname}).then(
+                            ()=>{
+                              wx.showToast({
+                                title: '绑定成功',
+                              })
+                              setTimeout(()=>{
+                                wx.navigateBack({})
+                              },1500)
+                            },
+                            ()=>{
+                              wx.showToast({
+                                title: '绑定失败',
+                                icon: "error",
+                              })
+                              setTimeout(()=>{
+                                wx.navigateBack({})
+                              },1500)
+                            }
+                          )
+                        }
+                      }
+                    })
+                  }
+                })
+              }else if(res.cancel){
+                wx.navigateBack({})
+              }
+            }
           })
         },
         (error)=>{
-          console.log(error);
           wx.showModal({
             title: '登录失败',
             content: '手机号或验证码无效',

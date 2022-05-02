@@ -130,7 +130,6 @@ Component({
     },
     //  跳转到队伍详情页
     jumpToTeamDetailPage() {
-      console.log(this.data.team.team_id);
       wx.navigateTo({
         url: '/pages/teamDetail/teamDetail?team_id=' + this.data.team.team_id,
       })
@@ -138,7 +137,7 @@ Component({
     // 跳转到申请加入界面
     jumpToApply(){
       wx.navigateTo({
-        url: '/pages/apply/apply?team_id=1&recruit_id=1',
+        url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
       })
     }
   }

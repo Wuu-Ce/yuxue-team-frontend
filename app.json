@@ -12,7 +12,6 @@
     "pages/recruitMember/recruitMember",
     "pages/settings/settings",
     "pages/signInTel/signInTel",
-    "pages/signIn/signIn",
     "pages/apply/apply",
     "pages/manageTeam/manageTeam",
     "pages/memberInfo/memberInfo"

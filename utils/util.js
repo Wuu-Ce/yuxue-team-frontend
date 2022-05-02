@@ -149,6 +149,7 @@ const request = (url, method, data) => {
       success(res) {
         if (res.statusCode !== 200) {
           // 表示请求失败，提醒用户“请求失败”
+          console.log("message: 请求失败，code: -1");
           reject({
             message: '请求失败',
             code: -1
@@ -158,12 +159,14 @@ const request = (url, method, data) => {
           resolve(res);
         } else if (res.data.code === 10301 || res.data.code === 10302) {
           // 用户未登录或用户登录信息无效，弹出登录窗口
+          console.log("message:" + res.data.message + "，"+"code:"+res.data.code);
           reject({
             message: res.data.message || '数据错误',
             code: res.data.code
           })
         } else {
           // 表示其他类型的错误，如参数格式不正确
+          console.log("message:" + res.data.message + "，"+"code:"+res.data.code);
           reject({
             message: res.data.message || '数据错误',
             code: res.data.code
@@ -172,6 +175,7 @@ const request = (url, method, data) => {
       },
       fail() {
         // 表示请求失败，提醒用户“请求失败”
+        console.log("message: 请求失败，code: -1");
         reject({
           message: '请求失败',
           code: -1

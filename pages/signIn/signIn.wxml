@@ -1,3 +1,0 @@
-<cu-custom bgColor="bg-white" isBack="true">
-  <view slot="content" class="text-black">登录</view>
-</cu-custom>

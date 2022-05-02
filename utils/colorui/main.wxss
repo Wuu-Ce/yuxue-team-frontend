@@ -3325,12 +3325,12 @@ scroll-view.cu-steps .cu-item {
 	padding-right: 50rpx;
 }
 .padding-tb-xxs {
-	padding-top: 10rpx;
-	padding-bottom: 10rpx;
+	padding-top: 5rpx;
+	padding-bottom: 5rpx;
 }
 .padding-tb-xs {
-	padding-top: 7rpx;
-	padding-bottom: 7rpx;
+	padding-top: 10rpx;
+	padding-bottom: 10rpx;
 }
 
 .padding-tb-sm {
