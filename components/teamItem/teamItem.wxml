@@ -36,9 +36,9 @@
   </view>
   <!-- 三、队伍成员 -->
   <view id="teamMembers" class="flex flex-wrap margin-top-sm light">
-    <view class="teamMember flex margin-right-xs margin-bottom-xs cu-avatar round" style="background-image:url({{item.avatar}});flex-shrink:0;" wx:for="{{iconMoreShow?membersShow:team.members}}"></view>
+    <view class="teamMember flex margin-right-xs margin-bottom-xs cu-avatar round" style="background-image:url({{item.avatar}});flex-shrink:0;" wx:for="{{iconMoreShow?membersShow:team.members}}" bindtap="jumpToUserDetail" data-user_id="{{item.user_id}}"></view>
     <!-- 是否显示“更多”这个小标签，若不显示则渲染全部队伍成员的头像，若显示则只渲染五个 -->
-    <view wx:if="{{iconMoreShow}}" catchtap="showAllMembers" class="cu-avatar round bg-grey light">
+    <view wx:if="{{iconMoreShow}}" catchtap="showAllMembers" class="cu-avatar round bg-grey light" >
       <text class="cuIcon-more"></text>
     </view>
   </view>

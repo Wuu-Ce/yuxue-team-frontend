@@ -52,7 +52,25 @@ Page({
       }
     )
   },
+  // 删除学校
   deleteSchool(){
-    
+    request('/info/update','POST',{school_id:-1}).then(
+      (res)=>{
+        wx.showToast({
+          title: '删除成功',
+        })
+        setTimeout(()=>{
+          wx.navigateBack({
+            delta:1
+          })
+        },1500)
+      },
+      (error)=>{
+        wx.showToast({
+          title: '删除失败',
+          icon: 'error'
+        })
+      }
+    )
   }
 })

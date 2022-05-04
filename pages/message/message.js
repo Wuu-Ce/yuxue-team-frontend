@@ -1,5 +1,5 @@
 const app = getApp()
-const checkCookieValid = require('../../utils/util.js').checkCookieValid
+const request = require("../../utils/util.js").request
 Page({
 
   /**
@@ -19,19 +19,11 @@ Page({
     this.setData({
       scrollHeight: windowInfo.windowHeight-this.data.CustomBar
     })
-
-    // checkCookieValid().then(
-    //   (res)=>{
-    //     if(res){
-    //       // 加载数据，setData
-    //     }else{
-    //       // 弹窗
-    //       this.setData({
-    //         showLoginRequired: true
-    //       })
-    //     }
-    //   }
-    // )
+    request('/notify/list','POST',{type:1}).then(
+      (res)=>{
+        console.log(res);
+      }
+    )
   },
   // 选择标签
   tabSelect(e) {

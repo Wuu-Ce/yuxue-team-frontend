@@ -134,11 +134,23 @@ Component({
         url: '/pages/teamDetail/teamDetail?team_id=' + this.data.team.team_id,
       })
     },
+    // 跳转到用户详情页
+    jumpToUserDetail(e){
+      var user_id = e.currentTarget.dataset.user_id;
+      wx.navigateTo({
+        url: '/pages/userDetail/userDetail?user_id='+user_id,
+      })
+    },
     // 跳转到申请加入界面
     jumpToApply(){
-      wx.navigateTo({
-        url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
-      })
+      var ifLogin = wx.getStorageSync('ifLogin');
+      if(ifLogin){
+        wx.navigateTo({
+          url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
+        })
+      }else{
+        this.triggerEvent('login',{},{})
+      }
     }
   }
 })

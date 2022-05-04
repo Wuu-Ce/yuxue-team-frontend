@@ -65,6 +65,61 @@
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>
   </view>
+  <!-- 年级 -->
+  <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
+    <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">年级</view>
+    <view class="flex align-center" bindtap="changeGrade" data-modalname="editGrade">
+      <view class="margin-right-sm" style="display: -webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+        <text user-select="true">{{grade?grade:'未填'}}</text>
+      </view>
+      <text class="cuIcon-right" style="font-size:32rpx;"></text>
+    </view>
+    <!-- 年级编辑框 -->
+    <view class="yuxue-modal bg-white {{modalName=='editGrade'?'show':''}}" bindtap="hideModal">
+      <view class="yuxue-dialog" catchtap>
+        <radio-group bindchange="selectGrade">
+          <view class="padding-sm text-bold text-black" style="font-size: 32rpx;">本科</view>
+          <label wx:for="{{undergraduate}}">
+            <view class="flex justify-between align-center padding-lr padding-tb-xs text-black">
+              <text>{{item.name}}</text>
+              <radio value="{{item.id}}" checked="{{gradeLst[item.id].checked}}"></radio>
+            </view>
+          </label>
+          <view class="padding-sm text-bold text-black" style="font-size: 32rpx;">硕士</view>
+          <label wx:for="{{graduate}}">
+            <view class="flex justify-between align-center padding-lr padding-tb-xs text-black" >
+              <text>{{item.name}}</text>
+              <radio value="{{item.id}}" checked="{{gradeLst[item.id].checked}}"></radio>
+            </view>
+          </label>
+          <view class="padding-sm justify-start text-bold text-black" style="font-size: 32rpx;">博士</view>
+          <label wx:for="{{doctor}}">
+            <view class="flex justify-between align-center padding-lr padding-tb-xs text-black" >
+              <text>{{item.name}}</text>
+              <radio value="{{item.id}}" checked="{{gradeLst[item.id].checked}}"></radio>
+            </view>
+          </label>
+        </radio-group>
+        <!-- <view class="flex justify-center padding-top-sm padding-bottom mainTone-color1" style="font-size: 32rpx;" bindtap="setDefaultGrade">不填</view> -->
+        <view class="flex ">
+          <view class="flex justify-center align-center padding-tb mainTone-color1 text-lg" style="flex-grow:1;" bindtap="setDefaultGrade">不填</view>
+          <view class="flex justify-center align-center padding-tb mainTone-color1 text-lg" style="flex-grow:1;" bindtap="hideModal">确定</view>
+        </view>
+        <!-- <view class="flex justify-center align-center">
+          <view class="content margin-lg">
+            <text class="text-black text-xl">年级</text>
+          </view>
+        </view>
+        <view class="flex padding-lr-lg padding-bottom-sm">
+          <textarea class="flex padding solids text-black radius" style="text-align: left;width:100%;flex-grow:1;height:250rpx;" value="{{grade?grade:''}}" placeholder="请输入年级" plackholder-class="text-grey" fixed="true" maxlength="10" bindinput="editGrade"></textarea>
+        </view>
+        <view class="flex ">
+          <view class="flex justify-center align-center padding-tb text-gray text-lg " style="flex-grow:1;" bindtap="hideModal">取消</view>
+          <view class="flex justify-center align-center padding-tb-sm mainTone-color1 text-lg" style="flex-grow:1;" bindtap="savaGrade">保存</view>
+        </view> -->
+      </view>
+    </view>
+  </view>
   <!-- 专业 -->
   <view class="flex padding-lr padding-tb-lg justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">专业</view>

@@ -15,7 +15,20 @@ Component({
    */
   data: {
     showLoginRequired: false,
-    modalName: null
+    modalName: null,
+    // 年级列表
+    gradeLst: [
+      {id: 0,name: '大一',checked: false},
+      {id: 1,name: '大二',checked: false},
+      {id: 2,name: '大三',checked: false},
+      {id: 3,name: '大四',checked: false},
+      {id: 4,name: '大五',checked: false},
+      {id: 5,name: '研一',checked: false},
+      {id: 6,name: '研一',checked: false},
+      {id: 7,name: '研一',checked: false},
+      {id: 8,name: '博士',checked: false},
+      {id: 9,name: '',checked: false}
+    ],
   },
 
   lifetimes: {
@@ -23,6 +36,7 @@ Component({
       this.refreshIfLogin();  // 刷新登录状态并setData
       if(this.data.ifLogin){
         this.getMyInfo();
+        this.checkIfBindWechat();
       }else{
         this.setData({
           showLoginRequired: true
@@ -44,6 +58,7 @@ Component({
       this.refreshIfLogin();  // 刷新登录状态并setData
       if(this.data.ifLogin){ 
         this.getMyInfo();
+        this.checkIfBindWechat();
       }else{
         this.setData({
           avatar: "",
@@ -76,8 +91,27 @@ Component({
             grade: res.data.data.grade
           })
         },
-        ()=>{}
+        (error)=>{console.log(error)}
       )
+    },
+    // 查询是否绑定微信
+    checkIfBindWechat(){
+      var that = this;
+      wx.login({
+        success(res){
+          if(res.code){
+            request('/auth/wx/status','POST',{code:res.code}).then(
+              (res)=>{
+                var bind = res.data.data.bind;
+                that.setData({
+                  bind: bind  // 表示是否与微信绑定
+                })
+              },
+              ()=>{}
+            )
+          }
+        }
+      })
     },
     // 刷新登录状态并setData，用于其他功能进行判断
     refreshIfLogin(){
@@ -164,17 +198,6 @@ Component({
     aboutUS(){
       this.showModal("aboutUS")
     },
-    // 模态框
-    showModal(modalName){
-      this.setData({
-        modalName: modalName
-      })
-    },
-    hideModal() {
-      this.setData({
-        modalName: null
-      })
-    },
     // 跳转到getcode界面
     jumpToCode(){
       wx.navigateTo({
@@ -185,7 +208,7 @@ Component({
     jumpToSettings(){
       if(this.data.ifLogin){
         wx.navigateTo({
-          url: '/pages/settings/settings',
+          url: '/pages/settings/settings?bind='+this.data.bind,
         })
       }else{
         this.setData({
@@ -198,6 +221,18 @@ Component({
       wx.navigateTo({
         url: '/pages/signInTel/signInTel',
       })
-    }
+    },
+
+    // 模态框
+    showModal(modalName){
+      this.setData({
+        modalName: modalName
+      })
+    },
+    hideModal() {
+      this.setData({
+        modalName: null
+      })
+    },
   }
 })

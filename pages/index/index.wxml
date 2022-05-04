@@ -33,20 +33,16 @@
       <view class=""></view>
     </view>
   </view>
-  <swiper id="swiperContainer" class="" style="height:{{swiperContainerH}}px;" current="{{topTabCur}}" 	duration="0"  circular="true">
-    <swiper-item wx:for="{{topTabList}}" wx:key="index" catchtouchmove="stopTouchMove">
-      <scroll-view scroll-y="true" style="height:{{swiperContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh" bindscrolltolower="loadNewPage" wx:if="{{topTabCur+1==item.id}}">
-        <!-- 下拉刷新 -->
-        <view wx:if="{{isLoad}}" class="cu-load loading"></view>
-        <!-- 队伍列表 -->
-        <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
-          <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam"></teamItem>
-        </view> 
-        <!-- 触底加载新页 -->
-        <view wx:if="{{showBottomLoading}}" class="cu-load bg-gray {{isBottomLoading?'loading':'over'}}"></view>
-      </scroll-view>
-    </swiper-item>
-  </swiper>
+  <scroll-view class="scrollViewContainer" enhanced="true" scroll-y="true" style="height:{{scrollViewContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh" bindscrolltolower="loadNewPage" >
+    <!-- 下拉刷新 -->
+    <view wx:if="{{isLoad}}" class="cu-load loading"></view>
+    <!-- 队伍列表 -->
+    <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
+      <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam" bindlogin="showLoginModal"></teamItem>
+    </view> 
+    <!-- 触底加载新页 -->
+    <view wx:if="{{showBottomLoading}}" class="cu-load bg-gray {{isBottomLoading?'loading':'over'}}"></view>
+  </scroll-view>
   
 </view>
 <!-- 个人中心 -->

@@ -12,23 +12,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-    wx.login({
-      success(res){
-        if(res.code){
-          request('/auth/wx/status','POST',{code:res.code}).then(
-            (res)=>{
-              var bind = res.data.data.bind;
-              that.setData({
-                bind: bind  // 表示是否与微信绑定
-              })
-            },
-            ()=>{}
-          )
-        }
-      }
+    console.log(options);
+    var bind = JSON.parse(options.bind);
+    this.setData({
+      bind: bind
     })
-    
   },
   // 退出登录
   logOut(){
