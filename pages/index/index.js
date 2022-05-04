@@ -20,6 +20,7 @@ Page({
     topTabList: [{id: 1,name: '兴趣'},{id: 2,name: '竞赛'},{id: 3,name: '创意'},{id: 4,name: '创业'},{id: 5,name: '学习'},{id: 6,name: '考证'}],
     scrollLeft: 0,  // 顶部tab距左边的距离
     tabCur: 0,  // 当前选中的底部tab
+    scrollViewContainerH: 300,  // 滚动框的初始高度
     accuseOptions: [{id: 0,name: '色情',selected: false},{id: 1,name: '欺诈',selected: false},{id: 2,name: '赌博',selected: false}],
     page: 1, // 页号
     key: "", // 搜索框中输入的关键字
@@ -48,15 +49,18 @@ Page({
     // 修改列表容器swiper的高度
     const that = this;
     const query = wx.createSelectorQuery()
-    query.select('#swiperContainer').boundingClientRect()
+    query.select(".scrollViewContainer").boundingClientRect()
+    console.log(query);
     query.exec(
       function (res) {
+        console.log(res);
         const tabbarQuery = wx.createSelectorQuery()
         tabbarQuery.select('#tabbar').boundingClientRect()
         tabbarQuery.exec(
           function (res1) {
+            console.log(res1);
             that.setData({
-              swiperContainerH: wx.getSystemInfoSync().windowHeight - res[0].top - res1[0].height - 10        
+              scrollViewContainerH: wx.getSystemInfoSync().windowHeight - res[0].top - res1[0].height - 10        
             })
           }
         )
@@ -96,9 +100,11 @@ Page({
       request('/recruit/listTeam','POST',data).then(
         (res)=>{
           var teamList = processTeamList(res.data.data);
+          console.log(teamList);
           resolve(teamList)
         },
         (error)=>{
+          console.log(error);
           wx.showToast({
             title: '请求失败',
             icon: 'error'
@@ -191,6 +197,9 @@ Page({
     }else{
       this.showModal('login')
     }
+  },
+  showLoginModal(){
+    this.showModal('login');
   },
   // 显示/隐藏模态框
   showModal(modalName) {

@@ -5,7 +5,36 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 年级选择器
+    undergraduate:[
+      {id: 0,name: '大一'},
+      {id: 1,name: '大二'},
+      {id: 2,name: '大三'},
+      {id: 3,name: '大四'},
+      {id: 4,name: '大五'},
+    ],
+    graduate: [
+      {id: 5,name: '研一'},
+      {id: 6,name: '研一'},
+      {id: 7,name: '研一'},
+    ],
+    doctor: [
+      {id: 8,name: '博士'}
+    ],
+    // 年级列表
+    gradeLst: [
+      {id: 0,name: '大一',checked: false},
+      {id: 1,name: '大二',checked: false},
+      {id: 2,name: '大三',checked: false},
+      {id: 3,name: '大四',checked: false},
+      {id: 4,name: '大五',checked: false},
+      {id: 5,name: '研一',checked: false},
+      {id: 6,name: '研一',checked: false},
+      {id: 7,name: '研一',checked: false},
+      {id: 8,name: '博士',checked: false},
+      {id: 9,name: '',checked: false}
+    ],
+    checked: false, //年级radio列表是否全部为空 
   },
 
   /**
@@ -15,6 +44,8 @@ Page({
     request('/info/detail','POST',{}).then(
       (res)=>{
         console.log(res);
+        var gradeLst = this.data.gradeLst;
+        gradeLst[res.data.data.grade].checked = true;
         this.setData({
           avatar: res.data.data.avatar,
           nickname: res.data.data.nickname,
@@ -22,7 +53,8 @@ Page({
           school: res.data.data.school,
           major: res.data.data.major,
           skill: res.data.data.skill,
-          grade: res.data.data.grade
+          grade: this.data.gradeLst[res.data.data.grade].name,
+          gradeLst: gradeLst
         })
       },
       (error)=>{
@@ -41,8 +73,9 @@ Page({
           school: res.data.data.school,
           major: res.data.data.major,
           skill: res.data.data.skill,
-          grade: res.data.data.grade
+          grade: this.data.gradeLst[res.data.data.grade].name
         })
+        this.data.gradeLst[res.data.data.grade].checked = true;
       },
       (error)=>{
         console.log(error);
@@ -125,7 +158,6 @@ Page({
     }
     request('/info/update','POST',{description:this.data.newDescription}).then(
       (res)=>{
-        console.log(res);
         this.setData({
           description:this.data.newDescription
         })
@@ -144,6 +176,51 @@ Page({
     wx.navigateTo({
       url: '/pages/searchCollege/searchCollege',
     })
+  },
+  // 编辑年级
+  changeGrade(e){
+    var modalName = e.currentTarget.dataset.modalname
+    this.setData({
+      modalName: modalName
+    })
+  },
+  selectGrade(e){
+    var id = parseInt(e.detail.value);
+    console.log(id);
+    request('/info/update','POST',{grade: id}).then(
+      ()=>{
+        this.setData({
+          grade: this.data.gradeLst[id].name
+        })
+      },
+      ()=>{
+        wx.showToast({
+          title: '保存失败',
+          icon: 'error'
+        })
+      }
+    )
+  },
+  setDefaultGrade(){
+    this.hideModal();
+    request('/info/update','POST',{grade: 9}).then(
+      ()=>{
+        var gradeLst = this.data.gradeLst;
+        for(let i=0;i<gradeLst.length;i++){
+          gradeLst[i].checked = false;
+        }
+        this.setData({
+          grade: '',
+          gradeLst: gradeLst
+        })
+      },
+      ()=>{
+        wx.showToast({
+          title: '保存失败',
+          icon: 'error'
+        })
+      }
+    )
   },
   // 编辑专业
   changeMajor(e){
@@ -201,6 +278,7 @@ Page({
       }
     )
   },
+  // 隐藏modal
   hideModal(e) {
     this.setData({
       modalName: null

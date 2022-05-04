@@ -14,7 +14,8 @@
     "pages/signInTel/signInTel",
     "pages/apply/apply",
     "pages/manageTeam/manageTeam",
-    "pages/memberInfo/memberInfo"
+    "pages/memberInfo/memberInfo",
+    "pages/userDetail/userDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

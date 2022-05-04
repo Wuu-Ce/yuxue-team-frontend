@@ -5,13 +5,13 @@
 <!-- 标题导航栏 -->
 <view class="bg-white nav text-grey text-center">
   <view class="cu-item {{0==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="0" style="height: {{NavHeight}}px;">
-    <text>来自团队</text>
+    <text>通知</text>
   </view>
   <view class="cu-item {{1==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="1" style="height: {{NavHeight}}px;">
-    <text>来自个人</text>
+    <text>需要审批</text>
   </view>
   <view class="cu-item {{2==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="2" style="height: {{NavHeight}}px;">
-    <text>来自系统</text>
+    <text>等待审批</text>
   </view>
 </view>
 <scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
