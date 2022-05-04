@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "report": "/components/reportTeam/reportTeam"
+    "report": "/components/reportTeam/reportTeam",
+    "loginRequired": "/components/loginRequired/loginRequired"
   }
 }

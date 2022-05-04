@@ -186,7 +186,7 @@ Page({
     var ifLogin = wx.getStorageSync('ifLogin');
     if(ifLogin){
       wx.navigateTo({
-        url: '/pages/myTeam/myTeam',
+        url: '/pages/createTeam/createTeam',
       })
     }else{
       this.showModal('login')

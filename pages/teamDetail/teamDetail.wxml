@@ -146,7 +146,7 @@
     <view class="padding-top-sm">
       <!-- 游客 未登录 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:if="{{relation===0}}">
-        <button class="cu-btn mainTone-bgColor" bindtap="showLogin">申请加入</button>
+        <button class="cu-btn mainTone-bgColor" bindtap="toApplyPage">申请加入</button>
       </view>
       <!-- 普通用户 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===1}}">
@@ -165,5 +165,7 @@
   </view>
 </scroll-view>
 
-
+<!-- 登录 modal框 -->
+<loginRequired show="{{showLoginModal}}"></loginRequired>
+<!-- 举报 modal框 -->
 <report tid="{{team.tid}}" teamName="{{team.name}}" show="{{reportModalShow}}"></report>

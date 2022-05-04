@@ -12,60 +12,59 @@ Page({
    */
   data: {
     scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
-    // 展示更多菜单
+    // 窗口展示
     moreMenuShow: false,
     reportModalShow: false,
+    showLoginModal: false,
+    // 缩略信息
     hideTeamGoal: true,
     hideTeamProtocol: true,
     hideTeamAbout: true,
+    
 
     // 用户类型 leader; member; normal; notLogin
-    relation: 3,
+    relation: -1,
     // 队伍信息
     team: {
-      //id
-      team_id: 1,
-      name: '予学团队',
-      createTime: new Date().getTime(),
+      team_id: 0,
+      name: '',
+      createTime: 0,
       description: '',
-      icon: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg',
-      classification: ['竞赛', '计算机'],
-      type: 1,
+      classification: ['', ''],
+      type: 0,
       typeinfo: '',
       announce: '',
-      goal: '上线第一个月增长5000名用户',
+      goal: '',
       rule: '',
       members: [],
     },
     recruit: [{
-      count: 2,
-      count_available: 2,
+      count: 0,
+      count_available: 0,
       is_available: 0,
       is_local: 0,
       items: [{
           is_available: true,
-          recruit_id: 9,
-          requirement: "下雨知道打伞",
-          ritem_id: 20,
-          role: "撑伞",
+          recruit_id: 0,
+          requirement: "",
+          ritem_id: 0,
+          role: "",
           time: null,
         },
         {
           is_available: true,
-          recruit_id: 9,
-          requirement: "手机没电知道充电",
-          ritem_id: 21,
-          role: "充电",
+          recruit_id: 0,
+          requirement: "",
+          ritem_id: 0,
+          role: "",
           time: null,
         }
       ],
-      recruit_id: 9,
-      team_id: 2,
+      recruit_id: 0,
+      team_id: 0,
       time: 1650444860,
-      type: 1,
-
+      type: 0,
     }]
-
   },
 
   /**
@@ -76,13 +75,16 @@ Page({
     // 队伍详情
     this.getTeamDetail(team_id)
     // 用户与团队关系
-    this.getRelation(team_id)
+    this.getRelation()
     // 招募
-    this.getRecruit(team_id)
+    this.getRecruit()
 
   },
   onShow() {
-
+    // 用户与团队关系
+    this.getRelation()
+    // 招募
+    this.getRecruit()
   },
   // 获取队伍详情
   getTeamDetail(team_id) {
@@ -96,9 +98,7 @@ Page({
         teamInfo.createtime = __formatTime(teamInfo.createtime * 1000, "Y年M月D日")
       }
     }
-    const rest = request('/team/detail', 'POST', {
-      team_id: team_id
-    })
+    const rest = request('/team/detail', 'POST', {team_id: team_id})
     rest.then(
       res => {
         const data = res.data.data
@@ -108,7 +108,6 @@ Page({
           that.setData({
             team: teamInfo
           })
-          console.log(teamInfo)
         }
       },
       res => {
@@ -121,13 +120,13 @@ Page({
       })
   },
   // 用户与队员关系接口
-  getRelation(team_id) {
+  getRelation() {
     const that = this
-    const relation = request('/team/relation', 'POST', {
-      team_id: team_id
-    })
+    const team_id = this.data.team.team_id
+    const relation = request('/team/relation', 'POST', {team_id: team_id})
     relation.then(
       res => {
+        console.log(res)
         const data = res.data.data
         if (data.status === -1) {
           wx.showToast({
@@ -151,16 +150,15 @@ Page({
     )
   },
   // 获取招募详情
-  getRecruit(team_id) {
+  getRecruit() {
+    const team_id = this.data.team.team_id
     const that = this
     const recruit = request('/recruit/listOfTeam', 'POST', {team_id: team_id})
     recruit.then(
       res => {
-        console.log(res)
         that.setData({
           recruit: res.data.data
         })
-        console.log(res)
       },
       res => {
         wx.showToast({
@@ -233,9 +231,16 @@ Page({
   },
   // 跳转申请加入界面
   toApplyPage() {
-    wx.navigateTo({
-      url: '/pages/apply/apply?team_id=' + this.data.team.team_id +'&recruit_id='  + this.data.recruit[0].recruit_id,
-    })
+    var ifLogin = wx.getStorageSync('ifLogin');
+    if(ifLogin){
+      wx.navigateTo({
+        url: '/pages/apply/apply?team_id=' + this.data.team.team_id +'&recruit_id='  + this.data.recruit[0].recruit_id,
+      })
+    }else{
+      this.setData({
+        showLoginModal: true
+      })
+    }
   },
   // 跳转管理团队界面
   toManagePage() {
