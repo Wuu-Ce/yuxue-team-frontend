@@ -2,6 +2,18 @@
   display: flex;
   flex-flow: column;
 }
+
+@keyframes showInput {
+  from {
+    height: 0;
+  }
+  to {
+    height:  300rpx;
+  }
+}
+.showInput {
+  animation: showInput 0.5s;
+}
 .fill {
   height: 10%;
   flex-basis: auto;

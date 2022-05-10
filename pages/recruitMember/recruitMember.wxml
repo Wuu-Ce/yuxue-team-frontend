@@ -72,7 +72,7 @@
             <textarea
               name="recruitDetail" 
               value="{{recruit.neccessary.detail}}" 
-              placeholder="说明对成员的要求，包括方向，人数，技能要求等" 
+              placeholder="说明对成员的要求，包括方向，技能，要求等" 
               class="normal-textarea solid-normal margin-top" 
               bindblur="bindFastDetail" 
               bindconfirm="bindFastDetail"

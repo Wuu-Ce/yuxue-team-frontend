@@ -1,3 +1,13 @@
+@keyframes showItem {
+  from {
+    transform: translateY(-60rpx) scale(0.3, 0.5);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1, 1);
+    opacity: 1;
+  }
+}
 .mainContainer {
   display: flex;
   flex-flow: column;
@@ -10,7 +20,7 @@
 }
 /* 底部线 */
 .bottomLine {
-  border-bottom: solid 4rpx rgb(201, 191, 211);
+  border-bottom: solid 4rpx rgba(64, 128, 196, 0.562);
 }
 
 /* 首行缩进 */
@@ -22,13 +32,13 @@
 .recruit-item {
   position: relative;
   border-radius: 15rpx;
-  background-color: rgb(201, 191, 211);
-  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(201, 191, 211, 0.5);
+  background-color: rgb(64, 128, 196);
+  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(48, 95, 146, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(64, 128, 196, 0.5);
 }
 .recruit-item-disable {
   position: relative;
   border-radius: 15rpx;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(64, 128, 196);
   box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1),-10rpx -10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1);
 }
 
@@ -47,7 +57,7 @@
   display: flex;
   justify-content: space-between;
   margin: 0 10rpx 0 10rpx;
-  background-color: rgb(201, 191, 211);
+  background-color: rgb(64, 128, 196);
 }
 
 .wuutag .left-box {
@@ -72,7 +82,7 @@
 .wuutag .main-content {
   border-radius: 0 0 8rpx 8rpx;
   padding: 4rpx 10rpx 4rpx 10rpx;
-  background-color: rgb(201, 191, 211);
+  background-color: rgb(64, 128, 196);
 }
 
 .finishText {
@@ -96,10 +106,23 @@
 /* 更多菜单 */
 .moreMenu {
   position:absolute;
-  top:300rpx;
+  top:120rpx;
   right:10rpx;
   width:260rpx;
-  z-index: 100
+  z-index: 100;
+  animation: showItem 0.3s;
+  background-color: rgb(64, 128, 196);
+}
+.moreMenu::before {
+  content: "";
+  position: absolute;
+  top: -8rpx;
+  right: 60rpx;
+  width: 20rpx;
+  height: 20rpx;
+  background-color: rgb(64, 128, 196);
+  transform: rotate(45deg) skew(15deg, 15deg);
+  z-index: 99;
 }
 
 /* 缩略文本容器 */
@@ -125,4 +148,5 @@
   top:10rpx;
   left: 50rpx;
   opacity: 0.8;
+  background-color: rgb(64, 128, 196);
 }

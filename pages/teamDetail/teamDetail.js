@@ -75,16 +75,20 @@ Page({
     // 队伍详情
     this.getTeamDetail(team_id)
     // 用户与团队关系
-    this.getRelation()
+    this.getRelation(team_id)
     // 招募
-    this.getRecruit()
+    this.getRecruit(team_id)
 
   },
   onShow() {
-    // 用户与团队关系
-    this.getRelation()
-    // 招募
-    this.getRecruit()
+    const team_id = this.data.team.team_id
+    if(team_id !== 0)
+    {
+      // 用户与团队关系
+      this.getRelation(team_id)
+      // 招募
+      this.getRecruit(team_id)
+    }
   },
   // 获取队伍详情
   getTeamDetail(team_id) {
@@ -116,17 +120,14 @@ Page({
           title: '加载失败',
           duration: 2000
         })
-        console.log(res)
       })
   },
   // 用户与队员关系接口
-  getRelation() {
+  getRelation(team_id) {
     const that = this
-    const team_id = this.data.team.team_id
     const relation = request('/team/relation', 'POST', {team_id: team_id})
     relation.then(
       res => {
-        console.log(res)
         const data = res.data.data
         if (data.status === -1) {
           wx.showToast({
@@ -150,8 +151,7 @@ Page({
     )
   },
   // 获取招募详情
-  getRecruit() {
-    const team_id = this.data.team.team_id
+  getRecruit(team_id) {
     const that = this
     const recruit = request('/recruit/listOfTeam', 'POST', {team_id: team_id})
     recruit.then(

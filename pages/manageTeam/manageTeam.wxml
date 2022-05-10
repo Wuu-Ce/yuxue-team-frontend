@@ -15,7 +15,7 @@
             <view class="text-sm text-gray">id：{{team.team_id}}</view>
           </view>
         </view>
-        <button class="cu-btn bg-blue shadow text-df basis-sm" style="margin-right: 0;" bindtap="chooseImage">更换logo</button>
+        <button class="cu-btn shadow text-df color-ok" style="margin-right: 0;width: 30%;" bindtap="chooseImage">更换logo</button>
       </view>
     </view>
 
@@ -40,13 +40,14 @@
           <view class="text-black">类型</view>
           <view class="flex justify-end basis-lg align-center">
             <view class="text-gray text-df text-content text-right">
-              <scroll-view scroll-x="true" style="height: 50rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start">
+              <scroll-view scroll-x="true" style="width: 400rpx; height: 50rpx; white-space: nowrap;" enable-flex="true" class="flex justify-end">
                 <view class=" flex justify-start">
                   <view wx:for="{{team.classification}}" wx:key="index">{{index>0?'-':''}}
                     <view class="cu-tag line-blue round text-blue margin-right-xs">{{item}}</view>
                   </view>
                 </view>
               </scroll-view>
+              <view class="padding-right-sm">{{team.typeinfo}}</view>
             </view>
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
@@ -78,7 +79,7 @@
           </view>
         </view>
         <view 
-          class="flex justify-between text-lg padding-tb"
+          class="flex justify-between text-lg padding-tb solid-bottom"
           bindtap="inputText"
           data-type="textarea"
           data-title="规约"
@@ -104,21 +105,29 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{textChanged}}" class="margin-right-sm shadow bg-white show-save text-center">
-        <button class="cu-btn text-df round margin bg-yellow" bindtap="updateTeamInfo">保存</button>
-      </view>
     </view>
+    <view wx:if="{{textChanged}}" class="margin-lr-lg shadow bg-white show-save text-center flex justify-around">
+      <button class="cu-btn text-df round margin color-cancel basis-sm" bindtap="cancelTeamInfo">取消</button>
+      <button class="cu-btn text-df round margin color-ok basis-sm" bindtap="updateTeamInfo">保存</button>
+    </view>
+
     <!-- 成员管理  -->
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">成员管理</view>
       <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="flex justify-between text-lg solid-bottom padding-bottom">
+        <view class="flex justify-between text-lg solid-bottom padding-bottom" bindtap="toMemberInfo">
           <view class="text-black">查看成员</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg solid-bottom padding-tb" bindtap="showInviteModal">
+        <view 
+          class="flex justify-between text-lg solid-bottom padding-tb" 
+          bindtap="inputText"
+          data-type="input"
+          data-title="用户UID"
+          data-value=""
+        >
           <view class="text-black">邀请</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
@@ -136,13 +145,13 @@
     <view class="padding-lr-sm padding-top">
       <view class="padding-left padding-bottom-xs text-gray">功能设置</view>
       <view class="padding cu-item shadow bg-white" style="border-radius: 15rpx;">
-        <view class="flex justify-between text-lg" bindtap="showMemberPop" data-type="changeLeader">
+        <view class="flex justify-between text-lg padding-bottom solid-bottom" bindtap="stopReciut">
           <view class="text-black">停止招募</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
           </view>
         </view>
-        <view class="flex justify-between text-lg" bindtap="showMemberPop" data-type="changeLeader">
+        <view class="flex justify-between text-lg padding-top" bindtap="showMemberPop" data-type="changeLeader">
           <view class="text-black">转移队长</view>
           <view class="flex justify-end basis-lg">
             <text class="cuIcon-right padding-left-sm text-black"></text>
@@ -151,14 +160,18 @@
       </view>
     </view>
     <view class="padding-lr-sm padding-top">
-      <button class="cu-btn lg margin bg-red padding" style="width: 100%;border-radius: 15rpx;">解散团队</button>
+      <button class="cu-btn lg margin color-cancel padding" style="width: 100%;border-radius: 15rpx;" bindtap="onClickDisband">解散团队</button>
     </view>
-    
   </view>
 </scroll-view>
 
 <!-- 成员管理组件 -->
-<member-select show="{{showMemberPop}}" type="{{popType}}"></member-select>
+<member-select 
+  wx:if="{{showMemberPop}}" 
+  show="{{showMemberPop}}" 
+  type="{{popType}}"
+  bind:close="onCloseMember"
+  ></member-select>
 
 <!-- 文本输入组件 -->
 <input-modal 

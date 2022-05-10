@@ -1,6 +1,7 @@
 import {
   request,
-  classification
+  classification,
+  copyObject
 } from '../../utils/util'
 const CONFIG = require("../../config.js")
 const app = getApp()
@@ -18,6 +19,7 @@ Page({
     popType: '',
     // 队伍信息副本
     teamCopy: {},
+    relation: 0,
     team: {
       team_id: '10000001',
       name: '予学团队',
@@ -44,7 +46,7 @@ Page({
     // 选择分类模态框展示
     showClassModal: false,
     // 分类 
-    class: classification,
+    class: copyObject(classification),
     // 选中分类
     cur: 0,
     inds: [-1, -1, -1, -1],
@@ -55,7 +57,6 @@ Page({
     nowTag: '',
     // 展示分类
     classSelected: false,
-    showClass: [],
   },
 
   /**
@@ -66,12 +67,14 @@ Page({
     const pages = getCurrentPages();
     const prevPage = pages[pages.length - 2]; //上一个页面
     const team = prevPage.data.team //取上页data里的数据也可以修改
+    const relation = prevPage.data.relation
     if (team.team_id == team_id)
       this.setData({
         prevPage: prevPage,
         team: team,
-        teamCopy: team,
-        curClass: this.data.class
+        teamCopy: copyObject(team),
+        curClass: this.data.class,
+        relation: relation
       })
   },
 
@@ -98,6 +101,7 @@ Page({
   // 输入完成
   inputConfirm(e) {
     const team = this.data.team
+    let changed = true
     switch (e.detail.title) {
       case '名称':
         team.name = e.detail.value
@@ -114,12 +118,23 @@ Page({
       case '公告':
         team.announce = e.detail.value
         break
+      case '用户UID': 
+        changed = false
+        this.inviteMember(e.detail.value)
+        break
       default:
         break
     }
     this.setData({
       team: team,
-      textChanged: true
+      textChanged: changed
+    })
+  },
+  // 取消更新团队信息
+  cancelTeamInfo() {
+    this.setData({
+      team: this.data.teamCopy,
+      textChanged: false
     })
   },
   // 更新队伍信息
@@ -132,18 +147,22 @@ Page({
     })
     const team = that.data.team
     const request_data = {
+      field_id: team.field_id,
       team_id: team.team_id,
       type: team.type,
-      typeinfor: team.typeinfo,
+      typeinfo: team.typeinfo,
       goal: team.goal,
       name: team.name,
       description: team.description,
       rule: team.rule,
       announce: team.announce
     }
+    console.log("请求参数：")
+    console.log(request_data)
     const res = request('/team/update', 'POST', request_data)
     res.then(
       res => {
+        console.log("返回参数")
         console.log(res)
         wx.hideToast()
         wx.showToast({
@@ -172,6 +191,10 @@ Page({
         })
       }
     )
+  },
+  // 邀请成员
+  inviteMember(user_id) {
+    
   },
   //  展示分类选择模态框
   showClassModal() {
@@ -246,15 +269,16 @@ Page({
     let cur = this.data.cur
     let inds = this.data.inds
     let curClass = this.data.class
+    let classArrayTemp = this.data.classArrayTemp
     let classTitle = ''
     if (curClass.edit) {
       curClass.input = ''
     }
-    this.data.classArrayTemp.pop()
+    classArrayTemp.pop()
     // 修改选中值
     this.setData({
       selected: inds[--cur],
-      classArrayTemp: this.data.classArrayTemp
+      classArrayTemp: classArrayTemp
     })
     inds[cur] = -1;
     // 修改所在分类
@@ -282,19 +306,17 @@ Page({
       })
     }, 300)
   },
+  // 输入分类名称 typeinfo
+  bindClassInput(e) {
+    this.data.curClass.input = e.detail.value
+  },
 
   // 确认分类
   modalOK() {
-    let classTitle = this.data.classTitle
-    let curClass = this.data.curClass
+    const curClass = this.data.curClass
     const team = this.data.team
-    let showClass = []
-    // 设置展示的分类
-    showClass.push(classTitle)
-
-    team.field_id = curClass.id
-    team.typeinfo = curClass.input
-
+    const teamCy = this.data.teamCopy
+    const classArrayTemp = this.data.classArrayTemp
     if (curClass.edit) {
       if (curClass.input === '') {
         wx.showToast({
@@ -304,48 +326,48 @@ Page({
         })
         return
       }
-      showClass.push(curClass.input)
+
     }
+    team.classification = classArrayTemp
+    team.field_id = curClass.id
+    team.typeinfo = curClass.input
+    let changed = (team.typeinfo === teamCy.typeinfo && team.classification.slice(-1)[0] === teamCy.classification.slice(-1)[0]) ? false : true
+    console.log(team.classification.slice(-1)[0] )
+    console.log(teamCy.classification.slice(-1)[0])
+    console.log(changed)
+
     this.setData({
-      nowTag: curClass.input,
       showClassModal: false,
       classSelected: true,
-      showClass: showClass,
-      classArray: this.data.classArrayTemp
+      team: team,
+      textChanged: changed
     })
   },
   // 选择图片
   chooseImage() {
     const that = this
-    wx.chooseImage({
-      // 最多可以选择的图片张数
+    wx.chooseMedia({
       count: 1,
-      // 所选的图片的尺寸
-      sizeType: ['compressed'],
-      // 选择图片的来源
+      mediaType: ['image'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
+      sizeType: ['compressed'],
+      camera: 'back',
+      success(res) {
         const team = that.data.team
         wx.compressImage({
-          src: res.tempFiles[0].path, // 图片路径
+          src: res.tempFiles[0].tempFilePath, // 图片路径
           quality: 1, // 压缩质量
-          success: (res1) => {
-            console.log(res1)
+          success(res1) {
             team.avatar = res1.tempFilePath
             that.upLoadLogo()
-          },
-          fail: (res1) => {
-            console.log(res1)
           }
         })
-      },
-      fail: function (res) {
-        console.log('fail', res)
-      },
+      }
     })
   },
   // 上传logo
   upLoadLogo() {
+    wx.showLoading({title: '更换中'})
     const prevPage = this.data.prevPage
     const that = this
     const team = that.data.team
@@ -365,9 +387,7 @@ Page({
       success(res) {
         wx.hideLoading()
         const data = JSON.parse(res.data)
-        console.log(data)
-
-        if (data.code == 0) {
+        if (data.code === 0) {
           team.avatar = data.data.avatar
           that.setData({
             team: team
@@ -378,13 +398,13 @@ Page({
           wx.showToast({
             icon: 'success',
             title: '更换成功',
-            duration: 2000
+            duration: 1000
           })
         } else {
           wx.showToast({
             icon: 'error',
             title: '更换失败',
-            duration: 2000
+            duration: 1000
           })
         }
       },
@@ -400,16 +420,131 @@ Page({
   },
   // 展示队伍面板
   showMemberPop(e) {
-    console.log(e)
     const type = e.currentTarget.dataset.type
     this.setData({
       showMemberPop: true,
       popType: type
     })
   },
-  hiddenMemberPop(e) {
+  onCloseMember(e) {
     this.setData({
       showMemberPop: false
     })
+  },
+
+  //跳转成员页面
+  toMemberInfo() {
+    wx.navigateTo({
+      url: '/pages/memberInfo/memberInfo',
+    })
+  },
+  // 停止招募确认弹窗
+  stopReciut() {
+    const that = this
+    if(!this.data.prevPage.data.recruit[0]) {
+      wx.showToast({
+        icon: 'error',
+        title: '未进行招募',
+        duration: 1000
+      })
+      return
+    }
+    wx.showModal({
+      title: '停止招募',
+      content: '要停止招募吗？',
+      confirmColor: '#080C4',
+      confirmText: '停止',
+      cancelColor: 'cancelColor',
+      success(res) {
+        if(res.confirm) {
+          that.stopReciutRequest()
+        }
+      }
+    })
+  },
+  // 停止招募-接口
+  stopReciutRequest() {
+    const prevPage = this.data.prevPage
+    const recruit_id = prevPage.data.recruit[0].recruit_id
+    wx.showLoading({
+      title: '正在停止招募',
+    })
+    const stopRes = request('/recruit/leader/stop', 'POST', {recruit_id: recruit_id})
+    stopRes.then(
+      res => {
+        wx.hideLoading()
+        if(res.data.code === 0){
+          prevPage.setData({
+            recruit: []
+          })
+          wx.showToast({
+            icon: 'success',
+            title: '已停止招募',
+            duration: 1000
+          })
+        }
+      },
+      error=> {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'error',
+          title: error.message,
+          duration: 2000
+        })
+      })
+  },
+  // 点击解散团队
+  onClickDisband() {
+    const that = this
+    wx.showModal({
+      title: '解散团队',
+      content: '要解散团队吗？',
+      confirmColor: '#DC143C',
+      confirmText: '解散',
+      cancelColor: 'cancelColor',
+      success(res) {
+        if(res.confirm) {
+          that.disbandTeam()
+        }
+      }
+    })
+  },
+  disbandTeam() {
+    wx.showLoading({
+      title: '解散中...',
+    })
+    const request_data = {
+      team_id: this.data.team.team_id
+    }
+    const res = request('/team/dissolve', 'POST', request_data)
+    res.then(
+      res=> {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'success',
+          title: '团队已解散',
+          duration: 1000,
+          coomplete() {
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          }
+        })
+        console.log(res)
+
+      },
+      error=> {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'error',
+          title: error.message,
+          duration: 1000
+        })
+
+      }
+    )
+
   }
 })
+
+

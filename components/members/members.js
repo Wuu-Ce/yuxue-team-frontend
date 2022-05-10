@@ -1,4 +1,4 @@
-import { request } from "../../utils/util"
+import { request, copyObject } from "../../utils/util"
 Component({
   /**
    * 组件的属性列表
@@ -26,60 +26,45 @@ Component({
   data: {
     showOkModal: false,
     animation: false,
-    members: [
-      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 1},
-      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 1},
-      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 1},
-      {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 1}
-    ],
     select: -1,
     selectMember: {},
+    members: [],
     team_id: 0
+  },
+
+
+  lifetimes: {
+    attached: function()  {
+      console.log('on show')
+      const pages = getCurrentPages();
+      const curPage = pages[pages.length - 1]; //当前页面
+      const team = curPage.data.team
+      const members = copyObject(team.members)
+      this.setData({
+        members: members,
+        team_id: team.team_id
+      })
+    }
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
-    // 获取队员列表
-    getTeamDetail(team_id) {
-      const that = this
-      const rest = request('/team/detail', 'POST', {
-        team_id: team_id
-      })
-      rest.then(
-        res => {
-          const data = res.data.data
-          if (res.data.code === 0) {
-            teamInfo = data.members
-            teamInfo = [
-              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 2},
-              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 2},
-              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 2},
-              {avatar: 'https://team.test.yuxue0824.com/static/avatar/user/20.jpg', nickname: 'name', user_id: 2}
-            ]
-            that.setData({
-              members: teamInfo
-            })
-
-            console.log(teamInfo)
-          }
-        },
-        res => {
-          wx.showToast({
-            icon: 'error',
-            title: '加载失败',
-            duration: 2000
-          })
-          console.log(res)
-        })
-    },
     // 选择某个队员
     SelectItem(e) {
       if(this.data.type === 'deleteMember')
         return
       let selectIndex = e.currentTarget.dataset.index
-      const members = this.data.members
+      const selectMember = this.data.members[selectIndex]
+      if(selectMember.is_leader) {
+        wx.showToast({
+          icon: 'error',
+          title: '不能选中队长',
+          duration: 1000
+        })
+        return
+      }
       this.setData({
         select: selectIndex,
         selectMember: members[selectIndex]
@@ -87,7 +72,6 @@ Component({
     },
     // 展示确认框
     showOkModal() {
-
       this.setData({
         showOkModal: true
       })
@@ -114,9 +98,17 @@ Component({
     // 点击移除按钮时
     bindRemove(e) {
       let selectIndex = e.currentTarget.dataset.index
-      const members = this.data.members
+      const selectMember = this.data.members[selectIndex]
+      if(selectMember.is_leader) {
+        wx.showToast({
+          icon: 'error',
+          title: '不能移除队长',
+          duration: 1000
+        })
+        return
+      }
       this.setData({
-        selectMember: members[selectIndex]
+        selectMember: selectMember
       })
       this.showOkModal()
     },
@@ -163,10 +155,10 @@ Component({
       })
       const member = this.data.selectMember
       const request_data = {
-        team_id: this.data.team_id,
-        new_user_id: member.user_id
+        team_id: this.data.team.team_id,
+        user_id: member.user_id
       }
-      let res = request('/team/transfer','POST',request_data)
+      let res = request('/team/kick','POST',request_data)
       res.then(
         res => {
           console.log(res)
