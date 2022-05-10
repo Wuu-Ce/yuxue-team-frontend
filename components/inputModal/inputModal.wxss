@@ -1,1 +1,9 @@
-@import '/app.wxss'
+@import '/app.wxss';
+
+.inputBox {
+  width: 90%;
+  margin-left: 5%;
+  padding: 20rpx 20rpx 20rpx 20rpx;
+  border-radius: 15rpx;
+  border: solid 4rpx rgb(220, 222, 224)
+}

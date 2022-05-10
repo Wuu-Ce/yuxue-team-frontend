@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-white" isBack="{{true}}">
-  <view class="text-black" slot="backText">创建队伍</view>
+  <view class="text-black" slot="backText">创建团队</view>
 </cu-custom>
 
 <!-- 步骤条 -->
@@ -17,94 +17,96 @@
     <form bindsubmit="submitTeamInfo" class="text-black">
       <view class="padding-lr-sm padding-top-sm">
         <view class="padding radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-          <view class="text-xl text-bold text-black">队伍信息</view>
-          <view class="margin-tb mainTone-color1">在这里填写创建队伍所需的信息</view>
+          <view class="text-xl text-bold text-black">团队信息</view>
+          <view class="margin-tb mainTone-color1">在这里填写创建团队所需的信息</view>
         </view>
       </view>
       <!-- 队伍名称 -->
-      <view class="padding-lr-sm padding-top-sm">
-        <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white flex justify-start align-center" style="border-radius: 15rpx;">
-          <view class="text-lg text-black" style="width: 25%;">队伍名称</view>
-          <input
-            name = "teamName"
-            placeholder="15字以内" 
-            maxlength="15"
-            value="{{team.name}}"
-            class="normal-input padding-lr-sm {{unTeamName?'solid-warnning':'solid-normal'}} " 
-            style="width: 75%;"
-            bindblur = "bindTeamName"
-            bindconfirm = "bindTeamName"
-          ></input>
-        </view>
-      </view>  
-      <!-- 头像 -->
-      <view class="padding-lr-sm padding-top-sm">
-        <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white flex justfy-start align-center" style="border-radius: 15rpx;">
-          <view class="text-lg text-black" style="width: 25%;">队伍logo</view>
-          <view  class="flex jutify-between" style="width: 50%;">
-            <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.avatar}}" alt="logo"></image>
+      <view class="padding-lr-sm padding-top-sm"> 
+        <view class="padding-lr-lg padding-top radius shadow bg-white" style="border-radius: 15rpx;">
+          <view class=" flex justify-start align-center">
+            <view class="text-lg text-black" style="width: 25%;">团队名称</view>
+            <input
+              name = "teamName"
+              placeholder="15字以内" 
+              maxlength="15"
+              value="{{team.name}}"
+              class="normal-input padding-lr-sm {{unTeamName?'solid-warnning':'solid-normal'}} " 
+              style="width: 75%;"
+              bindblur = "bindTeamName"
+              bindconfirm = "bindTeamName"
+            ></input>          
           </view>
-          <button class="cu-btn text-sm shadow-wrap mainTone-bgColor" style="width: 25%;" bindtap="chooseImage">选择图片</button>
+          <!-- logo -->
+           <view class="padding-tb flex justfy-start align-center">
+            <view class="text-lg text-black" style="width: 25%;">logo</view>
+            <view  class="flex jutify-between" style="width: 50%;">
+              <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.avatar}}" alt="logo"></image>
+            </view>
+            <button class="cu-btn text-sm shadow-wrap mainTone-bgColor" style="width: 25%;" bindtap="chooseImage">选择图片</button>
+          </view>
         </view>
       </view>
-      <!-- 分类 -->
-      <view class="padding-lr-sm padding-top-sm">
-        <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-          <view class="text-lg text-black">队伍类型</view>
-          <view wx:if="{{classSelected}}" class="padding-top">
-            <scroll-view scroll-x="true"  style="height: 50rpx; margin-left: 100rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start">
-              <view class=" flex justify-start">
-                <view wx:for="{{classArray}}" wx:key="index">{{index>0?'-':''}}
-                  <view class="cu-tag line-blue round text-blue margin-right-xs">{{item}}</view>
+      <!-- 类型 -->
+      <view class="padding-lr-sm padding-top-sm"> 
+        <view class="padding-lr-lg radius shadow bg-white" style="border-radius: 15rpx;">
+        <view class="padding-tb">
+            <view class="text-lg text-black">类型</view>
+            <view wx:if="{{classSelected}}" class="padding-top">
+              <scroll-view scroll-x="true"  style="height: 50rpx; margin-left: 100rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start">
+                <view class=" flex justify-start">
+                  <view wx:for="{{classArray}}" wx:key="index">{{index>0?'-':''}}
+                    <view class="cu-tag line-blue round text-blue margin-right-xs">{{item}}</view>
+                  </view>
                 </view>
-              </view>
-            </scroll-view>
-            <view wx:if="{{nowTag!==''}}" class="padding-tb-sm" style="margin-left: 100rpx;">{{nowTag}}</view>
+              </scroll-view>
+              <view wx:if="{{nowTag!==''}}" class="padding-tb-sm" style="margin-left: 100rpx;">{{nowTag}}</view>
+            </view>
+            <view class="flex flex-direction margin-top">
+                <button class="cu-btn shadow-wrap mainTone-bgColor" bindtap="showClassModal">请选择分类</button>
+            </view>       
           </view>
-          <view class="flex flex-direction margin-top">
-              <button class="cu-btn shadow-wrap mainTone-bgColor" bindtap="showClassModal">请选择分类</button>
-          </view>       
         </view>
       </view>
       <!-- 队伍介绍 -->
       <view class="padding-lr-sm padding-top-sm">
         <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-          <view class="text-lg text-black" >队伍介绍</view>
+          <view class="text-lg text-black" >介绍</view>
           <textarea
             name = "teamAbout"
             value="{{team.description}}"
-            placeholder="请在此输入队伍的介绍，不超过70字"
-            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top" 
+            placeholder="请在此输入团队的介绍。"
+            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm" 
             maxlength="70"
             bindblur = "bindTeamAbout"
             bindconfirm = "bindTeamAbout"
           ></textarea>
-        </view>
-      </view>
-      <!-- 队伍介绍 -->
-      <view class="padding-lr-sm padding-top-sm">
-        <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-          <view class="text-lg text-black" >队伍目标</view>
+
+          <view class="padding-top flex justify-between">
+            <view class="text-lg text-black" >目标</view>
+            <switch class="sm blue" bindchange="switchGoal"></switch>
+          </view>
           <textarea
+            hidden="{{!showGoal}}"
             name = "teamGoal"
             value="{{team.goal}}"
-            placeholder="请在此输入队伍目标"
-            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top" 
+            placeholder="请在此输入团队目标"
+            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm showInput" 
             maxlength="70"
             bindblur = "bindTeamGoal"
             bindconfirm = "bindTeamGoal"
           ></textarea>
-        </view>
-      </view>
-      <!-- 队伍规约 -->
-      <view class="padding-lr-sm padding-top-sm">
-        <view class="padding-lr-lg padding-tb radius cu-item shadow bg-white" style="border-radius: 15rpx;">
-          <view class="text-lg text-black">队伍规约</view>
+
+          <view class="padding-top flex justify-between">
+            <view class="text-lg text-black" >规约</view>
+            <switch class="sm blue" bindchange="switchRule"></switch>
+          </view>
           <textarea  
+            hidden="{{!showRule}}"
             name="teamProtocol"
             value="{{team.rule}}"
-            placeholder="请在此输入队伍的规约" 
-            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top" 
+            placeholder="请在此输入团队的规约" 
+            class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm showInput" 
             maxlength="70"
             bindblur = "bindTeamProtocol"
             bindconfirm = "bindTeamProtocol"
@@ -135,23 +137,23 @@
         <!-- 队伍信息 -->
         <view class="padding-top ">
           <view class="flex justify-start text-black align-center">
-            <view style="min-width: 160rpx;">队伍标志：</view>
+            <view style="min-width: 160rpx;">logo：</view>
             <image class="cu-avatar round" style="width: 84rpx;height: 84rpx;" src="{{team.avatar}}"></image>
           </view>
           <view class="flex justify-start text-black padding-top">
-            <view style="min-width: 160rpx;">队伍名称：</view>
+            <view style="min-width: 160rpx;">名称：</view>
             <view>{{team.name}}</view>
           </view>
           <view class="padding-top flex justify-start text-black">
-            <view style="min-width: 160rpx;">队伍介绍：</view>
+            <view style="min-width: 160rpx;">介绍：</view>
             <view>{{team.description}}</view>
           </view>
           <view class="padding-top flex justify-start text-black">
-            <view style="min-width: 160rpx;">队伍目标：</view>
+            <view style="min-width: 160rpx;">目标：</view>
             <view >{{team.goal}}</view>
           </view>
           <view class="flex justify-start padding-top text-black">
-            <view style="min-width: 160rpx;">队伍规约：</view>
+            <view style="min-width: 160rpx;">规约：</view>
             <view>{{team.rule}}</view>
           </view>
         </view>

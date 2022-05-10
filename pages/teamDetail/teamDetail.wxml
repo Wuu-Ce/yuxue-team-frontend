@@ -3,7 +3,7 @@
   <view class="text-black" slot="backText">返回</view>
 </cu-custom>
 
-<view bindtap="showMoreMenu" class="catchView" wx:if="{{moreMenuShow}}"></view>
+<view catchtap="showMoreMenu" class="catchView" wx:if="{{moreMenuShow}}"></view>
 <scroll-view scroll-y style="height: {{scrollH}}px;">
   <view style="min-height: {{scrollH}}px;" class="mainContainer">
     <!-- 名称 -->
@@ -16,7 +16,7 @@
             <view class="text-sm text-gray">id：{{team.team_id}}</view>
           </view>
         </view>
-        <view class="padding-sm text-lg" bindtap="showMoreMenu">
+        <view class="padding-sm text-lg" catchtap="showMoreMenu">
           <text class="cuIcon-moreandroid"></text>
         </view>
         <!-- 收藏、举报 -->
@@ -36,9 +36,9 @@
     <view class="padding-lr-sm padding-top-sm">
       <view class="radius cu-item shadow bg-white" style="border-radius: 15rpx;">
         <view class="padding-lr-lg  padding-top">
-          <view class="flex justify-between">
+          <view class="flex justify-between text-lg" bindtap="toMemberInfoPage">
             <view class="text-lg text-bold">团队成员</view>
-            <view class="cuIcon-right line-blue text-lg" bindtap="toMemberInfoPage"></view>
+            <view class="cuIcon-right line-blue " ></view>
           </view>
         </view>
         <scroll-view scroll-x="true" style="height: 150rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start padding-lr-lg margin-top-sm">

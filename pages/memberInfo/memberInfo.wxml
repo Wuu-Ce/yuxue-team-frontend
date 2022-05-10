@@ -3,46 +3,66 @@
   <view class="text-black" slot="backText">返回</view>
 </cu-custom>
 
-<scroll-view scroll-y style="height: {{scrollH}}px;" >
+<scroll-view scroll-y style="height: {{scrollH}}px;">
   <view style="min-height: {{scrollH}}px;" class="flex" style="flex-direction: column;">
-    <view class="padding-lr-sm padding-top-sm">
-      <view class="colorBar padding-tb padding-left-lg padding-right cu-item shadow bg-white" >
-        <view class="flex justify-between align-center solid-bottom padding-tb">
+    <view class="padding-lr-sm padding-top-sm" wx:for="{{team.members}}" wx:key="index">
+      <view class="colorBar padding-tb padding-left-lg padding-right cu-item shadow bg-white">
+        <view class="flex justify-between align-center solid-bottom padding-tb" style="position: relative;">
           <view class="flex justify-start align-center">
-            <image class="cu-avatar round" src=""></image>
-            <view class="text-lg padding-left">昵称_nick_name</view>
+            <image class="cu-avatar round" src="{{item.avatar}}"></image>
+            <view class="text-lg padding-left">{{item.nickname}}</view>
           </view>
-          <button class="cu-btn sm basis-xs bg-red" style="margin-right: 0;" wx:if="{{true}}">移除</button>
+          <view class="text-xl text-grey">
+            <view class="cuIcon-more padding-right-sm" bindtap="switchMoreMenu"></view>
+          </view>
+          
+          <!-- 收藏、举报 -->
+          <view wx:if="{{moreMenuShow}}" class="flex justify-around align-center bg-black text-white radius moreMenu">
+            <view wx:if="{{relation===3}}" class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickRemove" data-index="{{index}}">
+              <text class="iconfont icon-jinggao margin-right-xs"></text>
+              <text class="">移除</text>
+            </view>
+            <!-- <view class="flex align-center padding-lr-sm padding-tb-xs" catchtap="reportTeam">
+              <text class="cuIcon-warn margin-right-xxs"></text>
+              <text class="">举报</text>
+            </view> -->
+          </view>
         </view>
         <view class="text-sm wuutag">
-          <view class="item">
+          <view wx:if="{{item.role}}" class="item">
             <view class="left-box"></view>
             <view class="main-box">
-              <view class="main-content">负责方向</view>
+              <view class="main-content">{{item.role}}</view>
             </view>
             <view class="right-box"></view>
-          </view>  
-          <view class="item">
+          </view>
+          <!-- <view wx:if="{{item.is_leader}}" class="item">
             <view class="left-box"></view>
             <view class="main-box">
               <view class="main-content">队长</view>
             </view>
             <view class="right-box"></view>
-          </view>  
-          <view class="item">
+          </view>   -->
+          <!-- <view class="item">
             <view class="left-box"></view>
             <view class="main-box">
               <view class="main-content">我</view>
             </view>
             <view class="right-box"></view>
-          </view>     
+          </view>      -->
         </view>
-        <view class="padding-tb padding-left solid-bottom text-df">擅长领域： XXX</view>
+        <view class="padding-tb padding-left solid-bottom text-df">擅长领域： {{item.skill?item.skill:'未填写'}}</view>
         <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{true}}">
-          <view class="text-df">联系方式：XXX-XXXX-XXXX</view>
-          <view class="cuIcon-edit text-blue padding-right"></view>
+          <view class="text-df">联系方式：{{item.contact?item.contact:'未填写'}}</view>
+          <view class="text-xl">
+            <text class="cuIcon-post padding-right"></text>
+          </view>
+          
         </view>
       </view>
     </view>
   </view>
 </scroll-view>
+
+<!-- 遮罩层 -->
+<view wx:if="{{moreMenuShow}}" class="mask" bindtap="switchMoreMenu"></view>

@@ -13,7 +13,7 @@ Page({
   data: {
     // 步骤条步骤
     step: 0,
-    stepList: [{name: '队伍信息',fined: false,}, {name: '确认',fined: false,}],
+    stepList: [{name: '团队信息',fined: false,}, {name: '确认',fined: false,}],
     // 选中分类
     cur: 0,
     inds: [-1, -1, -1, -1],
@@ -26,6 +26,10 @@ Page({
     // 展示分类
     classSelected: false,
     showClass: [],
+
+    // 目标，规约展示
+    showGoal: false,
+    showRule: false,
 
     // 返回结果-队伍信息
     team: {
@@ -162,31 +166,38 @@ Page({
   // 选择图片
   chooseImage() {
     const that = this
-    wx.chooseImage({
-      // 最多可以选择的图片张数
+    wx.chooseMedia({
       count: 1,
-      // 所选的图片的尺寸
-      sizeType: ['compressed'],
-      // 选择图片的来源
+      mediaType: ['image'],
       sourceType: ['album', 'camera'],
-      success: function (res) {
+      sizeType: ['compressed'],
+      camera: 'back',
+      success(res) {
         const team = that.data.team
         wx.compressImage({
-          src: res.tempFiles[0].path, // 图片路径
+          src: res.tempFiles[0].tempFilePath, // 图片路径
           quality: 1, // 压缩质量
-          success: (res1) => {
+          success(res1) {
             team.avatar = res1.tempFilePath
             that.setData({
               team: team
             })
           },
-          fail: (res1) => {
-            console.log(res1)
+          fail()  {
+            wx.showToast({
+              icon: 'error',
+              title: '图片加载失败',
+              duration: 2000
+            })
           }
         })
       },
-      fail: function (res) {
-        console.log(res)
+      fail() {
+        wx.showToast({
+          icon: 'error',
+          title: '图片加载失败',
+          duration: 2000
+        })
       },
     })
   },
@@ -204,6 +215,13 @@ Page({
       teamable[2] = true
     }
   },
+  // 目标输入展示
+  switchGoal(e) {
+    teamable[3] = e.detail.value? teamable[3] : true 
+    this.setData({
+      showGoal: e.detail.value
+    })
+  },
     // 输入队伍目标
     bindTeamGoal(e) {
       this.data.team.goal = e.detail.value
@@ -211,6 +229,13 @@ Page({
         teamable[3] = true
       }
     },
+  // 目标输入展示
+  switchRule(e) {
+    teamable[4] = e.detail.value? teamable[4] : true 
+    this.setData({
+      showRule: e.detail.value
+    })
+  },
   // 输入队伍规约
   bindTeamProtocol(e) {
     this.data.team.rule = e.detail.value
@@ -352,6 +377,7 @@ Page({
   },
   // 提交队伍信息
   submitTeamInfo(e) {
+    const team = this.data.team
     let success = true
     for(let i=0; i<teamable.length; i++) {
       if(!teamable[i]) {
@@ -362,8 +388,10 @@ Page({
     if(success) {
       let steps = this.data.stepList
       steps[this.data.step].fined = true
+      team.rule = this.data.showRule? team.rule : '无'
+      team.goal = this.data.showGoal? team.goal : '无'
       this.setData({
-        team: this.data.team,
+        team: team,
         stepList: steps
       })
       this.nextStep()

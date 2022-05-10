@@ -51,6 +51,9 @@ Component({
     ok() {
       let value = this.data.value
       value = this.data.tempValue ==''? this.data.value: this.data.tempValue
+      if(this.data.type === '用户UID') {
+        
+      }
       const detail = {
         title: this.data.title,
         value: value

@@ -19,5 +19,15 @@
   animation: Save 0.5s;
   transition: height 0.5s;
   border-radius: 0 0 15rpx 15rpx;
-  margin-left: 40%;
 }
+
+.color-cancel {
+  color: white;
+  background-color: rgb(176, 182, 190) !important;
+}
+
+.color-ok {
+  color: white;
+  background-color: rgb(64, 128, 196) !important;
+}
+

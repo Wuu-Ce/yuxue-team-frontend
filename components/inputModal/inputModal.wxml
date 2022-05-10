@@ -4,13 +4,14 @@
       <viwe class="padding text-lg text-black text-bold">输入{{title}}</viwe>
       <view wx:if="{{type==='input'}}" class="padding-top">
         <input 
+          focus="{{show}}"
           type="text"
           name = "teamName"
-          placeholder="15字以内" 
+          placeholder="请输入{{title}}" 
           maxlength="15"
           value="{{value}}"
-          class="padding-lr-sm " 
-          style="width: 80%; margin-left:10%;"
+          class="inputBox" 
+          style="height: 80rpx;"
           bindinput="onBlur"
           bindblur = "onBlur"
           bindconfirm = "onConfirm"
@@ -18,11 +19,11 @@
       </view>
       <view wx:else class="padding-top text-left">
         <textarea 
+          focus="{{show}}"
           name = "teamAbout"
           value="{{value}}"
-          placeholder="请在此输入队伍的介绍，不超过70字"
-          class="margin-top" 
-          style="width: 80%; margin-left:10%;"
+          placeholder="请在此输入队伍的{{title}}，不超过200字"
+          class="inputBox" 
           maxlength="200"
           bindinput="onBlur"
           bindblur = "onBlur"
@@ -31,8 +32,8 @@
       </view>
     </view>
     <view class="solids-top text-center flex" style="height: 100rpx;">
-      <button class="padding-tb text-lg basis-df solid-right" style="width: 100%;" bindtap="cancel">取消</button>
-      <button class="padding-tb text-lg basis-df" style="width: 100%;" bindtap="ok">确认</button>>
+      <button class="padding-tb text-lg basis-df solids-right" style="width: 100%;" bindtap="cancel">取消</button>
+      <button class="padding-tb text-lg basis-df solids-left text-blue" style="width: 100%;" bindtap="ok">确认</button>
     </view>
   </view>
 </view>
