@@ -5,7 +5,7 @@
   <!-- 头像 -->
   <view class="flex padding-lr padding-tb-sm justify-between align-center solid-bottom">
     <view class="text-black margin-right-xl" style="font-size: 32rpx;white-space: nowrap;">头像</view>
-    <view class="flex align-center" bindtap="chooseImage">
+    <view class="flex align-center" bindtap="chooseAvatar">
       <view class="cu-avatar radius margin-right-sm lg" style="background-image:url({{avatar}});"></view>
       <text class="cuIcon-right" style="font-size:32rpx;"></text>
     </view>

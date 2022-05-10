@@ -15,7 +15,8 @@
   </view>
 </view>
 <scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
-<!-- 来自队伍 -->
+  <!-- <messageItem wx:for="{{messageList}}" data="{{item}}" type="{{tabCur+1}}"></messageItem> -->
+  <!-- 来自队伍 -->
   <!-- 我申请加入其他队伍的结果 -->
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">

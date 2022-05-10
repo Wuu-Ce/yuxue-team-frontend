@@ -15,7 +15,9 @@
     "pages/apply/apply",
     "pages/manageTeam/manageTeam",
     "pages/memberInfo/memberInfo",
-    "pages/userDetail/userDetail"
+    "pages/userDetail/userDetail",
+    "pages/teamJoinedByUser/teamJoinedByUser",
+    "pages/teamCreatedByUser/teamCreatedByUser"
   ],
   "window": {
     "backgroundTextStyle": "light",

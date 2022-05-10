@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "messageItem": "/components/messageItem/messageItem"
+  },
   "disableScroll": true
 }

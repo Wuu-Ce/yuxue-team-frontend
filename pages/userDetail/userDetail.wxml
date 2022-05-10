@@ -26,7 +26,7 @@
     </scroll-view>
     <view wx:else class="flex justify-center padding-lr-xl margin-bottom" style="width:100%;">
     </view>
-    <!-- <text class="cuIcon-writefill text-grey " style="position:absolute;top:30rpx;right:30rpx;font-size: large;" bindtap="jumpToModifyMyInfo"></text> -->
+    <!-- <view class="mainTone-bgColor padding-lr-sm padding-tb-xs text-bold round" style="position:absolute;top:30rpx;right:30rpx;font-size: 28rpx;" bindtap="">邀请</view> -->
   </view>
   <!-- 返回到上一页按钮 -->
   <view class="padding" style="position: absolute;left:12rpx;top:20rpx;">
@@ -34,7 +34,27 @@
   </view>
 </view>
 
+<View class="flex align-center margin-lr-lg margin-bottom">
+  <!-- 创建的团队 -->
+  <view class="flex flex-direction align-center padding-lg margin-right bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamCreatedByUser">
+    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">创建的团队</view>
+    <view class="flex justify-center align-center text-grey">
+      <text class="margin-right-xs">0个</text>
+      <text class="cuIcon-right"></text>
+    </view>
+  </view>
+  <!-- 加入的团队 -->
+  <view class="flex flex-direction align-center padding-lg bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamJoinedByUser">
+    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">加入的团队</view>
+    <view class="flex justify-center align-center text-grey">
+      <text class="margin-right-xs">0个</text>
+      <text class="cuIcon-right"></text>
+    </view>
+  </view>
+</View>
+
 <view class="bg-white margin-lg shadow" style="border-radius: 15rpx;">
-  <view class="padding text-black" style="font-size: 32rpx;">擅长领域</view>
-  <view class="flex padding-top-sm padding-bottom padding-lr text-black" style="min-height: 60rpx;">{{skill?skill:''}}</view>
+  <view class="flex justify-center padding-top padding-bottom-sm text-black" style="font-size: 32rpx;">兴趣/擅长</view>
+  <view class="flex padding-top-sm padding-bottom padding-lr-lg text-black" style="min-height: 60rpx;">{{skill?skill:''}}</view>
 </view>
+

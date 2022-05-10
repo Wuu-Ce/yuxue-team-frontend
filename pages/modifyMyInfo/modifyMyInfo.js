@@ -1,4 +1,5 @@
 const request = require("../../utils/util.js").request
+const CONFIG = require("../../config.js")
 Page({
 
   /**
@@ -65,7 +66,6 @@ Page({
   onShow(){
     request('/info/detail','POST',{}).then(
       (res)=>{
-        console.log(res);
         this.setData({
           avatar: res.data.data.avatar,
           nickname: res.data.data.nickname,
@@ -83,14 +83,48 @@ Page({
     )
   },
   // 更改头像
-  chooseImage(){
+  chooseAvatar(){
+    var that = this;
     wx.chooseMedia({
       count: 1,
-      mediaType: "image",
-      sourceType: 'album',
+      mediaType: ["image"],
       success(res){
-        var imagePath = res.tempFiles[0]. tempFilePath;
-        console.log(res);
+        var path = res.tempFiles[0].tempFilePath;
+        wx.compressImage({
+          src: path,
+          quality: 5,
+          success(res){
+            console.log(res)
+            var path = res.tempFilePath;
+            var root_url = CONFIG.online_url ? CONFIG.online_url : CONFIG.dev_url;
+            var url = root_url + '/upload/avatar/user';
+            var cookie = wx.getStorageSync('cookie');
+            wx.uploadFile({
+              url: url,
+              filePath: path,
+              name: 'file',
+              header: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'cookie': cookie
+              },
+              success(res){
+                var res = JSON.parse(res.data);
+                if(res.code===0){
+                  var avatar = res.data.avatar
+                  that.setData({
+                    avatar: avatar
+                  })
+                }else{
+                  wx.showToast({
+                    title: res.message,
+                    icon: 'error'
+                  })
+                }
+              }
+            })
+          }
+        })
+        
       }
     })
   },
