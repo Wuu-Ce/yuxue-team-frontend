@@ -19,10 +19,10 @@ Page({
     // 修改列表容器的高度
     const that = this
     const query = wx.createSelectorQuery()
-    query.select('#swiperContainer').boundingClientRect()
+    query.select('.scrollViewContainer').boundingClientRect()
     query.exec(function (res) {
       that.setData({
-        swiperContainerH: wx.getSystemInfoSync().windowHeight - res[0].top
+        scrollViewContainerH: wx.getSystemInfoSync().windowHeight - res[0].top
       })
     })
     this.getTeamList(0);

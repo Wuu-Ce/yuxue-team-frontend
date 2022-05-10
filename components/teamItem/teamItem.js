@@ -56,7 +56,8 @@ Component({
       //       })
       //     }
       //   })
-      // })
+      // }）
+      
       if(this.data.team.members.length<=5){  // 如果成员头像的数量小于区域可以容纳的数量
         this.setData({
           iconMoreShow: false

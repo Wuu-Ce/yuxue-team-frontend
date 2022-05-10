@@ -1,0 +1,8 @@
+<view wx:if="{{data.catalog===20001}}">
+  
+</view>
+<!-- <view wx:if="{{20000<=data.catalog<30000}}">
+  
+</view> -->
+
+

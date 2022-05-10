@@ -22,6 +22,9 @@ Page({
     request('/notify/list','POST',{type:1}).then(
       (res)=>{
         console.log(res);
+        this.setData({
+          messageList: res.data.data
+        })
       }
     )
   },

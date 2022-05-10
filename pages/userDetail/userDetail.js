@@ -24,8 +24,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
     var user_id = parseInt(options.user_id)
+    this.setData({
+      user_id: user_id
+    })
     request('/info/detail','POST',{user_id:user_id}).then(
       (res)=>{
         console.log(res);
@@ -46,6 +48,18 @@ Page({
   backToLastPage(){
     wx.navigateBack({
       delta: 0,
+    })
+  },
+  // 跳转到该用户创建的团队界面
+  jumpToTeamCreatedByUser(){
+    wx.navigateTo({
+      url: '/pages/teamCreatedByUser/teamCreatedByUser?user_id=' + this.data.user_id,
+    })
+  },
+  // 跳转到该用户加入的团队界面
+  jumpToTeamJoinedByUser(){
+    wx.navigateTo({
+      url: '/pages/teamJoinedByUser/teamJoinedByUser?user_id=' + this.data.user_id,
     })
   }
 })

@@ -1,0 +1,10 @@
+<cu-custom bgColor="bg-white" isBack="true">
+  <view slot="content" class="text-black">创建的团队</view>
+</cu-custom>
+
+<scroll-view class="scrollViewContainer" scroll-y="true" style="height:{{scrollViewContainerH}}px;">
+  <view wx:if="{{isLoad}}" class="cu-load loading"></view>
+  <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
+    <teamItem team="{{team}}"></teamItem>
+  </view>
+</scroll-view>
