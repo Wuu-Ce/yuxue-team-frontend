@@ -1,10 +1,9 @@
-import { request, classification } from '../../utils/util.js'
+import { request, classification,copyObject } from '../../utils/util.js'
 const CONFIG = require("../../config.js")
 const app = getApp()
 // 队伍信息可用 队名-分类-介绍-规约
 let teamable = [false, false, false, false, false]
-// 队长信息可用 队长名-年级-介绍
-let leaderable = [false, false, false]
+
 Page({
 
   /**
@@ -66,7 +65,7 @@ Page({
     showOkModal: false,
 
     // 分类 
-    class: classification,
+    class: copyObject(classification),
     // 容器高度
     scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar - 80,
   },
@@ -379,6 +378,10 @@ Page({
   submitTeamInfo(e) {
     const team = this.data.team
     let success = true
+    team.rule = this.data.showRule? team.rule : '无'
+    teamable[3] = team.rule == ''? false : true
+    team.goal = this.data.showGoal? team.goal : '无'
+    teamable[4] = team.goal == ''? false: true
     for(let i=0; i<teamable.length; i++) {
       if(!teamable[i]) {
         success = false
@@ -388,8 +391,8 @@ Page({
     if(success) {
       let steps = this.data.stepList
       steps[this.data.step].fined = true
-      team.rule = this.data.showRule? team.rule : '无'
-      team.goal = this.data.showGoal? team.goal : '无'
+
+
       this.setData({
         team: team,
         stepList: steps

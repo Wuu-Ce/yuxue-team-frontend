@@ -524,14 +524,13 @@ Page({
           icon: 'success',
           title: '团队已解散',
           duration: 1000,
-          coomplete() {
+          success(res) {
+            console.log(res)
             wx.redirectTo({
               url: '/pages/index/index',
             })
           }
         })
-        console.log(res)
-
       },
       error=> {
         wx.hideLoading()
