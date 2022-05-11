@@ -32,6 +32,15 @@
         </view>
       </view>
     </view>
+    <!-- 公告 -->
+    <view wx:if="{{team.announce&&relation>1}}" class="padding-lr-sm padding-top-sm">
+      <view class="radius cu-item bg-notice" style="border-radius: 15rpx;">
+        <view class="text-center padding-sm text-white">
+          <text class="cuIcon-notice padding-lr-xs"></text>公告
+        </view>
+        <view class="padding-lr-lg padding-bottom text-white text-long">{{team.announce}}</view>
+      </view>
+    </view>
     <!-- 团队成员 -->
     <view class="padding-lr-sm padding-top-sm">
       <view class="radius cu-item shadow bg-white" style="border-radius: 15rpx;">
@@ -82,7 +91,7 @@
           </view>
 
           <view class="margin-top flex justify-start">
-            <view style="min-width:160rpx;">团队规约:</view>
+            <view style="min-width:150rpx;">团队规约:</view>
             <view class="{{hideTeamProtocol?'text-content':''}}" bindtap="hideTeamProtocol" style="transition: height 0.5s; line-height: inherit;">{{team.rule}}</view>
           </view>
         </view>
@@ -108,6 +117,7 @@
               <view class="right-box"></view>
             </view>
           </view>
+          <!-- 招募内容 -->
           <view wx:if="{{rec.type==0}}" class="padding-lg">
             <view class="flex justify-between align-end padding-top">
               <view class="flex justify-start">
@@ -124,7 +134,7 @@
               <view>{{rec.requirement}}</view>
             </view>
           </view>
-          <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{rec.items.length>4?'350': rec.items.length*120 + 30}}px;">
+          <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{rec.items.length>4?'350': rec.items.length*120 }}px;">
             <view class="padding-top-xs">
               <view wx:for="{{rec.items}}" wx:for-item="detail" wx:key="index" class=" padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} margin-top margin-lr {{rec.items.length-1==index?'margin-bottom':''}}">
                 <view>方向：{{detail.role}}</view>
@@ -146,19 +156,19 @@
     <view class="padding-top-sm">
       <!-- 游客 未登录 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:if="{{relation===0}}">
-        <button class="cu-btn mainTone-bgColor" bindtap="toApplyPage">申请加入</button>
+        <button class="cu-btn wuu-button" bindtap="toApplyPage">申请加入</button>
       </view>
       <!-- 普通用户 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===1}}">
-        <button class="cu-btn mainTone-bgColor" bindtap="toApplyPage">申请加入</button>
+        <button class="cu-btn wuu-buttonr" bindtap="toApplyPage">申请加入</button>
       </view>
       <!-- 队员 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===2}}">
-        <button class="cu-btn mainTone-bgColor basis-sm" bindtap="">退出队伍</button>
+        <button class="cu-btn wuu-button basis-sm" bindtap="">退出队伍</button>
       </view>
       <!-- 队长 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===3}}">
-        <button class="cu-btn mainTone-bgColor basis-sm" bindtap="toManagePage">管理队伍</button>
+        <button class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toManagePage">管理队伍</button>
         <button wx:if="{{recruit.length === 0}}" class="cu-btn mainTone-bgColor basis-sm" bindtap="toTecruitPage">招募成员</button>
       </view>
     </view>

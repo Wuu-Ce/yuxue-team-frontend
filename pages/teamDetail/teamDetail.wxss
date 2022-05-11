@@ -18,27 +18,37 @@
   flex-shrink: 10;
   flex-grow: 1;
 }
+
+.wuu-button {
+  background-color: rgb(74, 129, 202) !important;
+  color:#fff;
+}
+/* 公告背景 */
+.bg-notice {
+background-color: rgba(74, 129, 202, 1);
+}
 /* 底部线 */
 .bottomLine {
-  border-bottom: solid 4rpx rgba(64, 128, 196, 0.562);
+  border-bottom: solid 4rpx rgba(74, 129, 202, 0.5);
 }
 
 /* 首行缩进 */
 .text-long{
-  text-indent: 50rpx;
+  text-indent: 50rpx !important;
   text-align: left;
 }
 
 .recruit-item {
+  color: aliceblue;
   position: relative;
   border-radius: 15rpx;
-  background-color: rgb(64, 128, 196);
-  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(48, 95, 146, 0.5),-10rpx -10rpx 20rpx 5rpx rgba(64, 128, 196, 0.5);
+  background-color: rgb(74, 129, 202);
+  box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(74, 129, 202, 0.3),-10rpx -10rpx 20rpx 5rpx rgba(74, 129, 202, 0.3);
 }
 .recruit-item-disable {
   position: relative;
   border-radius: 15rpx;
-  background-color: rgb(64, 128, 196);
+  background-color: rgb(194, 194, 194);
   box-shadow: 10rpx 10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1),-10rpx -10rpx 20rpx 5rpx rgba(0, 0, 0, 0.1);
 }
 
@@ -57,7 +67,7 @@
   display: flex;
   justify-content: space-between;
   margin: 0 10rpx 0 10rpx;
-  background-color: rgb(64, 128, 196);
+  background-color: rgba(74, 129, 202, 0.8);
 }
 
 .wuutag .left-box {
@@ -80,9 +90,10 @@
 }
 
 .wuutag .main-content {
+  color: aliceblue;
   border-radius: 0 0 8rpx 8rpx;
   padding: 4rpx 10rpx 4rpx 10rpx;
-  background-color: rgb(64, 128, 196);
+  background-color: rgba(74, 129, 202, 0.8);
 }
 
 .finishText {
