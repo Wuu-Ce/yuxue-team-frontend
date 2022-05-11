@@ -15,10 +15,9 @@
           <view class="text-xl text-grey">
             <view class="cuIcon-more padding-right-sm" bindtap="switchMoreMenu"></view>
           </view>
-          
-          <!-- 收藏、举报 -->
-          <view wx:if="{{moreMenuShow}}" class="flex justify-around align-center bg-black text-white radius moreMenu">
-            <view wx:if="{{relation===3}}" class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickRemove" data-index="{{index}}">
+          <!-- 更多菜单 -->
+          <view wx:if="{{moreMenuShow&&relation===3}}" class="flex justify-around align-center bg-black text-white radius moreMenu">
+            <view class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickRemove" data-index="{{index}}">
               <text class="iconfont icon-jinggao margin-right-xs"></text>
               <text class="">移除</text>
             </view>
@@ -28,6 +27,7 @@
             </view> -->
           </view>
         </view>
+        <!-- 队员职责 -->
         <view class="text-sm wuutag">
           <view wx:if="{{item.role}}" class="item">
             <view class="left-box"></view>
@@ -51,13 +51,16 @@
             <view class="right-box"></view>
           </view>      -->
         </view>
-        <view class="padding-tb padding-left solid-bottom text-df">擅长领域： {{item.skill?item.skill:'未填写'}}</view>
-        <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{true}}">
+        <view class="padding-top {{relation>1?'solid-bottom padding-bottom':''}} padding-left  text-df">擅长领域： {{item.skill?item.skill:'未填写'}}</view>
+        <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{relation>1}}">
           <view class="text-df">联系方式：{{item.contact?item.contact:'未填写'}}</view>
-          <view class="text-xl">
-            <text class="cuIcon-post padding-right"></text>
+          <view 
+            class="text-xl"
+            data-index = "{{index}}"
+            bindtap="editContact"
+            >
+            <text class="cuIcon-post padding-lr"></text>
           </view>
-          
         </view>
       </view>
     </view>
@@ -66,3 +69,12 @@
 
 <!-- 遮罩层 -->
 <view wx:if="{{moreMenuShow}}" class="mask" bindtap="switchMoreMenu"></view>
+
+<!-- 编辑联系方式组件 -->
+<input-modal 
+  show="{{inputShow}}" 
+  title="联系方式" 
+  type="input" 
+  value="{{selectMember.contact}}" 
+  bind:confirm = "inputConfirm"
+/>

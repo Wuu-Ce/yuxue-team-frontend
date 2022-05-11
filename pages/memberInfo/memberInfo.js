@@ -12,8 +12,12 @@ Page({
     relation: 0,
     team: {},
     teamCopy: {},
+    selectMember: {},
 
-    moreMenuShow: false
+    // 更多菜单展示控制
+    moreMenuShow: false,
+    // 输入组件展示控制
+    inputShow: false
   },
 
   /**
@@ -30,8 +34,6 @@ Page({
       teamCopy: copyObject(team),
       relation: relation
     })
-
-
   },
 
   /**
@@ -44,6 +46,24 @@ Page({
   switchMoreMenu() {
     this.setData({
       moreMenuShow: !this.data.moreMenuShow
+    })
+  },
+  // 编辑队内联系方式
+  editContact(e) {
+    const ind = e.currentTarget.dataset.index
+    let selectMember = this.data.team.members[ind]
+    this.setData({
+      selectMember: selectMember,
+      inputShow: true
+    })
+  },
+
+  // 提交输入内容
+  inputConfirm(e)  {
+    const selectMember = this.data.selectMember
+    selectMember.contact = e.detail.value
+    this.setData({
+      team: this.data.team
     })
   },
   // 点击移除队员
