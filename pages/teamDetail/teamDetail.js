@@ -106,6 +106,7 @@ Page({
     rest.then(
       res => {
         const data = res.data.data
+        console.log(data)
         if (res.data.code === 0) {
           teamInfo = data
           getInfo()

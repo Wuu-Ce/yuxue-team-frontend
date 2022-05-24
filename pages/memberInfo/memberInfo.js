@@ -65,6 +65,7 @@ Page({
     this.setData({
       team: this.data.team
     })
+    // 修改队内联系方式接口
   },
   // 点击移除队员
   onClickRemove(e) {

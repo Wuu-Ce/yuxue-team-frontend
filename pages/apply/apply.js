@@ -31,6 +31,7 @@ Page({
   onLoad: function (options) {
     const team_id = parseInt(options.team_id)
     const recruit_id = parseInt(options.recruit_id)
+    console.log(options)
     this.setData({
       team_id: team_id,
       recruit_id: recruit_id

@@ -32,7 +32,7 @@ Page({
 
     // 返回结果-队伍信息
     team: {
-      avatar: '',
+      avatar: CONFIG.avatar_static_url + '/0.jpg',
       name: '',
       field_id: 0,
       type: {},
