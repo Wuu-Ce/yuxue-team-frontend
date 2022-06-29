@@ -340,7 +340,6 @@ Page({
 
   // 提交
   confirmRecruit() {
-    this.hiddenOkModal()
     wx.showToast({
       icon:'loading',
       title: '发布中',
@@ -368,8 +367,6 @@ Page({
       requestData.expire_time = recruit.deadline_time / 1000
     }
 
-    console.log(recruit)
-    console.log(requestData)
     //  请求
     let res = request(API, 'POST', requestData)
     res.then(
@@ -403,20 +400,79 @@ Page({
       }
     )
   },
+  recuritAvailable() {
+    let res = {
+      avalible: true,
+      errMsg: ''
+    }
+    const recruit = this.data.recruit
+    switch(recruit.type) {
+      case 0: 
+       if (recruit.neccessary.detail.length === 0) {
+					res = {
+						avalible: false,
+						errMsg: '至少添加一项招募要求',
+					}
+				} else {
+					for (const item of recruit.neccessary.detail) {
+						if (item.role === '' || item.requirement === '') {
+							res = {
+								avalible: false,
+								errMsg: '招募的方向或要求未完善',
+              }
+              break
+						}
+					}
+				}
+        break
+      case 1:
+        if (recruit.neccessary.detail === '') {
+					res = {
+						avalible: false,
+						errMsg: '未填写招募说明',
+					}
+				} else if (recruit.num < 1) {
+					res = {
+						avalible: false,
+						errMsg: '至少招募一人',
+					}
+				}
+        break
+      default: 
+        break
+    }
+    return res
+  },
 
     // 切换确认框显示状态
   showOkModal() {
-    this.setData({
-      showOkModal: true
-    })
+    const recruit = this.data.recruit
+    const that = this
+    let func = ()=> this.confirmRecruit()
+    let modalContent = '确认发布招募信息'
+    const avalibleMsg = this.recuritAvailable()
+    if(!avalibleMsg.avalible){
+      modalContent = avalibleMsg.errMsg
+      func = ()=> {}
+    }
+    wx.showModal({
+			showCancel: avalibleMsg.avalible,
+			title: '提示',
+			content: modalContent,
+			cancelColor: '#000',
+			success(res) {
+				if (res.confirm) {
+          func()
+				} 
+			},
+		})
+
+    // this.setData({
+    //   showOkModal: true
+    // })
   },
 
-  // 切换确认框显示状态
-  hiddenOkModal() {
-    this.setData({
-      showOkModal: false
-    })
-  },
+
   // 显示提示信息
   showTip() {
     this.setData({

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "report": "/components/reportTeam/reportTeam",
-    "loginRequired": "/components/loginRequired/loginRequired"
+    "loginRequired": "/components/loginRequired/loginRequired",
+    "input-modal": "/components/inputModal/inputModal"
   }
 }

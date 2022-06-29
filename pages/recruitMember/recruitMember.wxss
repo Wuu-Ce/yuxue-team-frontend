@@ -1,16 +1,61 @@
-.mainContainer {
-  display: flex;
-  flex-flow: column;
-}
-.fill {
-  height: 10%;
-  flex-basis: auto;
-  flex-shrink: 10;
-  flex-grow: 1;
+@keyframes heightChange {
+  0% {
+   transform: translateY(-16rpx);
+   height: 0;
+  }
+  100% {
+    transform: translateY(0);
+    height: 120rpx;
+  }
 }
 
-switch .wx-switch-input.wx-switch-input-checked {
-  background-color: #c7b8a1 !important;
+@keyframes heightRe {
+  0% {
+   transform: translateY(-16rpx);
+   height: 0;
+  }
+  100% {
+    transform: translateY(0);
+    height: 120rpx;
+  }
+}
+
+@keyframes showItem {
+  0% {
+    transform: translateY(-80px) scaleX(0.8) scaleY(0.2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes down {
+  0% {
+    transform: translateY(-80px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes up {
+  0% {
+    transform: translateY(80px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes showTip {
+  0% {
+    transform: translate(80px, -40px)  scaleX(0.2) scaleY(0.2);
+    opacity: 0.2;
+  }
+
+  100% {}
 }
 
 @font-face {
@@ -38,26 +83,45 @@ switch .wx-switch-input.wx-switch-input-checked {
   color:rgb(106, 81, 82);
   font-size: 36rpx;
 }
+.mainContainer {
+  display: flex;
+  flex-flow: column;
+}
+
+.fill {
+  height: 10%;
+  flex-basis: auto;
+  flex-shrink: 10;
+  flex-grow: 1;
+}
+
+switch .wx-switch-input.wx-switch-input-checked {
+  background-color: rgba(74, 129, 202, 1) !important;
+}
+/* 应用主题蓝色 */
+.bg-main {
+  background-color: rgba(74, 129, 202, 1) !important;
+}
 .wuu-tip {
   position: absolute;
   width: 50vw;
   font-size: 24rpx;
-  color: black;
+  color: white;
   top: 50rpx;
-  right: 0;
+  right: -6rpx;
   border-radius: 15rpx;
-  background-color: rgb(240, 235, 229);
+  background-color: rgba(74, 129, 202, 1);
   z-index: 99;
-  opacity: 1;
+  animation: showTip .25s;
 }
 .wuu-tip::before {
   content: "";
   position: absolute;
-  top: -10rpx;
-  right:  10rpx;
+  top: -8rpx;
+  right:  12rpx;
   width: 20rpx;
   height: 20rpx;
-  background-color: rgb(240, 235, 229);
+  background-color: rgba(74, 129, 202, 1);
   transform: rotate(45deg);
   pointer-events: none;
 }
@@ -162,27 +226,7 @@ switch .wx-switch-input.wx-switch-input-checked {
   z-index: 1;
 }
 
-@keyframes heightChange {
-  0% {
-   transform: translateY(-16rpx);
-   height: 0;
-  }
-  100% {
-    transform: translateY(0);
-    height: 120rpx;
-  }
-}
 
-@keyframes heightRe {
-  0% {
-   transform: translateY(-16rpx);
-   height: 0;
-  }
-  100% {
-    transform: translateY(0);
-    height: 120rpx;
-  }
-}
 
 .anime {
   animation: heightChange 0.5s;
@@ -206,32 +250,7 @@ switch .wx-switch-input.wx-switch-input-checked {
    border-radius: 20rpx;
    border: solid 2rpx rgb(166, 166, 168);
  }
-@keyframes showItem {
-  0% {
-    transform: translateY(-80px) scaleX(0.8) scaleY(0.2);
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateY(0) scaleX(1) scaleY(1);
-    opacity: 1;
-  }
-}
-@keyframes down {
-  0% {
-    transform: translateY(-80px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-@keyframes up {
-  0% {
-    transform: translateY(80px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
+
  .recruit-item {
    position: relative;
    border-radius: 20rpx;

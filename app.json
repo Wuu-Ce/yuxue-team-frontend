@@ -17,7 +17,8 @@
     "pages/memberInfo/memberInfo",
     "pages/userDetail/userDetail",
     "pages/teamJoinedByUser/teamJoinedByUser",
-    "pages/teamCreatedByUser/teamCreatedByUser"
+    "pages/teamCreatedByUser/teamCreatedByUser",
+    "pages/inviteUser/inviteUser"
   ],
   "window": {
     "backgroundTextStyle": "light",

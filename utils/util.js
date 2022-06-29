@@ -239,9 +239,24 @@ const classification = {
         { id: 17,  edit: true, name: '体育',input:'', tip: '竞赛名称'},
         { id: 18,  edit: true, name: '科技文化艺术节',   input:'', tip: '竞赛名称'},
       ]},
-      { edit: false, name: '理科', input:'', tip: '竞赛名称'},
-      { edit: false, name: '商科', input:'', tip: '竞赛名称'},
-      { edit: false, name: '综合', input:'', tip: '竞赛名称'},
+      { edit: false, name: '理科',nextClass:[
+        { id: 19,  edit: true, name: '数学',input:'', tip: '竞赛名称'},
+        { id: 20,  edit: true, name: '物理',input:'', tip: '竞赛名称'},
+        { id: 21,  edit: true, name: '化学化工',   input:'', tip: '竞赛名称'},
+        { id: 22,  edit: true, name: '健康生命&医学',input:'', tip: '竞赛名称'},
+        { id: 23,  edit: true, name: '力学',input:'', tip: '竞赛名称'},
+      ]},
+      { edit: false, name: '商科',nextClass:[
+        { id: 24,  edit: true, name: '创业',input:'', tip: '竞赛名称'},
+        { id: 25,  edit: true, name: '商业',input:'', tip: '竞赛名称'},
+        { id: 26,  edit: true, name: '创青春',   input:'', tip: '竞赛名称'},
+      ]},
+      { edit: false, name: '综合',  nextClass:[
+        { id: 27,  edit: true, name: '职业技能',input:'', tip: '竞赛名称'},
+        { id: 28,  edit: true, name: '挑战杯',input:'', tip: '竞赛名称'},
+        { id: 29,  edit: true, name: '环保公益',   input:'', tip: '竞赛名称'},
+        { id: 30,  edit: true, name: '社会综合',input:'', tip: '竞赛名称'},
+      ]},
     ],},
     {
       id: 3, edit: true, name: '创意', input:'', tip:'请介绍一下你的创意'

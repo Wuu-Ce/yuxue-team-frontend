@@ -1,0 +1,100 @@
+<cu-custom bgColor="bg-white" isBack="{{true}}">
+  <view slot="content" class="text-black text-bold">邀请用户</view>
+  <view class="text-black" slot="backText">返回</view>
+</cu-custom>
+
+<scroll-view scroll-y style="height: {{scrollH}}px;">
+  <view style="min-height: {{scrollH}}px;" class="flex" style="flex-direction: column;">
+    <!-- 搜索 -->
+    <form class="bg-white padding-lr" bindsubmit="searchUser">
+      <view class="flex align-center padding-xs margin-tb round bg-gray" style="flex-grow:1;">
+        <input 
+          type="text" 
+          name="search"
+          auto-focus="true"
+          class="padding-lr"
+          confirm-type="search" 
+          placeholder="根据UID来搜索用户" 
+          placeholder-class="text-sm text-grey" 
+          style="width:100%;" 
+          bindconfirm="searchUser"
+        />
+        <button form-type="submit" class="cu-btn cuIcon-search margin-right bg-main round shadow" style="width: 60rpx; height: 60rpx;" >
+        </button>
+      </view>    
+    </form>
+    <!-- 搜索结果 -->
+    <text class="padding-top padding-left text-grey">搜索结果</text>
+    <view wx:for="{{searchRes}}" wx:key="index" wx:for-item="user" class="bg-white padding" value="searchUser">
+      <view class="flex justify-start align-center">
+        <image class="cu-avatar round" src="{{user.avatar}}" bindtap="toUserPage"></image>
+        <view class="margin-left-sm">
+          <view class="text-lg">{{user.nickname}}</view>
+          <view class="text-sm text-gray">id：{{user.user_id}}</view>
+        </view>
+        <button class="cu-btn shadow text-df bg-main" style="margin-right: 0;width: 20%;" bindtap="onClickInvite" data-index="{{index}}">邀请</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 邀请弹窗 -->
+<view class="yuxue-modal bg-white {{showModal?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: absolute;" catchtap>
+    <view class="content margin-lg">
+      <text class="text-black text-xl text-bold">邀请成员</text>
+    </view>
+    <view class="flex justify-center" style="overflow: hidden;">
+      <text>邀请</text>
+      <text class="text-blue padding-lr-xs">{{user.nickname}}</text>
+      <text>加入</text>
+      <text class="text-blue padding-lr-xs">{{team.name}}</text>
+    </view>
+    <form bindsubmit="sendInvite" class="padding-top">
+      <!-- 申请理由 -->
+      <view class="padding-sm">
+        <view class="text-black text-bold margin-left" style="text-align: start;">申请理由</view>
+        <textarea 
+          name="reason" 
+          placeholder="请输入申请理由" 
+          class="margin-top-sm padding-sm normal-textarea"
+          style="text-align: start;"
+        ></textarea>
+      </view>
+      <!-- 联系方式 -->
+      <view class=" margin-sm padding-tb-sm padding-lr-sm bg-white shadow" style="border-radius: 15rpx;">
+        <view class="flex justify-start align-center">
+          <view class="text-black text-bold" style="width: 25%;">联系方式</view>
+          <input 
+            name="contact" 
+            placeholder="请输入联系方式" 
+            class="padding-lr-sm" 
+            style="width: 75%;" 
+            maxlength="25" 
+            style="text-align: start;"
+          ></input>
+        </view>
+      </view>
+      <view class="flex margin-top-sm solids-top">
+        <view class="solids-right" style="width: 50%;">
+          <button 
+            style="width: 100%;"
+            value="{{reason}}"
+            class="padding-tb text-gray text-lg " 
+            bindtap="hideModal"
+            form-type="reset"
+          >取消</button>
+        </view>
+        <view class="solids-right"style="width: 50%;">
+          <button 
+            style="width: 100%;"
+            value="{{contact}}"
+            class="padding-tb mainTone-color1 text-lg" 
+            form-type="submit"
+          >邀请</button>
+        </view>
+      </view>    
+    </form>
+  </view>
+</view>
+

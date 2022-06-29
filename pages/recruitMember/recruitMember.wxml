@@ -158,27 +158,11 @@
     <!-- 下一步按钮 -->
     <view class="padding-lg radius margin-top-sm cu-item shadow bg-white " style="position: relative;bottom:0;">
       <view class="cu-bar">
-        <button class="cu-btn mainTone-bgColor  shadow-warp" bindtap="showOkModal">开始招募</button>
+        <button class="cu-btn bg-main  shadow-warp text-white" bindtap="showOkModal">开始招募</button>
       </view>
     </view>
   </view>
 </scroll-view>
-
-<!-- 完成模态框 -->
-<view class="yuxue-modal show" wx:if="{{showOkModal}}">
-  <view class="yuxue-dialog" catchtap="showOkModal">
-    <view class="cu-bar bg-white justify-center">
-      <view class="text-lg text-bold text-black text-center">提示</view>
-    </view>
-    <view class="padding">
-        <view class="text-black">确认填写信息无误，点击确认发布招募信息。</view>
-    </view>
-    <view class="text-center flex justify-between" style="height: 100rpx;">
-      <button class="padding-tb text-lg bg-white" style="width: 50%; border-right: solid 1px rgb(0, 0, 0, 0.3); border-radius: 0;" catchtap="hiddenOkModal">取消</button>
-      <button class="padding-tb text-lg bg-white" style="width: 50%; border-radius: 0;" catchtap="confirmRecruit">确认</button>
-    </view>
-  </view>
-</view>
 
 
 <!-- 日期选择器 -->

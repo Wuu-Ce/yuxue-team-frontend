@@ -35,6 +35,7 @@ Page({
     inputTitle: '',
     inputType: 'input',
     inputValue: '',
+    inputPlaceholder: '',
     textChanged: false,
     // 动画类型
     animation: '',
@@ -91,11 +92,13 @@ Page({
     const title = e.currentTarget.dataset.title
     const type = e.currentTarget.dataset.type
     const value = e.currentTarget.dataset.value
+    const placeholder = e.currentTarget.placeholder
     this.setData({
       inputShow: true,
       inputTitle: title,
       inputType: type,
-      inputValue: value
+      inputValue: value,
+      inputPlaceholder: placeholder
     })
   },
   // 输入完成
@@ -118,7 +121,7 @@ Page({
       case '公告':
         team.announce = e.detail.value
         break
-      case '用户UID': 
+      case '邀请成员': 
         changed = false
         this.inviteMember(e.detail.value)
         break
@@ -332,9 +335,9 @@ Page({
     team.field_id = curClass.id
     team.typeinfo = curClass.input
     let changed = (team.typeinfo === teamCy.typeinfo && team.classification.slice(-1)[0] === teamCy.classification.slice(-1)[0]) ? false : true
-    console.log(team.classification.slice(-1)[0] )
-    console.log(teamCy.classification.slice(-1)[0])
-    console.log(changed)
+    // console.log(team.classification.slice(-1)[0] )
+    // console.log(teamCy.classification.slice(-1)[0])
+    // console.log(changed)
 
     this.setData({
       showClassModal: false,
@@ -386,6 +389,7 @@ Page({
       },
       success(res) {
         wx.hideLoading()
+        console.log(res)
         const data = JSON.parse(res.data)
         if (data.code === 0) {
           team.avatar = data.data.avatar

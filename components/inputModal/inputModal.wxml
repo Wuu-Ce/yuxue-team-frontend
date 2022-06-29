@@ -1,13 +1,13 @@
 <view class="yuxue-modal {{show?'show':''}}">
   <view class="yuxue-dialog">
     <view class="padding">
-      <viwe class="padding text-lg text-black text-bold">输入{{title}}</viwe>
+      <viwe class="padding text-lg text-black text-bold">{{title}}</viwe>
       <view wx:if="{{type==='input'}}" class="padding-top">
         <input 
           focus="{{show}}"
           type="text"
           name = "teamName"
-          placeholder="请输入{{title}}" 
+          placeholder="{{placeholder}}" 
           maxlength="15"
           value="{{value}}"
           class="inputBox" 
@@ -22,7 +22,7 @@
           focus="{{show}}"
           name = "teamAbout"
           value="{{value}}"
-          placeholder="请在此输入队伍的{{title}}，不超过200字"
+          placeholder="{{placeholder}}"
           class="inputBox" 
           maxlength="200"
           bindinput="onBlur"

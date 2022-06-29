@@ -19,6 +19,10 @@ Component({
     value: {
       type: String,
       value: ''
+    },
+    placeholder: {
+      type: String,
+      value: ''
     }
 
   },

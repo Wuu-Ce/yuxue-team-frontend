@@ -35,7 +35,7 @@
     <!-- 公告 -->
     <view wx:if="{{team.announce&&relation>1}}" class="padding-lr-sm padding-top-sm">
       <view class="radius cu-item bg-notice" style="border-radius: 15rpx;">
-        <view class="text-center padding-sm text-white">
+        <view class="text-center padding-sm text-white text-lg text-bold">
           <text class="cuIcon-notice padding-lr-xs"></text>公告
         </view>
         <view class="padding-lr-lg padding-bottom text-white text-long">{{team.announce}}</view>
@@ -47,14 +47,29 @@
         <view class="padding-lr-lg  padding-top">
           <view class="flex justify-between text-lg" bindtap="toMemberInfoPage">
             <view class="text-lg text-bold">团队成员</view>
-            <view class="cuIcon-right line-blue " ></view>
+            <view class="flex justify-between align-center text-xl">
+              <text class="text-df line-blue">全队共{{team.members.length}}人</text>
+              <view class="cuIcon-right line-blue padding-left-xs" ></view>
+            </view>
           </view>
         </view>
         <scroll-view scroll-x="true" style="height: 150rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start padding-lr-lg margin-top-sm">
-          <view class="padding-sm justify-center" wx:for="{{team.members}}" wx:key="index">
-            <image class="cu-avatar round" src="{{item.avatar}}"></image>
-            <view wx:if="{{item.is_leader}}" class="leader-tag bg-blue radius text-xs padding-lr-xs">队长</view>
-            <view class="padding-top-xs hidden-text">{{item.nickname}}</view>
+          <view class="padding-sm justify-center" wx:for="{{team.members.length>5?5:team.members.length}}" wx:key="index">
+            <image class="cu-avatar round" src="{{team.members[index].avatar}}"></image>
+            <view wx:if="{{team.members[index].is_leader}}" class="leader-tag bg-blue radius text-xs padding-lr-xs">队长</view>
+            <view class="padding-top-xs hidden-text">{{team.members[index].nickname}}</view>
+          </view>
+          <!-- 邀请成员 -->
+          <view 
+            wx:if="{{relation===3||relation===2}}"
+            class="padding-sm justify-center" 
+            bindtap="toInvitePage"
+            data-type="input"
+            data-title="邀请成员"
+            data-placeholder="用户UID"
+            data-value="">
+            <view class="cu-avatar round cuIcon-add bg-notice text-bold" style="font-size: 24px;"></view>
+            <view class="padding-top-xs hidden-text">邀请</view>
           </view>
         </scroll-view>
       </view>
@@ -117,8 +132,8 @@
               <view class="right-box"></view>
             </view>
           </view>
-          <!-- 招募内容 -->
-          <view wx:if="{{rec.type==0}}" class="padding-lg">
+          <!-- 招募内容，快速招募 -->
+          <view wx:if="{{rec.type===0}}" class="padding-lg">
             <view class="flex justify-between align-end padding-top">
               <view class="flex justify-start">
                 <view style="min-width: 150rpx;">目前需求：</view>
@@ -134,6 +149,7 @@
               <view>{{rec.requirement}}</view>
             </view>
           </view>
+          <!-- 招募内容，普通招募 -->
           <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{rec.items.length>4?'350': rec.items.length*120 }}px;">
             <view class="padding-top-xs">
               <view wx:for="{{rec.items}}" wx:for-item="detail" wx:key="index" class=" padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} margin-top margin-lr {{rec.items.length-1==index?'margin-bottom':''}}">
@@ -143,7 +159,6 @@
                 <view wx:if="{{!detail.is_available}}" class="text-sl finishText text-bold">已完成</view>
               </view>
             </view>
-            
           </scroll-view>
           <view wx:if="{{rec.items.length>4}}" class="text-center cuIcon-unfold padding-top-xs"></view>
         </view>
@@ -169,12 +184,21 @@
       <!-- 队长 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===3}}">
         <button class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toManagePage">管理队伍</button>
-        <button wx:if="{{recruit.length === 0}}" class="cu-btn mainTone-bgColor basis-sm" bindtap="toTecruitPage">招募成员</button>
+        <button wx:if="{{recruit.length === 0}}" class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toTecruitPage">招募成员</button>
       </view>
     </view>
   </view>
 </scroll-view>
 
+<!-- 文本输入组件 -->
+<input-modal 
+  show="{{inputOptions.show}}" 
+  title="{{inputOptions.title}}" 
+  type="{{inputOptions.type}}"
+  value="{{inputOptions.value}}" 
+  placeholder="{{inputOptions.placeholder}}" 
+  bind:confirm="inputConfirm">
+</input-modal>
 <!-- 登录 modal框 -->
 <loginRequired show="{{showLoginModal}}"></loginRequired>
 <!-- 举报 modal框 -->

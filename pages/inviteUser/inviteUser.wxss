@@ -1,0 +1,16 @@
+.bg-main {
+  color: white;
+  background-color: rgb(64, 128, 196) !important;
+}
+
+.normal-textarea {
+  position: relative;
+  width: 100%;
+  height: 180rpx;
+  border: solid 4rpx rgb(243, 241, 241);
+  border-radius: 15rpx;
+  -webkit-overflow-scrolling: touch;
+  /* border-radius: 10rpx; */
+  /* padding: 20rpx 20rpx 20rpx 20rpx; */
+  /* box-sizing: border-box; */
+}
