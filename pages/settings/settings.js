@@ -12,10 +12,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
     var bind = JSON.parse(options.bind);
+    var showMyCreate = JSON.parse(options.showMyCreate);
+    var showMyJoin = JSON.parse(options.showMyJoin);
     this.setData({
-      bind: bind
+      bind: bind,
+      showMyCreate: showMyCreate,
+      showMyJoin: showMyJoin
     })
   },
   // 退出登录
@@ -85,5 +88,36 @@ Page({
         }
       })
     }
+  },
+
+  // 是否公开我创建的团队
+  showMyCreate(e){
+    var showMyCreate = e.detail.value;
+    this.setData({
+      showMyCreate: showMyCreate
+    })
+    var data = {
+      create: showMyCreate,
+      join: this.data.showMyJoin
+    }
+    request('/team/updateMyPrivate','POST',data).then(
+      (res)=>{},
+      ()=>{}
+    )
+  },
+  // 是否公开我加入的团队
+  showMyJoin(e){
+    var showMyJoin = e.detail.value;
+    this.setData({
+      showMyJoin: showMyJoin
+    })
+    var data = {
+      create: this.data.showMyCreate,
+      join: showMyJoin
+    }
+    request('/team/updateMyPrivate','POST',data).then(
+      (res)=>{},
+      ()=>{}
+    )
   },
 })

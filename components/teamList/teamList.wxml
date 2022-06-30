@@ -1,3 +1,0 @@
-<view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
-  <teamItem team="{{team}}"></teamItem>
-</view>

@@ -10,9 +10,9 @@
 <view wx:if="{{tabCur==0}}">
   <view  class="flex flex-direction padding-top-sm padding-bottom-xxs padding-lr-lg bg-white search" style="z-index:500;">
     <!-- 搜索 -->
-    <view class="flex align-center padding-lr-sm padding-tb-xxs round bg-gray" style="flex-grow:1;" >
+    <view class="flex align-center padding-lr-sm padding-tb-xs round" style="flex-grow:1;background-color: #f5f5f5;" >
       <text class="cuIcon-search margin-right-sm text-grey"></text>
-      <input type="text" 	confirm-type="search" placeholder="根据团队ID、名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindinput="searchTeam"></input>
+      <input type="text" 	confirm-type="search" placeholder="根据团队名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindinput="searchTeam"></input>
     </view>
     <!-- 顶部tab -->
     <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" style="position: relative;">
@@ -38,7 +38,7 @@
     <view wx:if="{{isLoad}}" class="cu-load loading"></view>
     <!-- 队伍列表 -->
     <view wx:for="{{teamList}}" wx:for-item="team" wx:key="*this">
-      <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam" bindlogin="showLoginModal"></teamItem>
+      <teamItem team="{{team}}" bindaccuseteam="onAccuseTeam" bindcollectTeam="onCollectTeam" bindlogin="showLoginModal"></teamItem>
     </view> 
     <!-- 触底加载新页 -->
     <view wx:if="{{showBottomLoading}}" class="cu-load bg-gray {{isBottomLoading?'loading':'over'}}"></view>
@@ -77,6 +77,6 @@
 <!-- 登录 modal框 -->
 <loginRequired show="{{modalName=='login'?true:false}}"></loginRequired>
 <!-- 举报 modal框 -->
-<reportTeam show="{{modalName=='accuse'?true:false}}"></reportTeam>
+<reportTeam show="{{modalName=='accuse'?true:false}}" team_id="{{accuseTeamID}}"></reportTeam>
 
 

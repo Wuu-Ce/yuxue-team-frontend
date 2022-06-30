@@ -29,6 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
     const team_id = parseInt(options.team_id)
     const recruit_id = parseInt(options.recruit_id)
     this.setData({

@@ -96,7 +96,7 @@ const processTeamList = (teamList) => {
   for(let i=0;i<teamList.length;i++){
     var team = teamList[i];
     // console.log(team);
-    team.createtime = __formatTime(team.createtime*1000,"Y年M月D日");
+    team.createtime = __formatTime(team.createtime*1000);
   }
   return teamList
 }

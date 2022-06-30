@@ -1,4 +1,3 @@
-// index.js
 // 获取应用实例
 const app = getApp();
 const checkCookieValid = require("../../utils/util.js").checkCookieValid;
@@ -207,20 +206,37 @@ Page({
       modalName: null
     })
   }, 
-  // 举报模态框
-  onAccuseTeam(){
-    console.log("jubao");
+  // 收藏团队
+  onCollectTeam(e){
+    var team = e.detail.team;
+    var collectStatus = e.detail.collect;
+    var collectTeamID = team.team_id;
+    if(collectStatus){
+      request('/collect/add','POST',{team_id:collectTeamID}).then(
+        (res)=>{
+          console.log(res);
+        },
+        ()=>{}
+      )
+    }else{
+      request('/collect/delete','POST',{team_id:collectTeamID}).then(
+        (res)=>{
+          console.log(res);
+        },
+        ()=>{}
+      )
+    }
+    console.log(collectTeamID);
+  },
+  // 举报团队
+  onAccuseTeam(e){
+    console.log(e);
+    var team = e.detail.team;
+    var accuseTeamID = team.team_id;
+    this.setData({ 
+      accuseTeamID:accuseTeamID
+    })
+    // 显示举报模态框
     this.showModal('accuse');
   },
-  // 选择举报选项
-  chooseAccuseOption(e){
-    console.log(e);
-    var optionID = e.currentTarget.dataset.id;
-    var accuseOptions = this.data.accuseOptions;
-    accuseOptions[optionID].selected = !accuseOptions[optionID].selected;
-    this.setData({
-      accuseOptions: accuseOptions
-    })
-  },
-
 })

@@ -28,6 +28,7 @@ Component({
 
   lifetimes: {
     attached: function() {
+      console.log(this.data.team)
       // 在组件实例进入页面节点树时执行
       // const that = this;
       // const query = this.createSelectorQuery()
@@ -101,14 +102,18 @@ Component({
       })
     },
     // 点击收藏按钮
-    onClickCollect(){
+    collectTeam(){
       var collected = !this.data.collected;
+      // team表示收藏/取消收藏哪支队伍，collect表示收藏还是取消收藏
+      this.triggerEvent('collectTeam', {team:this.data.team,collect:collected}, { bubbles: true,composed: true});
+      // this.hideCollectButton();
+      
       this.setData({
         collected: collected
       })
-      setTimeout(() => {
-        this.hideCollectButton();
-      }, 150)
+      // setTimeout(() => {
+      //   this.hideCollectButton();
+      // }, 150)
       if(collected){
         wx.showToast({
           title: '已收藏',
@@ -122,11 +127,10 @@ Component({
           duration: 500
         })
       }
-      
     },
     // 点击举报按钮
     accuseTeam(){
-      this.triggerEvent('accuseteam', {}, { bubbles: true,composed: true});
+      this.triggerEvent('accuseteam', {team:this.data.team}, { bubbles: true,composed: true});
       this.hideCollectButton();
     },
     //  跳转到队伍详情页
@@ -145,6 +149,7 @@ Component({
     // 跳转到申请加入界面
     jumpToApply(){
       var ifLogin = wx.getStorageSync('ifLogin');
+      console.log(this.data.team)
       if(ifLogin){
         wx.navigateTo({
           url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
