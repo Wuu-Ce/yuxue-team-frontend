@@ -17,63 +17,56 @@
 
 <scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
 <!-- 通知 -->
-  <!-- 我申请加入其他团队的结果 -->
-  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+  <!-- 我申请加入其他团队的结果，目前显示在登台他人审批里面 -->
+  <!-- <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black">你的申请已通过！</view>
   </view>
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black margin-bottom-xs">你的申请未通过。</view>
     <view class="text-grey">你的擅长领域与我们团队的需求不匹配。</view>
-  </view>
+  </view> -->
+  
   <!-- 我被移除出团队 -->
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black margin-bottom-xs">你被<text class="mainTone-color1">明天会不会下雨</text>移除出团队。</view>
     <view class="text-grey">你太水了</view>
   </view>
   <!-- 我收到来自某支团队的邀请 -->
-  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+  <!-- <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">予学团队</text>。</view>
@@ -93,14 +86,12 @@
   </view>
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">予学团队</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black margin-bottom-xs"><text class="mainTone-color1">明天会不会下雨</text>邀请你加入<text class="mainTone-color1">iParding团队</text>。</view>
@@ -120,26 +111,24 @@
   </view>
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">刘懒懒</view>
         </view>
       </view>
-      <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black">收藏了你的团队</view>
-  </view>
+  </view> -->
   <!-- 招募结束 -->
-  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+  <!-- <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="text-black margin-bottom-sm" style="font-size:32rpx;">团队招募结束！</view>
     <view class="text-grey margin-bottom-sm">你的团队<text class="mainTone-color1">予学团队</text>招募人数已满（13人），招募结束。</view>
     <view class="flex justify-end">
       <text class="text-gray">晚上8:28</text>
     </view>
-  </view>
+  </view> -->
 
 <!-- 需要我审批 -->
   <view wx:if="{{tabCur==1}}" wx:for="{{myApproval}}" class="flex flex-direction padding bg-white solids-bottom">

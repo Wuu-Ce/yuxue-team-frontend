@@ -28,6 +28,7 @@ Page({
     this.setData({
       user_id: user_id
     })
+    var that = this;
     request('/info/detail','POST',{user_id:user_id}).then(
       (res)=>{
         console.log(res);
@@ -45,6 +46,15 @@ Page({
       },
       (error)=>{console.log(error)}
     )
+    request('/team/getMyPrivate','POST',{user_id: user_id}).then(
+      (res)=>{
+        that.setData({
+          showMyCreate: res.data.data.create,
+          showMyJoin: res.data.data.join
+        })
+      },
+      ()=>{}
+    )
   },
   // 返回到上一页
   backToLastPage(){
@@ -54,14 +64,30 @@ Page({
   },
   // 跳转到该用户创建的团队界面
   jumpToTeamCreatedByUser(){
-    wx.navigateTo({
-      url: '/pages/teamCreatedByUser/teamCreatedByUser?user_id=' + this.data.user_id,
-    })
+    if(this.data.showMyCreate){
+      wx.navigateTo({
+        url: '/pages/teamCreatedByUser/teamCreatedByUser?user_id=' + this.data.user_id,
+      })
+    }else{
+      wx.showModal({
+        title: '对方设置了隐私权限',
+        content: '无法查看',
+        showCancel: false
+      })
+    }
   },
   // 跳转到该用户加入的团队界面
   jumpToTeamJoinedByUser(){
-    wx.navigateTo({
-      url: '/pages/teamJoinedByUser/teamJoinedByUser?user_id=' + this.data.user_id,
-    })
+    if(this.data.showMyJoin){
+      wx.navigateTo({
+        url: '/pages/teamJoinedByUser/teamJoinedByUser?user_id=' + this.data.user_id,
+      })
+    }else{
+      wx.showModal({
+        title: '对方设置了隐私权限',
+        content: '无法查看',
+        showCancel: false
+      })
+    }
   }
 })

@@ -37,7 +37,9 @@
 <View class="flex align-center margin-lr-lg margin-bottom">
   <!-- 创建的团队 -->
   <view class="flex flex-direction align-center padding-lg margin-right bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamCreatedByUser">
-    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">创建的团队</view>
+    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">创建的团队
+      <text wx:if="{{!showMyCreate}}" class="cuIcon-lock margin-left-xs" style="font-size: 32rpx;"></text>
+    </view>
     <view class="flex justify-center align-center text-grey">
       <text class="margin-right-xs">{{createNum}}个</text>
       <text class="cuIcon-right"></text>
@@ -45,7 +47,9 @@
   </view>
   <!-- 加入的团队 -->
   <view class="flex flex-direction align-center padding-lg bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamJoinedByUser">
-    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">加入的团队</view>
+    <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">加入的团队
+      <text wx:if="{{!showMyJoin}}" class="cuIcon-lock margin-left-xs" style="font-size: 32rpx;"></text>
+    </view>
     <view class="flex justify-center align-center text-grey">
       <text class="margin-right-xs">{{joinNum}}个</text>
       <text class="cuIcon-right"></text>
