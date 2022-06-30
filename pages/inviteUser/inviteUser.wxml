@@ -24,7 +24,7 @@
       </view>    
     </form>
     <!-- 搜索结果 -->
-    <text class="padding-top padding-left text-grey">搜索结果</text>
+    <text class="padding-top padding-left text-grey text-center">{{noRes?'未搜索到用户':'搜索结果'}}</text>
     <view wx:for="{{searchRes}}" wx:key="index" wx:for-item="user" class="bg-white padding" value="searchUser">
       <view class="flex justify-start align-center">
         <image class="cu-avatar round" src="{{user.avatar}}" bindtap="toUserPage"></image>

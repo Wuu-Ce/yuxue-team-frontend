@@ -24,6 +24,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    relation:{},
     showOkModal: false,
     animation: false,
     select: -1,
@@ -35,14 +36,15 @@ Component({
 
   lifetimes: {
     attached: function()  {
-      console.log('on show')
       const pages = getCurrentPages();
       const curPage = pages[pages.length - 1]; //当前页面
       const team = curPage.data.team
+      const relation = curPage.data.relation
       const members = copyObject(team.members)
       this.setData({
         members: members,
-        team_id: team.team_id
+        team_id: team.team_id,
+        relation: relation
       })
     }
   },

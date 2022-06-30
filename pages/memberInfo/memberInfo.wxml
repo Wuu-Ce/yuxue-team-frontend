@@ -9,7 +9,7 @@
       <view class="colorBar padding-tb padding-left-lg padding-right cu-item shadow bg-white">
         <view class="flex justify-between align-center solid-bottom padding-tb" style="position: relative;">
           <view class="flex justify-start align-center">
-            <image class="cu-avatar round" src="{{item.avatar}}"></image>
+            <image class="cu-avatar round" data-index="{{index}}" src="{{item.avatar}}" bindtap="toUserPage"></image>
             <view class="text-lg padding-left">{{item.nickname}}</view>
           </view>
           <view class="text-xl text-grey">
@@ -52,7 +52,7 @@
           </view>      -->
         </view>
         <view class="padding-top {{relation>1?'solid-bottom padding-bottom':''}} padding-left  text-df">擅长领域： {{item.skill?item.skill:'未填写'}}</view>
-        <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{relation>1}}">
+        <view class="padding-top padding-left flex justify-between text-lg" wx:if="{{relation.isMember}}">
           <view class="text-df">联系方式：{{item.contact?item.contact:'未填写'}}</view>
           <view 
             class="text-xl"

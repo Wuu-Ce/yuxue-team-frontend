@@ -84,33 +84,6 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
     // 用户与队员关系接口
     getRelation(team_id) {
       const relation = request('/team/relation', 'POST', {
@@ -126,19 +99,18 @@ Page({
               duration: 2000
             })
           }
-        
-          if(data.status !== 3) {
-            wx.showToast({
-              icon: 'error',
-              title: '您不是队长！',
-              duration: 2000,
-            })
-            setTimeout(function() {
-              wx.navigateBack({
-                delta: 1,
-              })
-            },2000)
-          }
+          if (!data.isLeader) {
+						wx.showToast({
+							icon: 'error',
+							title: '您不是队长！',
+							duration: 2000,
+						})
+						setTimeout(function () {
+							wx.navigateBack({
+								delta: 1,
+							})
+						}, 2000)
+					}
         },
         res => {
           wx.showToast({

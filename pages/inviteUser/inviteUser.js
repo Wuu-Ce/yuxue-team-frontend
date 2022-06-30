@@ -13,7 +13,8 @@ Page({
 		scrollH: wx.getSystemInfoSync().windowHeight - app.globalData.CustomBar,
 		searchRes: [],
 		// 邀请弹窗控制参数
-		showModal: false,
+    showModal: false,
+    noRes: false,
 		team: {},
 		user: {},
 	},
@@ -120,25 +121,30 @@ Page({
       })
       return
     }
-		// 获取用户信息
+    // 获取用户信息
+    const sRes = []
 		const rest = request('/info/detail', 'POST', { user_id: UID_int })
 		rest.then(
 			(res) => {
         console.log(res)
 				if (res.data.code === 0) {
-					const sRes = []
 					sRes.push(res.data.data)
 					that.setData({
 						searchRes: sRes,
+						noRes: false,
 					})
 				}
 			},
 			(res) => {
-				wx.showToast({
-					icon: 'error',
-					title: res.message,
-					duration: 2000,
-				})
+					that.setData({
+            searchRes: sRes,
+            noRes: true,
+					})
+				// wx.showToast({
+				// 	icon: 'error',
+				// 	title: res.message,
+				// 	duration: 2000,
+				// })
 			}
 		)
 	},
@@ -180,7 +186,7 @@ Page({
       reason: '',
       contact: ''
     })
-    wx.showLoading({})
+    wx.showLoading()
 		const rest = request('/invite/create', 'POST', {
 			user_id: that.data.user.user_id,
 			team_id: that.data.team.team_id,
@@ -189,7 +195,7 @@ Page({
 		})
 		rest.then(
 			(res) => {
-        wx.hideLoading({})
+        wx.hideLoading()
 				console.log(res)
 				if (res.data.code === 0) {
           wx.showToast({
@@ -204,7 +210,7 @@ Page({
        
 			},
 			(res) => {
-        wx.hideLoading({})
+        wx.hideLoading()
 				wx.showToast({
 					icon: 'error',
 					title: res.message,

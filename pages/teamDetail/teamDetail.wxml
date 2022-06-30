@@ -54,14 +54,14 @@
           </view>
         </view>
         <scroll-view scroll-x="true" style="height: 150rpx; white-space: nowrap;" enable-flex="true" class="flex justify-start padding-lr-lg margin-top-sm">
-          <view class="padding-sm justify-center" wx:for="{{team.members.length>5?5:team.members.length}}" wx:key="index">
+          <view class="padding-sm justify-center" wx:for="{{team.members.length>5?5:team.members.length}}" wx:key="index" data-index="{{index}}" bindtap="toUserPage">
             <image class="cu-avatar round" src="{{team.members[index].avatar}}"></image>
             <view wx:if="{{team.members[index].is_leader}}" class="leader-tag bg-blue radius text-xs padding-lr-xs">队长</view>
             <view class="padding-top-xs hidden-text">{{team.members[index].nickname}}</view>
           </view>
           <!-- 邀请成员 -->
           <view 
-            wx:if="{{relation===3||relation===2}}"
+            wx:if="{{relation.isLeader}}"
             class="padding-sm justify-center" 
             bindtap="toInvitePage"
             data-type="input"

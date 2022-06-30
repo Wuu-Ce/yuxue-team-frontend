@@ -104,6 +104,7 @@ Page({
 			this.getRelation(team_id)
 			// 招募
 			this.getRecruit(team_id)
+			this.getTeamDetail(team_id)
 		}
 	},
 	// 获取队伍详情
@@ -313,4 +314,12 @@ Page({
 				'/pages/recruitMember/recruitMember?team_id=' + this.data.team.team_id,
 		})
 	},
+	// 跳转用户主页
+	toUserPage(e){
+    const index = e.currentTarget.dataset.index
+    const user_id = this.data.team.members[index].user_id
+    wx.navigateTo({
+      url: '/pages/userDetail/userDetail?user_id=' + user_id,
+    })
+  },
 })
