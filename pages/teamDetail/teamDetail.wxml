@@ -169,22 +169,22 @@
 
     <!-- 按钮 -->
     <view class="padding-top-sm">
+      <!-- 队长 -->
+      <view class="bg-white padding-lg flex jsutify-center" wx:if="{{relation.isLeader}}">
+        <button class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toManagePage">管理队伍</button>
+        <button wx:if="{{recruit.length === 0}}" class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toTecruitPage">招募成员</button>
+      </view>  
+      <!-- 队员 -->
+      <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation.isMember}}">
+        <button class="cu-btn wuu-button basis-sm" bindtap="">退出队伍</button>
+      </view>        
       <!-- 游客 未登录 -->
-      <view class="bg-white padding-lg flex jsutify-center" wx:if="{{relation===0}}">
+      <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation.isLogin}}">
         <button class="cu-btn wuu-button" bindtap="toApplyPage">申请加入</button>
       </view>
       <!-- 普通用户 -->
-      <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===1}}">
+      <view class="bg-white padding-lg flex jsutify-center" wx:else>
         <button class="cu-btn wuu-buttonr" bindtap="toApplyPage">申请加入</button>
-      </view>
-      <!-- 队员 -->
-      <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===2}}">
-        <button class="cu-btn wuu-button basis-sm" bindtap="">退出队伍</button>
-      </view>
-      <!-- 队长 -->
-      <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation===3}}">
-        <button class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toManagePage">管理队伍</button>
-        <button wx:if="{{recruit.length === 0}}" class="cu-btn wuu-button shadow-warp basis-sm" bindtap="toTecruitPage">招募成员</button>
       </view>
     </view>
   </view>

@@ -21,7 +21,15 @@ Page({
 		hideTeamAbout: true,
 
 		// 用户类型 leader; member; normal; notLogin
-		relation: -1,
+		relation: {
+			isApplying: false,
+			isCollected: false,
+			isExist: false,
+			isInviting: false,
+			isLeader: false,
+			isLogin: false,
+			isMember: false,
+		},
 		// 队伍信息
 		team: {
 			team_id: 0,
@@ -140,6 +148,7 @@ Page({
 		const relation = request('/team/relation', 'POST', { team_id: team_id })
 		relation.then(
 			(res) => {
+				console.log(res)
 				const data = res.data.data
 				if (data.status === -1) {
 					wx.showToast({
@@ -149,7 +158,7 @@ Page({
 					})
 				}
 				that.setData({
-					relation: data.status,
+					relation: data,
 				})
 			},
 			(res) => {
@@ -266,15 +275,14 @@ Page({
 	},
 	// 邀请成员
 	inviteMember(user_id) {
-    console.log('inviteMember() called.')
-
-  },
-  toInvitePage() {
-    const that = this
-    wx.navigateTo({
-      url: '/pages/inviteUser/inviteUser?team_id=' + that.data.team.team_id,
-    })
-  },
+		console.log('inviteMember() called.')
+	},
+	toInvitePage() {
+		const that = this
+		wx.navigateTo({
+			url: '/pages/inviteUser/inviteUser?team_id=' + that.data.team.team_id,
+		})
+	},
 	// 跳转申请加入界面
 	toApplyPage() {
 		var ifLogin = wx.getStorageSync('ifLogin')

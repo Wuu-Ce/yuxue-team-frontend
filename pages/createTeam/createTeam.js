@@ -32,7 +32,7 @@ Page({
 
     // 返回结果-队伍信息
     team: {
-      avatar: CONFIG.avatar_static_url + '/0.jpg',
+      avatar: CONFIG.avatar_static_url + '/team/0.jpg',
       name: '',
       field_id: 0,
       type: {},
@@ -410,8 +410,9 @@ Page({
   // 展示完成模态框
   showOkMoldal() {
     const that = this
+    const defaultAvatar = CONFIG.avatar_static_url + '/team/0.jpg'
     wx.showLoading({
-      title: '队伍创建中',
+      title: '创建中'
     })
     const team = this.data.team
     const request_data = {
@@ -423,7 +424,6 @@ Page({
       description: team.description,
       rule: team.rule
     }
-    console.log(request_data)
     let res = request('/team/new','POST',request_data)
     res.then(
       (res)=>{
@@ -432,8 +432,19 @@ Page({
           this.setData({
             team_id: team_id,
         })
-        that.upLoadLogo(team_id)
+        if (team.avatar===defaultAvatar){
+          wx.hideLoading()
+          wx.showToast({
+            title: '创建成功',
+            duration: 1000,
+          })
+          setTimeout(function() {
+            that.redictToHome()
+          }, 1000)
+        } else
+					that.upLoadLogo(team_id)
         } else {
+          wx.hideLoading()
           wx.showToast({
             icon: 'error',
             title: '创建失败',
@@ -443,7 +454,6 @@ Page({
         
       },
       res=>{
-        console.log(res)
         wx.hideLoading()
         wx.showToast({
           icon: 'error',
@@ -473,12 +483,17 @@ Page({
         'cookie': cookie
       },
       success (res) {
+        console.log(res)
         wx.hideLoading()
         const data = JSON.parse(res.data)
         if(data.code==0) {
-          that.setData({
-            showOkModal: true
-          })
+        wx.showToast({
+					title: '创建成功',
+					duration: 1000,
+					complete() {
+						that.redictToHome()
+					},
+				})
         } else {
           wx.showToast({
             icon: 'error',
@@ -488,10 +503,11 @@ Page({
         }
       },
       fail (res) {
+        console.log(res)
         wx.hideLoading()
         wx.showToast({
           icon: 'error',
-          title: res.message,
+          title: res.errMsg,
           duration: 2000
         })
       }

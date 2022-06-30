@@ -1,4 +1,4 @@
-import { request } from '../../utils/util'
+import { request,copyObject } from '../../utils/util'
 const app = getApp()
 Page({
 
@@ -73,9 +73,15 @@ Page({
     const recruitRes = request('/recruit/detail', 'POST', {recruit_id: recruit_id})
     recruitRes.then(
       res => {
-        that.setData({
-          recruit: res.data.data
-        })
+        this.data.recruit = res.data.data
+        console.log(res)
+        if(res.data.data.type===1){
+          that.fliter()
+        } else {
+          that.setData({
+            recruit: res.data.data
+          })
+        }
       },
       res => {
         wx.showToast({
@@ -86,6 +92,18 @@ Page({
         console.log(res)
       }
     )
+  },
+  // 去除普通招募中的完成项
+  fliter(){
+    const recruit = copyObject(this.data.recruit) 
+    recruit.items=[]
+    for(const item of this.data.recruit.items){
+      if(item.is_available)
+        recruit.items.push(item)
+    }
+    this.setData({
+      recruit: recruit
+    })
   },
   // 普通招募选中一项
   SelectIteam(e) {

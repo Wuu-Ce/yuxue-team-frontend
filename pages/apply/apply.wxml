@@ -46,10 +46,20 @@
           </view>
           <scroll-view wx:else scroll-y class="padding-top-lg" style="height: {{recruit.items.length>4?'350': recruit.items.length*120 + 30}}px;">
             <view class="padding-top-xs">
-              <view wx:for="{{recruit.items}}" wx:for-item="detail" wx:key="index" class=" padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} {{select==index?'colorBar recruit-item-select':''}} margin-top margin-lr {{recruit.items.length-1==index?'margin-bottom':''}}" bindtap="SelectIteam" data-index="{{index}}">
-                <view>方向：{{detail.role}}</view>
-                <view class="padding-top-sm">要求：{{detail.requirement}}</view>
-                <view wx:if="{{!detail.is_available}}" class="text-sl finishText text-bold">已完成</view>
+              <view 
+                wx:for="{{recruit.items}}" 
+                wx:for-item="detail" 
+                wx:key="index" 
+              >
+                <view wx:if="{{detail.is_available}}" 
+                  class="padding-sm {{detail.is_available?'recruit-item':'recruit-item-disable'}} {{select==index?'colorBar recruit-item-select':''}} margin-top margin-lr {{recruit.items.length-1==index?'margin-bottom':''}}"
+                  bindtap="SelectIteam" 
+                  data-index="{{index}}"
+                >
+                  <view>方向：{{detail.role}}</view>
+                  <view class="padding-top-sm">要求：{{detail.requirement}}</view>
+                </view>
+
               </view>
             </view>
           </scroll-view>

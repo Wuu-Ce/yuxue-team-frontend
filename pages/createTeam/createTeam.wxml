@@ -92,7 +92,6 @@
             value="{{team.goal}}"
             placeholder="请在此输入团队目标"
             class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm showInput" 
-            maxlength="70"
             bindblur = "bindTeamGoal"
             bindconfirm = "bindTeamGoal"
           ></textarea>
@@ -107,7 +106,6 @@
             value="{{team.rule}}"
             placeholder="请在此输入团队的规约" 
             class="normal-textarea {{unTeamName?'solid-warnning':'solid-normal'}} margin-top-sm showInput" 
-            maxlength="70"
             bindblur = "bindTeamProtocol"
             bindconfirm = "bindTeamProtocol"
           ></textarea>
@@ -248,21 +246,6 @@
     </view>
     <view class="padding-xl text-white">
       {{warningText}}
-    </view>
-  </view>
-</view>
-
-<!-- 完成模态框 -->
-<view class="yuxue-modal show" wx:if="{{showOkModal}}">
-  <view class="yuxue-dialog">
-    <view class="padding">
-      <view class="text-center">
-        <view class="cuIcon-roundcheckfill text-blue text-xxl text-bold" style="font-size: 60px;"></view>
-        <view class="text-lg">队伍创建成功</view>
-      </view>
-    </view>
-    <view class="solids-top text-center" wx:if="{{curClass.edit}}" style="height: 100rpx;">
-      <view class="padding-tb text-lg mainTone-color1" style="width: 100%;" bindtap="redictToHome">确认</view>
     </view>
   </view>
 </view>
