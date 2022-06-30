@@ -8,16 +8,16 @@
     <text>通知</text>
   </view>
   <view class="cu-item {{1==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="1" style="height: {{NavHeight}}px;">
-    <text>需要审批</text>
+    <text>需要我审批</text>
   </view>
   <view class="cu-item {{2==tabCur?'text-black cur':''}}" bindtap="tabSelect" data-id="2" style="height: {{NavHeight}}px;">
-    <text>等待审批</text>
+    <text>等待他人审批</text>
   </view>
 </view>
+
 <scroll-view class="" scroll-y="true" style="height:{{scrollHeight-50}}px;">
-  <!-- <messageItem wx:for="{{messageList}}" data="{{item}}" type="{{tabCur+1}}"></messageItem> -->
-  <!-- 来自队伍 -->
-  <!-- 我申请加入其他队伍的结果 -->
+<!-- 通知 -->
+  <!-- 我申请加入其他团队的结果 -->
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
@@ -45,9 +45,9 @@
       <view class="text-gray">12:22</view>
     </view>
     <view class="text-black margin-bottom-xs">你的申请未通过。</view>
-    <view class="text-grey">你的擅长领域与我们队伍的需求不匹配。</view>
+    <view class="text-grey">你的擅长领域与我们团队的需求不匹配。</view>
   </view>
-  <!-- 我被移除出队伍 -->
+  <!-- 我被移除出团队 -->
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
@@ -60,10 +60,10 @@
       <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
-    <view class="text-black margin-bottom-xs">你被<text class="mainTone-color1">明天会不会下雨</text>移除出队伍。</view>
+    <view class="text-black margin-bottom-xs">你被<text class="mainTone-color1">明天会不会下雨</text>移除出团队。</view>
     <view class="text-grey">你太水了</view>
   </view>
-  <!-- 我收到来自某支队伍的邀请 -->
+  <!-- 我收到来自某支团队的邀请 -->
   <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
@@ -118,39 +118,7 @@
       </view>
     </view>
   </view>
-<!-- 来自个人 -->
-  <!-- 我创建的队伍收到加入申请 -->
-  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solids-bottom">
-    <view class="flex justify-between align-center margin-bottom">
-      <!-- 头像、昵称、日期 -->
-      <view class="flex align-center">
-        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
-        <view class="">
-          <view class="margin-bottom-xs text-black" style="font-size:32rpx">明天会不会下雨</view>
-        </view>
-      </view>
-      <!-- 时间 -->
-      <view class="text-gray">12:22</view>
-    </view>
-    <view class="text-black margin-bottom-xs">
-      请求加入你的队伍<text class="mainTone-color1">予学团队</text>
-    </view>
-    <view class="text-grey margin-bottom-xs">我叫任涛，今年大三，就读于软件工程专业，喜欢编程，擅长微信小程序开发，希望可以加入你的团队。</view>
-    <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view>
-    <view class="flex justify-end padding-lr margin-top-sm">
-      <view class="margin-right">
-        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;">
-          <text class="text-white">同意</text>
-        </button>
-      </view>
-      <view>
-        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;">
-          <text class="text-white">拒绝</text>
-        </button>
-      </view>
-    </view>
-  </view>
-  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding  bg-white solids-bottom">
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
@@ -162,45 +130,78 @@
       <!-- 时间 -->
       <view class="text-gray">12:22</view>
     </view>
-    <view class="text-black">收藏了你的队伍</view>
+    <view class="text-black">收藏了你的团队</view>
   </view>
-  <view wx:if="{{tabCur==1}}" class="flex flex-direction padding bg-white solid-bottom">
+  <!-- 招募结束 -->
+  <view wx:if="{{tabCur==0}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="text-black margin-bottom-sm" style="font-size:32rpx;">团队招募结束！</view>
+    <view class="text-grey margin-bottom-sm">你的团队<text class="mainTone-color1">予学团队</text>招募人数已满（13人），招募结束。</view>
+    <view class="flex justify-end">
+      <text class="text-gray">晚上8:28</text>
+    </view>
+  </view>
+
+<!-- 需要我审批 -->
+  <view wx:if="{{tabCur==1}}" wx:for="{{myApproval}}" class="flex flex-direction padding bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
       <view class="flex align-center">
-        <view class="cu-avatar round lg margin-right-sm" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);width:80rpx;height:80rpx;"></view>
+        <view class="cu-avatar round lg margin-right-sm" style="background-image:url({{item.content.user.avatar}});width:80rpx;height:80rpx;"></view>
         <view class="">
-          <view class="margin-bottom-xs text-black" style="font-size:32rpx">明天会不会下雨</view>
+          <view class="margin-bottom-xs text-black" style="font-size:32rpx">{{item.content.user.nickname}}</view>
         </view>
       </view>
       <!-- 时间 -->
-      <view class="text-gray">12:22</view>
+      <view class="text-gray">{{item.time}}</view>
     </view>
     <view class="text-black margin-bottom-xs">
-      请求加入你的队伍<text class="mainTone-color1">予学团队</text>
+      请求加入你的团队<text class="mainTone-color1">{{item.content.team.name}}</text>
     </view>
-    <view class="text-grey margin-bottom-xs">方向：小程序开发</view>
-    <view class="text-grey margin-bottom-xs">我叫任涛，今年大三，就读于软件工程专业，喜欢编程，擅长微信小程序开发，希望可以加入你的团队。</view>
-    <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view>
+    <!-- <view class="text-grey margin-bottom-xs">申请方向：小程序开发</view>
+    <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
+    <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view> -->
+    <view wx:if="{{item.content.apply.recruit_type===1}}" class="text-grey margin-bottom-xs">申请方向：{{item.content.apply.recruit_item_role}}</view>
+    <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
+    <view class="text-grey">联系方式：<text user-select="true">{{item.content.apply.contact}}</text></view>
     <view class="flex justify-end padding-lr margin-top-sm">
-      <view class="margin-right">
-        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;">
-          <text class="text-white">同意</text>
+      <view wx:if="{{item.status===0}}" class="margin-right">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;" bindtap="approve" data-related_id="{{item.related_id}}">
+          <text class="">同意</text>
         </button>
       </view>
-      <view>
-        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;">
-          <text class="text-white">拒绝</text>
+      <view wx:if="{{item.status===0}}">
+        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;" bindtap="disapprove" data-related_id="{{item.related_id}}">
+          <text class="">拒绝</text>
+        </button>
+      </view>
+      <view wx:if="{{item.status!==0}}">
+        <button class="cu-btn {{item.status===1?'bg-green light':'bg-red light'}}" style="width:120rpx;height:60rpx;">
+          <text class="" style="white-space: nowrap;">{{item.status===1?'已同意':'已拒绝'}}</text>
         </button>
       </view>
     </view>
   </view>
-<!-- 来自系统 -->
-  <view wx:if="{{tabCur==2}}" class="flex flex-direction padding  bg-white solids-bottom">
-    <view class="text-black margin-bottom-sm" style="font-size:32rpx;">队伍招募结束！</view>
-    <view class="text-grey margin-bottom-sm">你的队伍<text class="mainTone-color1">予学团队</text>招募人数已满（13人），招募结束。</view>
+
+<!-- 等待他人审批 -->
+  <view wx:if="{{tabCur==2}}" wx:for="{{myApply}}" class="flex flex-direction padding  bg-white solids-bottom">
+    <view class="flex align-center">
+      <!-- 申请 -->
+      <view wx:if="{{item.catalog===20001}}" class="margin-right-sm margin-bottom-sm text-black" style="flex-grow: 1;font-size:30rpx;">
+        你向<text class="mainTone-color1" data-team_Id="{{item.content.team.team_id}}" bindtap="jumpToTeamDetail">{{item.content.team.name}}</text>团队发送了加入申请
+      </view>
+      <!-- 邀请 -->
+      <view wx:if="{{catalog===20002}}" class="margin-right-sm margin-bottom-sm text-black" style="flex-grow: 1;font-size:30rpx;">
+        你邀请了赵迪加入你的团队<text class="mainTone-color1">{{item.content.team.name}}</text>
+      </view>
+      <!-- 时间 -->
+      <view><text class="text-gray" style="white-space: nowrap;">{{item.time}}</text></view>
+    </view>
+    <!-- <view class="text-grey margin-bottom-sm">你的团队<text class="mainTone-color1">予学团队</text>招募人数已满（13人），招募结束。</view> -->
+    <view wx:if="{{item.content.apply.recruit_type===1}}" class="text-grey margin-bottom-xs">申请方向：{{item.content.apply.recruit_item_role}}</view>
+    <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
+    <view class="text-grey">联系方式：<text user-select="true">{{item.content.apply.contact}}</text></view>
     <view class="flex justify-end">
-      <text class="text-gray">晚上8:28</text>
+      <text class="{{item.status===0?'text-grey':item.status===1?'text-green':'text-red'}}">{{item.status===0?'等待验证':item.status===1?'已通过':'未通过'}}</text>
     </view>
   </view>
 </scroll-view>

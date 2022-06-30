@@ -21,6 +21,8 @@
         plackholder-class="text-grey" 
         fixed="true" 
         maxlength="-1"
+        confirm-type="return"
+        bindinput="editAccuseReason"
       ></textarea>
     </view>
     <view class="padding-lg text-black">

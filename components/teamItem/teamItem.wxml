@@ -14,7 +14,7 @@
       </view>
       <!-- 收藏、举报 -->
       <view wx:if="{{collectButtonShow}}" class="flex justify-around align-center bg-black text-white radius" style="position:absolute;top:70rpx;right:-60rpx;width:260rpx;z-index:1000">
-        <view class="flex align-center padding-lr-sm padding-tb-sm" catchtap="onClickCollect">
+        <view class="flex align-center padding-lr-sm padding-tb-sm" catchtap="collectTeam">
           <text class="cuIcon-{{collected?'favorfill text-yellow':'favor'}} margin-right-xxs"></text>
           <text class="">收藏</text>
         </view>
@@ -44,8 +44,8 @@
   </view>
   <!-- 四、申请加入 -->
   <view class="flex justify-end align-center margin-top-sm">
-    <view wx:if="{{!team.status.member}}" class="cu-btn flex align-center -white round shadow"  style="animation-delay: 0.1s;background-color: #F3F4EE;" bindtap="jumpToApply">
-      <text class="text-bold" style="letter-spacing:4rpx;color:#6E6E6C">申请加入</text>
+    <view class="cu-btn flex align-center -white round shadow"  style="animation-delay: 0.1s;background-color: #F3F4EE;" bindtap="jumpToApply">
+      <text class="text-bold" style="letter-spacing:4rpx;color:#6E6E6C">{{team.relation.isLeader?'管理团队':team.relation.isMember?'已加入':team.relation.isApplying?'申请中':team.relation.isInviting?'已向你发出邀请':'申请加入'}}</text>
     </view>
   </view>
 </view>

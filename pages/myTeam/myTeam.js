@@ -52,6 +52,7 @@ Page({
       url = '/team/listApply'
       data = {}
     }
+    console.log(data);
     request(url,'POST',data).then(
       (res)=>{
         console.log(res);

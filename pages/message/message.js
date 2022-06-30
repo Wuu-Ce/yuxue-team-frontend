@@ -1,5 +1,6 @@
 const app = getApp()
 const request = require("../../utils/util.js").request
+const __formatTime = require("../../utils/util.js").__formatTime
 Page({
 
   /**
@@ -22,24 +23,84 @@ Page({
     request('/notify/list','POST',{type:1}).then(
       (res)=>{
         console.log(res);
+        var myApproval = this.processMessageList(res.data.data);
         this.setData({
-          messageList: res.data.data
+          myApproval: myApproval,
         })
-      }
+      },
+      ()=>{}
     )
+    request('/notify/list','POST',{type:2}).then(
+      (res)=>{
+        console.log(res);
+        var myApply = this.processMessageList(res.data.data);
+        this.setData({
+          myApply: myApply,
+        })
+      },
+      ()=>{}
+    )
+    request('/notify/list','POST',{type:3}).then(
+      (res)=>{
+        console.log(res);
+        var notice = this.processMessageList(res.data.data);
+        this.setData({
+          notice: notice,
+        })
+      },
+      ()=>{}
+    )
+  },
+  // 处理列表，将时间由时间戳调整为字符串
+  processMessageList(messageList){
+    for(let i=0;i<messageList.length;i++){
+      let item = messageList[i];
+      item.time = __formatTime(item.time*1000);
+    }
+    return messageList
   },
   // 选择标签
   tabSelect(e) {
+    
     this.setData({
       tabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id - 1) * 60,
     })
+    console.log(this.data.tabCur);
   },
-  // changeTab: function(e){
-  //   var tabCur = e.currentTarget.dataset.id;
-  //   this.setData({
-  //     tabCur: tabCur
-  //   })
-
-  // }
+  // 允许对方加入
+  approve(e){
+    var related_id = e.currentTarget.dataset.related_id;
+    request('/apply/leader/check','POST',{apply_id: related_id,agree:true}).then(
+      (res)=>{
+        console.log(res);
+        wx.showToast({
+          title: '已同意',
+        })
+        var myApproval = this.data.myApproval;
+        for(let i=0;i<myApproval.length;i++){
+          let item = myApproval[i];
+          if(item.related_id===related_id){
+            item.status=1;
+          }
+        }
+        this.setData({
+          myApproval: myApproval
+        })
+      },
+      ()=>{}
+    )
+  },
+  // 不允许对方加入
+  disapprove(e){
+    
+  },
+  // 跳转到团队详情页
+  jumpToTeamDetail(e){
+    console.log(e);
+    var team_id = e.currentTarget.dataset.team_id;
+    wx.navigateTo({
+      url: '/pages/teamDetail/teamDetail?team_id=' + team_id,
+    })
+  }
 })

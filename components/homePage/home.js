@@ -36,7 +36,10 @@ Component({
       this.refreshIfLogin();  // 刷新登录状态并setData
       if(this.data.ifLogin){
         this.getMyInfo();
+        // 查询是否绑定微信
         this.checkIfBindWechat();
+        // 查询隐私设置
+        this.checkPrivacySettings();
       }else{
         this.setData({
           showLoginRequired: true
@@ -58,7 +61,10 @@ Component({
       this.refreshIfLogin();  // 刷新登录状态并setData
       if(this.data.ifLogin){ 
         this.getMyInfo();
+        // 查询是否绑定微信
         this.checkIfBindWechat();
+        // 查询隐私设置
+        this.checkPrivacySettings();
       }else{
         this.setData({
           avatar: "",
@@ -113,6 +119,19 @@ Component({
         }
       })
     },
+    // 查询隐私设置
+    checkPrivacySettings(){
+      var that = this;
+      request('/team/getMyPrivate','POST',{}).then(
+        (res)=>{
+          that.setData({
+            showMyCreate: res.data.data.create,
+            showMyJoin: res.data.data.join
+          })
+        },
+        ()=>{}
+      )
+    },
     // 刷新登录状态并setData，用于其他功能进行判断
     refreshIfLogin(){
       var ifLogin = wx.getStorageSync('ifLogin');
@@ -156,6 +175,7 @@ Component({
         }
       })
     },
+    // 跳转到我的团队界面
     jumpToMyTeam() {
       if(this.data.ifLogin){
         wx.navigateTo({
@@ -167,6 +187,7 @@ Component({
         })
       }
     },
+    // 跳转到编辑个人信息界面
     jumpToModifyMyInfo(){
       if(this.data.ifLogin){
         wx.navigateTo({
@@ -190,6 +211,12 @@ Component({
         })
       }
     },
+    // 跳转到我的收藏界面
+    jumpToMyCollect(){
+      wx.navigateTo({
+        url: '/pages/myCollect/myCollect',
+      })
+    },
     // 联系客服
     contactService(){
       this.showModal("contactService");
@@ -208,7 +235,7 @@ Component({
     jumpToSettings(){
       if(this.data.ifLogin){
         wx.navigateTo({
-          url: '/pages/settings/settings?bind='+this.data.bind,
+          url: '/pages/settings/settings?bind='+this.data.bind+'&showMyCreate='+this.data.showMyCreate+'&showMyJoin='+this.data.showMyJoin,
         })
       }else{
         this.setData({

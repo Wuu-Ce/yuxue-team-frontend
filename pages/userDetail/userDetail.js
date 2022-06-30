@@ -38,7 +38,9 @@ Page({
           school: res.data.data.school,
           major: res.data.data.major,
           skill: res.data.data.skill,
-          grade: res.data.data.grade
+          grade: res.data.data.grade,
+          createNum: res.data.data.count.create,
+          joinNum: res.data.data.count.join,
         })
       },
       (error)=>{console.log(error)}

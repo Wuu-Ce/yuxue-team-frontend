@@ -46,7 +46,7 @@
   </view>
 </view>
 <view class="flex flex-direction margin-lr-lg margin-top padding bg-white shadow" style="border-radius: 15rpx;">
-  <view class="flex align-center padding-bottom solids-bottom" style="" bindtap="">
+  <view class="flex align-center padding-bottom solids-bottom" style="" bindtap="jumpToMyCollect">
     <text class="cuIcon-favor text-black margin-right-sm" style="font-size:40rpx;"></text>
     <text class="text-black" style="font-size: 32rpx;">我的收藏</text>
   </view>

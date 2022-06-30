@@ -39,7 +39,7 @@
   <view class="flex flex-direction align-center padding-lg margin-right bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamCreatedByUser">
     <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">创建的团队</view>
     <view class="flex justify-center align-center text-grey">
-      <text class="margin-right-xs">0个</text>
+      <text class="margin-right-xs">{{createNum}}个</text>
       <text class="cuIcon-right"></text>
     </view>
   </view>
@@ -47,7 +47,7 @@
   <view class="flex flex-direction align-center padding-lg bg-white shadow" style="border-radius: 15rpx;flex-grow: 1;" bindtap="jumpToTeamJoinedByUser">
     <view class="margin-bottom-sm text-black" style="font-size: 32rpx;">加入的团队</view>
     <view class="flex justify-center align-center text-grey">
-      <text class="margin-right-xs">0个</text>
+      <text class="margin-right-xs">{{joinNum}}个</text>
       <text class="cuIcon-right"></text>
     </view>
   </view>
