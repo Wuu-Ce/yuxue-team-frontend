@@ -146,14 +146,27 @@ Component({
         url: '/pages/userDetail/userDetail?user_id='+user_id,
       })
     },
-    // 跳转到申请加入界面
-    jumpToApply(){
-      var ifLogin = wx.getStorageSync('ifLogin');
+    // 点击右下角的按钮
+    jumpToApply(e){
       console.log(this.data.team)
+      var ifLogin = wx.getStorageSync('ifLogin');
+      var relation = this.data.team.relation
       if(ifLogin){
-        wx.navigateTo({
-          url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
-        })
+        if(relation.isLeader){  // 是否为队长
+          wx.navigateTo({
+            url: '/pages/manageTeam/manageTeam?team_id=' + this.data.team.team_id,
+          })
+        }else if(relation.isMember){  //  是否为队员
+  
+        }else if(relation.isApplying){  // 是否正在申请该团队
+  
+        }else if(relation.isInviting){  // 是否正在被该团队邀请
+  
+        }else{  // 按钮显示为：申请加入
+          wx.navigateTo({
+            url: '/pages/apply/apply?team_id='+this.data.team.team_id+'&recruit_id='+this.data.team.recruit_id,
+          })
+        }
       }else{
         this.triggerEvent('login',{},{})
       }

@@ -72,6 +72,7 @@ Page({
 			curClass: this.data.class,
 		})
 
+
 		// const pages = getCurrentPages()
 		// const prevPage = pages[pages.length - 2] //上一个页面
 		// const team = prevPage.data.team //取上页data里的数据也可以修改
