@@ -30,7 +30,6 @@ Component({
     select: -1,
     selectMember: {},
     members: [],
-    team_id: 0
   },
 
 
@@ -46,7 +45,9 @@ Component({
         team_id: team.team_id,
         relation: relation
       })
+      console.log(this.data.team_id)
     }
+    
   },
 
   /**
@@ -69,7 +70,7 @@ Component({
       }
       this.setData({
         select: selectIndex,
-        selectMember: members[selectIndex]
+        selectMember:selectMember
       })
     },
     // 展示确认框
@@ -156,8 +157,10 @@ Component({
         title: '正在移除',
       })
       const member = this.data.selectMember
+      console.log(typeof this.data.team_id)
+      console.log(typeof member.user_id)
       const request_data = {
-        team_id: this.data.team.team_id,
+        team_id: this.data.team_id,
         user_id: member.user_id
       }
       let res = request('/team/kick','POST',request_data)
