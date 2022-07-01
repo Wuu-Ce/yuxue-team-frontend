@@ -13,7 +13,7 @@
           <image class="cu-avatar round" src="{{team.avatar}}"></image>
           <view class="margin-left-sm">
             <view class="text-lg">{{team.name}}</view>
-            <view class="text-sm text-gray">id：{{team.team_id}}</view>
+            <!-- <view class="text-sm text-gray">id：{{team.team_id}}</view> -->
           </view>
         </view>
         <view class="padding-sm text-lg" catchtap="showMoreMenu">

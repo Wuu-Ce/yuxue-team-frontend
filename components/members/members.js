@@ -45,7 +45,6 @@ Component({
         team_id: team.team_id,
         relation: relation
       })
-      console.log(this.data.team_id)
     }
     
   },
