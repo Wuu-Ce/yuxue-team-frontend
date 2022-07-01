@@ -245,11 +245,9 @@ Page({
 	// 更新队伍信息
 	updateTeamInfo() {
 		const that = this
-		const prevPage = that.data.prevPage
-		wx.showToast({
-			icon: 'loading',
-			title: '保存中',
-		})
+		wx.showLoading({
+      title: '保存中',
+    })
 		const team = that.data.team
 		const request_data = {
 			field_id: team.field_id,
@@ -262,28 +260,20 @@ Page({
 			rule: team.rule,
 			announce: team.announce,
 		}
-		console.log('请求参数：')
-		console.log(request_data)
 		const res = request('/team/update', 'POST', request_data)
 		res.then(
 			(res) => {
-				console.log('返回参数')
-				console.log(res)
-				wx.hideToast()
+				wx.hideLoading()
 				wx.showToast({
 					icon: 'sccuess',
 					title: '保存成功',
 					duration: 1000,
-				})
-				prevPage.setData({
-					team: team,
 				})
 				this.setData({
 					textChanged: false,
 				})
 			},
 			(res) => {
-				console.log(res)
 				wx.hideToast()
 				wx.showToast({
 					icon: 'error',

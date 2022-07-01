@@ -62,3 +62,70 @@
   <view class="flex padding-top-sm padding-bottom padding-lr-lg text-black" style="min-height: 60rpx;">{{skill?skill:''}}</view>
 </view>
 
+<!-- 邀请组件 -->
+<view class="bg-white margin-lg shadow" style="border-radius: 15rpx;" bindtap="showInviteModal">
+  <view class="flex justify-center padding-top padding-bottom-sm text-black" style="font-size: 32rpx;" >邀请</view>
+</view>
+
+<!-- 邀请弹窗 -->
+<view class="yuxue-modal bg-white {{showInviteModal?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: absolute;" catchtap>
+    <view class="content margin-lg">
+      <text class="text-black text-xl text-bold">邀请成员</text>
+    </view>
+    <view class="flex justify-center align-center">
+      <text>邀请</text>
+      <text class="text-blue padding-lr-xs">{{nickname}}</text>
+      <text>加入</text>
+      <view class="dropdown-menu margin-left-sm text-xxl">
+        <view  class="dropdown-menu_title text-blue text-df"  bindtap="showMenuItem">{{menu.title}}</view>
+        <text class="cuIcon-triangledownfill icon {{menu.show?'down':''}}"></text>
+        <view wx:if="{{menu.show}}" class="dropdown-menu_content">
+          <view 
+            wx:for="{{myTeamForOthers}}" 
+            wx:key="index" 
+            class="dropdown-menu_item {{menu.index===index?'active':''}} text-df {{item.relation.isMember||item.relation.isMember||item.relation.isMember?'disable':''}}"
+            data-index="{{index}}"
+            catchtap="selectMenuItem"
+            >
+            <view class="flex justify-between align-center">
+              <text class="text-df">{{item.team.name}}</text>
+              <view wx:if="{{item.relation.isMember}}" class="flex justify-center align-center text-sm text-green">
+                <text class="cuIcon-title"></text> 队伍中
+              </view>
+              <view wx:elif="{{item.relation.isApplying}}" class="flex justify-center align-center text-sm text-blue">
+                <text class="cuIcon-title"></text> 申请中
+              </view>
+              <view wx:elif="{{item.relation.isInviting}}" class="flex justify-center align-center text-sm text-blue">
+                <text class="cuIcon-title"></text> 邀请中
+              </view>
+              </view>
+            </view>
+          </view>        
+        </view>
+    </view>
+    <form bindsubmit="sendInvite" class="padding-top">
+      <view class="padding-sm">
+        <view class="text-black text-bold margin-left" style="text-align: start;">申请理由</view>
+        <textarea name="reason" placeholder="请输入申请理由" class="margin-top-sm padding-sm normal-textarea" style="text-align: start;"></textarea>
+      </view>
+
+      <view class=" margin-sm padding-tb-sm padding-lr-sm bg-white shadow" style="border-radius: 15rpx;">
+        <view class="flex justify-start align-center">
+          <view class="text-black text-bold" style="width: 25%;">联系方式</view>
+          <input name="contact" placeholder="请输入联系方式" class="padding-lr-sm" style="width: 75%;" maxlength="25" style="text-align: start;"></input>
+        </view>
+      </view>
+      <view class="flex margin-top-sm solids-top">
+        <view class="solids-right" style="width: 50%;">
+          <button style="width: 100%;" class="padding-tb text-gray text-lg " bindtap="hideInviteModal" form-type="reset">取消</button>
+        </view>
+        <view class="solids-right" style="width: 50%;">
+          <button style="width: 100%;" class="padding-tb mainTone-color1 text-lg" form-type="submit">邀请</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</view>
+
+
