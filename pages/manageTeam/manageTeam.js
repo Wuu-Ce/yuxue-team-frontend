@@ -126,7 +126,7 @@ Page({
 					getInfo()
 					that.setData({
             team: teamInfo,
-            copyObject: copyObject(teamInfo)
+            teamCopy: copyObject(teamInfo)
 					})
         }
         wx.hideLoading()
