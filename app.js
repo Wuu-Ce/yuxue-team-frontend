@@ -6,7 +6,12 @@ App({
     // 18330205262：1
     // 18192973090：3
     // 赵迪：4
-    request('/test/login','POST',{'user_id':2}).then(
+    // 潘：12
+    // 吴金志：5
+    // 路伯钰：8
+    //  38：2，3，6，7，9，10，11； 1，4，5
+    // 45：2，3，6； 1，4，5
+    request('/test/login','POST',{'user_id':4}).then(
       (res)=>{
         wx.setStorageSync('cookie', res.cookies[0]);
         wx.setStorage({

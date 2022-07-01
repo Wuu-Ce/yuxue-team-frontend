@@ -21,7 +21,6 @@ Component({
 
     membersShow: [1], // 显示出来的成员列表
     collectButtonShow: false, // 是否显示收藏、举报按钮
-    collected: false,  // 是否收藏,
     modalName: null,
     iconMoreShow: true,  // 是否显示“more”按钮，若显示则不展开
   },
@@ -58,7 +57,9 @@ Component({
       //     }
       //   })
       // }）
-      
+      this.setData({
+        collected: this.data.team.relation.isCollected
+      })
       if(this.data.team.members.length<=5){  // 如果成员头像的数量小于区域可以容纳的数量
         this.setData({
           iconMoreShow: false
