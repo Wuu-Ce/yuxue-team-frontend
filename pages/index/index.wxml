@@ -10,10 +10,25 @@
 <view wx:if="{{tabCur==0}}">
   <view  class="flex flex-direction padding-top-sm padding-bottom-xxs padding-lr-lg bg-white search" style="z-index:500;">
     <!-- 搜索 -->
-    <view class="flex align-center padding-lr-sm padding-tb-xs round" style="flex-grow:1;background-color: #f5f5f5;" >
-      <text class="cuIcon-search margin-right-sm text-grey"></text>
-      <input type="text" 	confirm-type="search" placeholder="根据团队名称、简介来搜索团队" placeholder-class="text-sm text-grey" style="width:100%;" bindinput="searchTeam"></input>
-    </view>
+    <form  bindsubmit="searchTeam">
+      <view class="flex align-center padding-lr-sm padding-tb-xs round" style="flex-grow:1;background-color: #f5f5f5;" >
+        <input 
+          name="search"
+          type="text" 	
+          confirm-type="search" 
+          placeholder="根据团队名称、简介来搜索团队" 
+          placeholder-class="text-sm text-grey" 
+          style="width: 100%;"
+          class="margin-left-sm"
+          bindconfirm="searchTeam"
+          ></input>
+        <button 
+          form-type="submit" 
+          class="cu-btn sm cuIcon-search margin-right-sm text-grey bg-gray round"
+          style="width: 24px;"
+        ></button>
+      </view>    
+    </form>
     <!-- 顶部tab -->
     <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" style="position: relative;">
       <!-- tabs -->

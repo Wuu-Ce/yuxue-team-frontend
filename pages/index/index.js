@@ -67,8 +67,14 @@ Page({
   },
   // 搜索团队
   searchTeam(e){
-    var value = e.detail.value;
+    let value = null
+    if(e.type === 'submit') {
+      value = e.detail.value.search
+    } else if(e.type === 'confirm') {
+      value = e.detail.value
+    }
     this.data.key = value;
+    console.log(e)
     this.getTeamList()
   },
   // 顶部tab切换
