@@ -176,7 +176,7 @@
       </view>  
       <!-- 队员 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation.isMember}}">
-        <button class="cu-btn wuu-button basis-sm" bindtap="">退出队伍</button>
+        <button class="cu-btn wuu-button basis-sm" bindtap="">退出团队</button>
       </view>        
       <!-- 游客 未登录 -->
       <view class="bg-white padding-lg flex jsutify-center" wx:elif="{{relation.isLogin}}">

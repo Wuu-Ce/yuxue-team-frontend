@@ -6,18 +6,18 @@ App({
     // 18330205262：1
     // 18192973090：3
     // 赵迪：4
-    request('/test/login','POST',{'user_id':2}).then(
-      (res)=>{
-        wx.setStorageSync('cookie', res.cookies[0]);
-        wx.setStorage({
-          key: "ifLogin",
-          data: true
-        })
-      },
-      (error)=>{
-        console.log(error.message);
-      }
-    )
+    // request('/test/login','POST',{'user_id':3}).then(
+    //   (res)=>{
+    //     wx.setStorageSync('cookie', res.cookies[0]);
+    //     wx.setStorage({
+    //       key: "ifLogin",
+    //       data: true
+    //     })
+    //   },
+    //   (error)=>{
+    //     console.log(error.message);
+    //   }
+    // )
 
     // 环境信息
     wx.getSystemInfo({
