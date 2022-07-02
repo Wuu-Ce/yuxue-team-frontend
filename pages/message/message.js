@@ -61,7 +61,6 @@ Page({
   },
   // 选择标签
   tabSelect(e) {
-    
     this.setData({
       tabCur: e.currentTarget.dataset.id,
       scrollLeft: (e.currentTarget.dataset.id - 1) * 60,
@@ -95,9 +94,15 @@ Page({
   disapprove(e){
     
   },
+  // 跳转到用户个人主页
+  jumpToUserDetail(e){
+    var user_id = e.currentTarget.dataset.user_id;
+    wx.navigateTo({
+      url: '/pages/userDetail/userDetail?user_id='+user_id,
+    })
+  },
   // 跳转到团队详情页
   jumpToTeamDetail(e){
-    console.log(e);
     var team_id = e.currentTarget.dataset.team_id;
     wx.navigateTo({
       url: '/pages/teamDetail/teamDetail?team_id=' + team_id,

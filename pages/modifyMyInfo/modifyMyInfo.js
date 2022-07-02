@@ -46,7 +46,11 @@ Page({
       (res)=>{
         console.log(res);
         var gradeLst = this.data.gradeLst;
-        gradeLst[res.data.data.grade].checked = true;
+        var grade = res.data.data.grade;
+        if(grade===null){
+          grade = 9;
+        }
+        gradeLst[grade].checked = true;
         this.setData({
           avatar: res.data.data.avatar,
           nickname: res.data.data.nickname,
@@ -54,7 +58,7 @@ Page({
           school: res.data.data.school,
           major: res.data.data.major,
           skill: res.data.data.skill,
-          grade: this.data.gradeLst[res.data.data.grade].name,
+          grade: gradeLst[grade].name,
           gradeLst: gradeLst
         })
       },
@@ -66,6 +70,12 @@ Page({
   onShow(){
     request('/info/detail','POST',{}).then(
       (res)=>{
+        var gradeLst = this.data.gradeLst;
+        var grade = res.data.data.grade;
+        if(grade===null){
+          grade = 9;
+        }
+        gradeLst[grade].checked = true;
         this.setData({
           avatar: res.data.data.avatar,
           nickname: res.data.data.nickname,
@@ -73,9 +83,8 @@ Page({
           school: res.data.data.school,
           major: res.data.data.major,
           skill: res.data.data.skill,
-          grade: this.data.gradeLst[res.data.data.grade].name
+          grade: gradeLst[grade].name
         })
-        this.data.gradeLst[res.data.data.grade].checked = true;
       },
       (error)=>{
         console.log(error);
