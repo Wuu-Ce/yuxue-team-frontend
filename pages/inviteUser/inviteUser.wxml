@@ -13,7 +13,6 @@
           name="search"
           auto-focus="true"
           class="padding-lr"
-        
           confirm-type="search" 
           placeholder="根据UID来搜索用户" 
           placeholder-class="text-sm text-grey" 
@@ -25,13 +24,21 @@
       </view>    
     </form>
     <!-- 搜索结果 -->
-    <text class="padding-top padding-left text-grey text-center">{{noRes?'未搜索到用户':'搜索结果'}}</text>
+    <text class="padding-top padding-left text-grey {{noRes?'text-center':''}} ">{{noRes?'未搜索到用户':'搜索结果'}}</text>
     <view wx:for="{{searchRes}}" wx:key="index" wx:for-item="user" class="bg-white padding" value="searchUser">
       <view class="flex justify-start align-center">
         <image class="cu-avatar round" src="{{user.avatar}}" bindtap="toUserPage"></image>
         <view class="margin-left-sm">
           <view class="text-lg">{{user.nickname}}</view>
-          <view class="text-sm text-gray">id：{{user.user_id}}</view>
+          <view wx:if="{{user.curTeamRelation.isMember}}" class="flex justify-center align-center text-sm text-green">
+            <text class="cuIcon-title"></text> 队伍中
+          </view>
+          <view wx:elif="{{user.curTeamRelation.isApplying}}" class="flex justify-center align-center text-sm text-blue">
+            <text class="cuIcon-title"></text> 申请中
+          </view>
+          <view wx:elif="{{user.curTeamRelation.isInviting}}" class="flex justify-center align-center text-sm text-blue">
+            <text class="cuIcon-title"></text> 邀请中
+          </view>
         </view>
         <button class="cu-btn shadow text-df bg-main" style="margin-right: 0;width: 20%;" bindtap="onClickInvite" data-index="{{index}}">邀请</button>
       </view>
@@ -47,54 +54,28 @@
     </view>
     <view class="flex justify-center" style="overflow: hidden;">
       <text>邀请</text>
-      <text class="text-blue padding-lr-xs">{{user.nickname}}</text>
+      <text class="text-blue padding-lr-xs"  style="max-width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">{{user.nickname}}</text>
       <text>加入</text>
-      <text class="text-blue padding-lr-xs">{{team.name}}</text>
+      <text class="text-blue padding-lr-xs" style="max-width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">{{team.name}}</text>
     </view>
     <form bindsubmit="sendInvite" class="padding-top">
-      <!-- 申请理由 -->
       <view class="padding-sm">
         <view class="text-black text-bold margin-left" style="text-align: start;">申请理由</view>
-        <textarea 
-          name="reason" 
-          placeholder="请输入申请理由" 
-          class="margin-top-sm padding-sm normal-textarea"
-          style="text-align: start;"
-        ></textarea>
+        <textarea name="reason" value="{{reason}}" placeholder="请输入申请理由" class="margin-top-sm padding-sm normal-textarea bg-gray" style="text-align: start;"></textarea>
       </view>
-      <!-- 联系方式 -->
-      <view class=" margin-sm padding-tb-sm padding-lr-sm bg-white shadow" style="border-radius: 15rpx;">
-        <view class="flex justify-start align-center">
-          <view class="text-black text-bold" style="width: 25%;">联系方式</view>
-          <input 
-            name="contact" 
-            placeholder="请输入联系方式" 
-            class="padding-lr-sm" 
-            style="width: 75%;" 
-            maxlength="25" 
-            style="text-align: start;"
-          ></input>
-        </view>
+    
+      <view class="flex justify-start align-center margin-sm bg-gray" style="border-radius: 15rpx;">
+        <view class="text-black text-bold padding-sm bg-white" style="width: 40%;border-radius: 15rpx 0  0 15rpx; border:solid 1px #ebebeb;">联系方式</view>
+        <input name="contact" value="{{contact}}" placeholder="请输入联系方式" class="padding-lr-sm " style="width: 60%;" maxlength="25" style="text-align: start;"></input>
       </view>
-      <view class="flex margin-top-sm solids-top">
+      <view class="flex margin-top solids-top">
         <view class="solids-right" style="width: 50%;">
-          <button 
-            style="width: 100%;"
-            value="{{reason}}"
-            class="padding-tb text-gray text-lg " 
-            bindtap="hideModal"
-            form-type="reset"
-          >取消</button>
+          <button style="width: 100%;" class="padding-tb text-gray text-lg " bindtap="hideModal" form-type="reset">取消</button>
         </view>
-        <view class="solids-right"style="width: 50%;">
-          <button 
-            style="width: 100%;"
-            value="{{contact}}"
-            class="padding-tb mainTone-color1 text-lg" 
-            form-type="submit"
-          >邀请</button>
+        <view class="solids-right" style="width: 50%;">
+          <button style="width: 100%;" class="padding-tb mainTone-color1 text-lg" form-type="submit">邀请</button>
         </view>
-      </view>    
+      </view>
     </form>
   </view>
 </view>

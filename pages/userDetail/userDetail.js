@@ -167,7 +167,8 @@ Page({
 		this.setData({
 			menu: menu,
 		})
-	},
+  },
+  // 发送邀请
 	sendInvite(e){
     const that = this
     const menu = this.data.menu
