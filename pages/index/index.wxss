@@ -1,6 +1,40 @@
+@keyframes showFliterBox{
+  0% {
+    transform: scaleY(0) translateY(-300px);
+    opacity: 0;
+  }
+}
 .tabbar {
   position: fixed;
   bottom: 0px;
   left: 0px;
   width: 100%;
+}
+
+.topTabbar{
+  position: relative;
+
+}
+
+.fliterBox{
+  position: absolute;
+  bottom: -300px;
+  left: 0;
+  height: 300px;
+  width: 100vw;
+  z-index: 500;
+  border-radius: 0 0 15px 15px;
+  animation: showFliterBox 0.3s;
+}
+.mask{
+  position: absolute;
+  top: 85px;
+  left: 0;
+  width: 100vw;
+  background-color: #000;
+  opacity: 0.3;
+  z-index: 1;
+}
+button.active{
+  border: solid 1px rgb(134, 171, 240);
 }

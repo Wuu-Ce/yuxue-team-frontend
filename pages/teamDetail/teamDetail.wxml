@@ -33,7 +33,7 @@
       </view>
     </view>
     <!-- 公告 -->
-    <view wx:if="{{team.announce&&relation>1}}" class="padding-lr-sm padding-top-sm">
+    <view wx:if="{{team.announce&&relation.isMember}}" class="padding-lr-sm padding-top-sm">
       <view class="radius cu-item bg-notice" style="border-radius: 15rpx;">
         <view class="text-center padding-sm text-white text-lg text-bold">
           <text class="cuIcon-notice padding-lr-xs"></text>公告

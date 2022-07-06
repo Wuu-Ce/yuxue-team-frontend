@@ -70,15 +70,12 @@ Page({
 		)
 	},
 
-
-  
   // 用户与我的团队的关系
   getTeamRelation() {
     const that = this
 		request('/team/myTeamForOthers', 'POST', { user_id: this.data.user_id }).then(
 			(res) => {
         console.log(that.data.user_id)
-        console.log(res)
         this.setData({
 					myTeamForOthers: res.data.data,
 				})
@@ -94,7 +91,8 @@ Page({
 		wx.navigateBack({
 			delta: 0,
 		})
-	},
+  },
+  
 	// 跳转到该用户创建的团队界面
 	jumpToTeamCreatedByUser() {
 		if (this.data.showMyCreate) {
@@ -110,7 +108,8 @@ Page({
 				showCancel: false,
 			})
 		}
-	},
+  },
+  
 	// 跳转到该用户加入的团队界面
 	jumpToTeamJoinedByUser() {
 		if (this.data.showMyJoin) {
@@ -151,7 +150,16 @@ Page({
 	// 选中下拉菜单选项
 	selectMenuItem(e) {
 		const menu = this.data.menu
-		const index = e.currentTarget.dataset.index
+    const index = e.currentTarget.dataset.index
+    const relation = this.data.myTeamForOthers[index].relation
+    if (relation.isApplying || relation.isInviting || relation.isMember){
+      wx.showToast({
+        icon: 'error',
+        title: '不能选择该团队',
+        duration: 1000
+      })
+      return
+    }
 		menu.team = this.data.myTeamForOthers[index].team
 		menu.title = menu.team.name
 		menu.show = false
@@ -161,6 +169,7 @@ Page({
 		})
 	},
 	sendInvite(e){
+    const that = this
     const menu = this.data.menu
     if(menu.index<0) {
       wx.showToast({
@@ -191,6 +200,18 @@ Page({
 			(res) => {
         wx.hideLoading()
         if(res.data.code===0){
+          that.hideInviteModal()
+          that.getTeamRelation()
+          that.setData({
+						menu: {
+							show: false,
+							team: {},
+							index: -1,
+							title: '请选择',
+            },
+            reason: '',
+            contact: ''
+					})
           wx.showToast({
             icon: 'success',
             title: '已发送',
@@ -205,6 +226,6 @@ Page({
           title: err.message,
         })
       }
-		)
+    )
   },
 })

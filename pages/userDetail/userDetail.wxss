@@ -9,7 +9,7 @@
 }
 .dropdown-menu {
   position: relative;
-  min-width: 100px;
+  width: 120px;
   padding: 5px;
   border: solid 4rpx rgb(230, 229, 229);
   border-radius: 6px;
@@ -36,32 +36,37 @@
 .down{
   transform: rotate(180deg);
 }
-.disable{
+/* .disable{
   pointer-events: none;
   opacity: 0.7;
-}
+} */
 .dropdown-menu_content {
   position: absolute;
   top: 100%;
   right: 0;
-  border: solid 3px rgb(230, 229, 229);
+  border: solid 1px rgb(230, 229, 229);
   border-radius: 6px;
   animation: showItem .4s;
   background-color: #ffffff;
   z-index: 1200;
 }
+.notFirst {
+  border-top: solid 1px rgb(230, 229, 229);
+}
+
 .dropdown-menu_item {
-  min-width: 0;
+  min-width: 100px;
   padding: 5px;
-  border-top:solid 1px rgb(230, 229, 229);
   white-space: nowrap;
 }
 .dropdown-menu_item.active {
   color: rgb(47, 119, 212);
-  background-color: rgb(229, 235, 241);
+  background-color: rgb(230, 229, 229);
 }
 .dropdown-menu_title {
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-right: 20px;
 }
 
@@ -75,4 +80,11 @@
   /* border-radius: 10rpx; */
   /* padding: 20rpx 20rpx 20rpx 20rpx; */
   /* box-sizing: border-box; */
+}
+
+.inviteTip {
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+  content:"";
 }

@@ -8,10 +8,10 @@
 
 <!-- 组队列表 -->
 <view wx:if="{{tabCur==0}}">
-  <view  class="flex flex-direction padding-top-sm padding-bottom-xxs padding-lr-lg bg-white search" style="z-index:500;">
+  <view  class="padding-top-sm bg-white topTabbar">
     <!-- 搜索 -->
     <form  bindsubmit="searchTeam">
-      <view class="flex align-center padding-lr-sm padding-tb-xs round" style="flex-grow:1;background-color: #f5f5f5;" >
+      <view class="flex align-center padding-lr-sm margin-lr-lg padding-tb-xs round" style="flex-grow:1;background-color: #f5f5f5;" >
         <input 
           name="search"
           type="text" 	
@@ -30,9 +30,9 @@
       </view>    
     </form>
     <!-- 顶部tab -->
-    <view class="flex align-center justify-between margin-top-sm margin-bottom-xs bg-white" style="position: relative;">
+    <view class="flex align-center justify-between bg-white" >
       <!-- tabs -->
-      <scroll-view scroll-x class="nav flex" enable-flex="true" scroll-with-animation scroll-left="{{scrollLeft}}" style="flex-grow:0;height:55rpx;width:95%;">
+      <scroll-view scroll-x class="nav flex padding-bottom-xs padding-top-sm" enable-flex="true" scroll-with-animation scroll-left="{{scrollLeft}}" style="flex-grow:0;height:80rpx;width:90%;">
         <view class="padding-lr" style="display: inline-block;height:100%;line-height:{{index==topTabCur?'45rpx':'55rpx'}};" wx:for="{{topTabList}}" wx:key="index" bindtap="topTabSelect" data-id="{{index}}">
           <view class="flex flex-direction" style="position: relative;">
             <text class="{{index==topTabCur?'mainTone-color1 text-bold text-lg':'text-black text-lg'}}">{{item.name}}</text>
@@ -42,11 +42,23 @@
         </view>
       </scroll-view>
       <!-- 分类 -->
-      <view class="flex padding-xs shadow" style="flex-shrink: 0;" bindtap="setFilter">
+      <view class="padding-top padding-lr-sm {{showFilter?'bg-gray':''}}" style="border-radius: 5px 5px 0 0; height: 40px;" bindtap="showFliterBox">
         <text class="cuIcon-apps" style="font-size:32rpx;"></text>
       </view>
-      <view class=""></view>
     </view>
+    <!-- 分类弹窗  -->
+    <view wx:if="{{showFilter}}" class="fliterBox bg-gray">
+      <scroll-view class="nav flex" enable-flex="true" scroll-with-animation style="flex-grow:0;height: 250px;width:100%;">
+        <view class="padding">
+          <button class="cu-btn bg-white round  {{fliter.isLocalSchool?'active ':'shadow'}}"  bindtap="setLocalSchool" style="width: 100px;color: #000;">只看本校</button>
+        </view>
+      </scroll-view>
+      <view class="flex justify-center padding-lr-lg">
+        <button class="shadow bg-white" style="border-radius: 100px 0 0 100px;" bindtap="showFliterBox">取消</button>
+        <button class="bg-white shadow" style="border-radius: 0 100px 100px 0;background-color: rgb(216, 221, 245);" bindtap="sihft">确定</button>
+      </view>      
+    </view>    
+    <view wx:if="{{showFilter}}" class="mask" style="height: {{maskH}}px;" bindtap="showFliterBox"></view>
   </view>
   <scroll-view class="scrollViewContainer" enhanced="true" scroll-y="true" style="height:{{scrollViewContainerH}}px;" refresher-enabled="true" refresher-triggered="{{refreshing}}" bindrefresherrefresh="refresh" bindscrolltolower="loadNewPage" >
     <!-- 下拉刷新 -->

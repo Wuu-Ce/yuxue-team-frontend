@@ -1,8 +1,13 @@
 <view class="flex flex-direction justify-end" style="background-image: url(https://team.test.yuxue0824.com/static/backimage/1.webp);background-repeat:no-repeat;background-size:contain;height:600rpx;position:relative;">
   <view class="flex flex-direction align-center margin-lg shadow bg-white" style="border-radius: 40rpx;position:relative;box-shadow: 0rpx 0rpx 40rpx 0rpx rgb(211, 213, 229);min-height: 286rpx;">
     <!-- 头像 -->
-    <view class="cu-avatar round xl" style="background-image:url({{avatar}});position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;" bindtap="clickAvatar">
+    <view class="cu-avatar round xl" style="background-image:url({{avatar}});position: absolute;top: -64rpx;box-shadow: 0px 0px 0rpx 5rpx #ffffff;" bindtap="clickAvatar"  bindtap="showInviteModal">
+      <view class="inviteTip mainTone-bgColor text-white round text-sm padding-lr-xs padding-tb-xxs shadow">
+        <text class="cuIcon-add text-bold"></text>
+        <text>邀请</text>
+      </view>
     </view>
+
     <!-- 头像占位框 -->
     <view style="height: 64rpx;"></view>
     <!-- 昵称 -->
@@ -62,11 +67,6 @@
   <view class="flex padding-top-sm padding-bottom padding-lr-lg text-black" style="min-height: 60rpx;">{{skill?skill:''}}</view>
 </view>
 
-<!-- 邀请组件 -->
-<view class="bg-white margin-lg shadow" style="border-radius: 15rpx;" bindtap="showInviteModal">
-  <view class="flex justify-center padding-top padding-bottom-sm text-black" style="font-size: 32rpx;" >邀请</view>
-</view>
-
 <!-- 邀请弹窗 -->
 <view class="yuxue-modal bg-white {{showInviteModal?'show':''}}" bindtap="hideModal">
   <view class="yuxue-dialog" style="position: absolute;" catchtap>
@@ -75,7 +75,7 @@
     </view>
     <view class="flex justify-center align-center">
       <text>邀请</text>
-      <text class="text-blue padding-lr-xs">{{nickname}}</text>
+      <text class="text-blue padding-lr-xs" style="max-width: 90px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">{{nickname}}</text>
       <text>加入</text>
       <view class="dropdown-menu margin-left-sm text-xxl">
         <view  class="dropdown-menu_title text-blue text-df"  bindtap="showMenuItem">{{menu.title}}</view>
@@ -84,12 +84,12 @@
           <view 
             wx:for="{{myTeamForOthers}}" 
             wx:key="index" 
-            class="dropdown-menu_item {{menu.index===index?'active':''}} text-df {{item.relation.isMember||item.relation.isMember||item.relation.isMember?'disable':''}}"
+            class="dropdown-menu_item {{menu.index===index?'active':''}}  {{index>0?'notFirst':''}} text-df "
             data-index="{{index}}"
             catchtap="selectMenuItem"
             >
             <view class="flex justify-between align-center">
-              <text class="text-df">{{item.team.name}}</text>
+              <text class="text-df" style="max-width: 100px;overflow: hidden; text-overflow: ellipsis;">{{item.team.name}}</text>
               <view wx:if="{{item.relation.isMember}}" class="flex justify-center align-center text-sm text-green">
                 <text class="cuIcon-title"></text> 队伍中
               </view>
@@ -107,16 +107,27 @@
     <form bindsubmit="sendInvite" class="padding-top">
       <view class="padding-sm">
         <view class="text-black text-bold margin-left" style="text-align: start;">申请理由</view>
-        <textarea name="reason" placeholder="请输入申请理由" class="margin-top-sm padding-sm normal-textarea" style="text-align: start;"></textarea>
+        <textarea 
+          name="reason" 
+          value="{{reason}}"
+          placeholder="请输入申请理由" 
+          class="margin-top-sm padding-sm normal-textarea bg-gray" style="text-align: start;"
+        ></textarea>
       </view>
 
-      <view class=" margin-sm padding-tb-sm padding-lr-sm bg-white shadow" style="border-radius: 15rpx;">
-        <view class="flex justify-start align-center">
-          <view class="text-black text-bold" style="width: 25%;">联系方式</view>
-          <input name="contact" placeholder="请输入联系方式" class="padding-lr-sm" style="width: 75%;" maxlength="25" style="text-align: start;"></input>
+      <view class="flex justify-start align-center margin-sm bg-gray" style="border-radius: 15rpx;">
+          <view class="text-black text-bold padding-sm bg-white" style="width: 40%;border-radius: 15rpx 0  0 15rpx; border:solid 1px #ebebeb;">联系方式</view>
+          <input 
+            name="contact" 
+            value="{{contact}}"
+            placeholder="请输入联系方式" 
+            class="padding-lr-sm " 
+            style="width: 60%;" 
+            maxlength="25" 
+            style="text-align: start;"
+          ></input>
         </view>
-      </view>
-      <view class="flex margin-top-sm solids-top">
+      <view class="flex margin-top solids-top">
         <view class="solids-right" style="width: 50%;">
           <button style="width: 100%;" class="padding-tb text-gray text-lg " bindtap="hideInviteModal" form-type="reset">取消</button>
         </view>

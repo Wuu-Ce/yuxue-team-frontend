@@ -13,6 +13,7 @@
           name="search"
           auto-focus="true"
           class="padding-lr"
+        
           confirm-type="search" 
           placeholder="根据UID来搜索用户" 
           placeholder-class="text-sm text-grey" 

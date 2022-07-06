@@ -130,7 +130,7 @@
     <view wx:if="{{item.catalog===30007}}" class="text-black">收藏了你的团队<text class="mainTone-color1" data-team_Id="{{item.content.team.team_id}}" bindtap="jumpToTeamDetail">{{item.content.team.name}}</text></view>
   </view>
 <!-- 需要我审批 -->
-  <view wx:if="{{tabCur==1}}" wx:for="{{myApproval}}" class="flex flex-direction padding bg-white solids-bottom">
+  <view wx:if="{{tabCur==1}}" wx:for="{{myApproval}}" wx:key="index" class="flex flex-direction padding bg-white solids-bottom">
     <view class="flex justify-between align-center margin-bottom">
       <!-- 头像、昵称、日期 -->
       <view class="flex align-center" bindtap="jumpToUserDetail" data-user_id="{{item.content.user.user_id}}">
