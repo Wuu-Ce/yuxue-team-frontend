@@ -11,21 +11,6 @@ App({
 		// 路伯钰：8
 		//  38：2，3，6，7，9，10，11； 1，4，5
     // 45：2，3，6； 1，4，5
-<<<<<<< HEAD
-    
-		request('/test/login','POST',{'user_id': 5}).then(
-		  (res)=>{
-		    wx.setStorageSync('cookie', res.cookies[0]);
-		    wx.setStorage({
-		      key: "ifLogin",
-		      data: true
-		    })
-		  },
-		  (error)=>{
-		    console.log(error.message);
-		  }
-		)
-=======
     request('/test/login','POST',{'user_id':3}).then(
       (res)=>{
         wx.setStorageSync('cookie', res.cookies[0]);
@@ -38,7 +23,7 @@ App({
         console.log(error.message);
       }
     )
->>>>>>> 0ceac29df6c7a95a3dab7a6e545df09659d57327
+
 
 		// 环境信息
 		wx.getSystemInfo({
