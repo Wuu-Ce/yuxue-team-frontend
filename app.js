@@ -12,7 +12,7 @@ App({
 		//  38：2，3，6，7，9，10，11； 1，4，5
     // 45：2，3，6； 1，4，5
     
-		request('/test/login','POST',{'user_id': 3}).then(
+		request('/test/login','POST',{'user_id': 5}).then(
 		  (res)=>{
 		    wx.setStorageSync('cookie', res.cookies[0]);
 		    wx.setStorage({
