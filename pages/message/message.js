@@ -67,28 +67,133 @@ Page({
     })
     console.log(this.data.tabCur);
   },
-  // 允许对方加入
-  approve(e){
+  examine(e){
     var related_id = e.currentTarget.dataset.related_id;
-    request('/apply/leader/check','POST',{apply_id: related_id,agree:true}).then(
-      (res)=>{
-        console.log(res);
-        wx.showToast({
-          title: '已同意',
-        })
-        var myApproval = this.data.myApproval;
-        for(let i=0;i<myApproval.length;i++){
-          let item = myApproval[i];
-          if(item.related_id===related_id){
-            item.status=1;
+    var catalog = e.currentTarget.dataset.catalog;
+    var type = e.currentTarget.dataset.type;
+    if(type==0){  // 同意
+      if(catalog===10001){
+        // 允许加入
+        request('/apply/leader/check','POST',{apply_id: related_id,agree:true}).then(
+          (res)=>{
+            console.log(res);
+            wx.showToast({
+              title: '已同意',
+            })
+            var myApproval = this.data.myApproval;
+            for(let i=0;i<myApproval.length;i++){
+              let item = myApproval[i];
+              if(item.related_id===related_id){
+                item.status=1;
+              }
+            }
+            this.setData({
+              myApproval: myApproval
+            })
+          },
+          ()=>{}
+        )
+      }else if(catalog===10002){
+        // 接受邀请
+        request('/invite/check','POST',{invite_id:related_id,agree:true}).then(
+          (res)=>{
+            console.log(res);
+            wx.showToast({
+              title: '已同意',
+            })
+            var myApproval = this.data.myApproval;
+            for(let i=0;i<myApproval.length;i++){
+              let item = myApproval[i];
+              if(item.related_id===related_id){
+                item.status=1;
+              }
+            }
+            this.setData({
+              myApproval: myApproval
+            })
           }
+        )
+      }
+    }else if(type==1){  // 拒绝
+
+    }
+  },
+
+  // 编辑拒绝理由
+  editAccuseReason(e){
+    console.log(e);
+    var rejectReason = e.detail.value;
+    this.data.rejectReason = rejectReason;
+  },
+  // 举报团队
+  rejectSend(related_id,) {
+    if(this.data.rejectReason===''){
+      wx.showToast({
+        title: '请输入拒绝理由',
+        icon: 'error'
+      })
+      return
+    }
+    if(catalog===10001){
+      // 允许加入
+      request('/apply/leader/check','POST',{apply_id: related_id,agree:true}).then(
+        (res)=>{
+          console.log(res);
+          wx.showToast({
+            title: '已同意',
+          })
+          var myApproval = this.data.myApproval;
+          for(let i=0;i<myApproval.length;i++){
+            let item = myApproval[i];
+            if(item.related_id===related_id){
+              item.status=1;
+            }
+          }
+          this.setData({
+            myApproval: myApproval
+          })
+        },
+        ()=>{}
+      )
+    }else if(catalog===10002){
+      // 接受邀请
+      request('/invite/check','POST',{invite_id:related_id,agree:true}).then(
+        (res)=>{
+          console.log(res);
+          wx.showToast({
+            title: '已同意',
+          })
+          var myApproval = this.data.myApproval;
+          for(let i=0;i<myApproval.length;i++){
+            let item = myApproval[i];
+            if(item.related_id===related_id){
+              item.status=1;
+            }
+          }
+          this.setData({
+            myApproval: myApproval
+          })
         }
-        this.setData({
-          myApproval: myApproval
+      )
+    }
+    var data = {
+      type: accuseOptionList,
+      reason: this.data.accuseReason,
+      team_id: this.data.team_id
+    }
+    request('/accuse/add','POST',data).then(
+      (res)=>{
+        this.hideModal();
+        wx.showToast({
+          title: '举报成功',
+          icon: 'success'
         })
       },
-      ()=>{}
+      ()=>{
+
+      }
     )
+    
   },
   // 不允许对方加入
   disapprove(e){

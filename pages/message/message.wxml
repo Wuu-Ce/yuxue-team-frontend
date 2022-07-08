@@ -119,7 +119,7 @@
   <!-- 收藏 -->
   <view wx:if="{{tabCur==0}}" wx:for="{{notice}}" class="flex flex-direction padding  bg-white solids-bottom">
     <view wx:if="{{item.catalog===30007}}" class="flex justify-between align-center margin-bottom">
-      <view class="flex align-center" bindtap="jumpToUserDetail" data-user_id="">
+      <view class="flex align-center" bindtap="jumpToUserDetail" data-user_id="{{item.content.user.user_id}}">
         <view class="cu-avatar round lg margin-right-sm" style="background-image:url({{item.content.user.avatar}});width:80rpx;height:80rpx;"></view>
         <view class="">
           <view class="margin-bottom-xs text-black" style="font-size:32rpx">{{item.content.user.nickname}}</view>
@@ -143,22 +143,31 @@
       <view class="text-gray">{{item.time}}</view>
     </view>
     <view class="text-black margin-bottom-xs">
-      请求加入你的团队<text class="mainTone-color1" data-team_Id="{{item.content.team.team_id}}" bindtap="jumpToTeamDetail">{{item.content.team.name}}</text>
+      {{item.catalog===10001?'请求加入你的团队':'邀请你加入团队'}}<text class="mainTone-color1" data-team_Id="{{item.content.team.team_id}}" bindtap="jumpToTeamDetail">{{item.content.team.name}}</text>
     </view>
     <!-- <view class="text-grey margin-bottom-xs">申请方向：小程序开发</view>
     <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
     <view class="text-grey">联系方式：<text user-select="true">18330205262</text></view> -->
-    <view wx:if="{{item.content.apply.recruit_type===1}}" class="text-grey margin-bottom-xs">申请方向：{{item.content.apply.recruit_item_role}}</view>
-    <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
-    <view class="text-grey">联系方式：<text user-select="true">{{item.content.apply.contact}}</text></view>
+    <!-- 申请加入 -->
+    <view wx:if="{{item.catalog===10001}}">
+      <view wx:if="{{item.content.apply.recruit_type===1}}" class="text-grey margin-bottom-xs">申请方向：{{item.content.apply.recruit_item_role}}</view>
+      <view class="text-grey margin-bottom-xs">申请理由：{{item.content.apply.reason}}</view>
+      <view class="text-grey">联系方式：<text user-select="true">{{item.content.apply.contact}}</text></view>
+    </view>
+    <!-- 邀请 -->
+    <view wx:if="{{item.catalog===10002}}">
+      <view class="text-grey margin-bottom-xs">邀请理由：{{item.content.invite.reason}}</view>
+      <view class="text-grey">联系方式：<text user-select="true">{{item.content.invite.contact}}</text></view>
+    </view>
+    <!-- 按钮 -->
     <view class="flex justify-end padding-lr margin-top-sm">
       <view wx:if="{{item.status===0}}" class="margin-right">
-        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;" bindtap="approve" data-related_id="{{item.related_id}}">
+        <button class="cu-btn mainTone-bgColor1" style="width:120rpx;height:60rpx;" bindtap="examine" data-related_id="{{item.related_id}}" data-catalog="{{item.catalog}}" data-type="0">
           <text class="">同意</text>
         </button>
       </view>
       <view wx:if="{{item.status===0}}">
-        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;" bindtap="disapprove" data-related_id="{{item.related_id}}">
+        <button class="cu-btn bg-red" style="width:120rpx;height:60rpx;" bindtap="examine" data-related_id="{{item.related_id}}" data-catalog="{{item.catalog}}" data-type="1">
           <text class="">拒绝</text>
         </button>
       </view>
@@ -195,3 +204,36 @@
 </scroll-view>
 
 <loginRequired show="{{showLoginRequired}}"></loginRequired>
+
+<!-- 拒绝说明 -->
+<view class="yuxue-modal bg-white {{modelName=='拒绝'?'show':''}}" bindtap="hideModal">
+  <view class="yuxue-dialog" style="position: absolute;" catchtap>
+    <view class="flex justify-center align-center">
+      <view class="content margin-lg">
+        <text class="text-black text-xl text-bold">拒绝</text>
+      </view>
+    </view>
+    <view class="flex padding-lr-lg padding-tb-xs">
+      <textarea class="flex padding solids text-black radius" 
+        style="text-align: left;width:100%;flex-grow:1;height:250rpx;" 
+        placeholder="请输入拒绝理由" 
+        plackholder-class="text-grey" 
+        fixed="true" 
+        maxlength="-1"
+        confirm-type="return"
+        bindinput="editAccuseReason"
+      ></textarea>
+    </view>
+    <view class="flex">
+      <!-- <view class="flex justify-center align-center padding-tb text-gray text-lg solids-right" style="flex-grow:1;" bindtap="hideModal">取消</view> -->
+      <view class="flex justify-center align-center padding-bottom mainTone-color1 text-lg" style="flex-grow:1;" bindtap="reportTeam">提交</view>
+    </view>
+    <!-- <view class="cu-btn mainTone-bgColor flex padding-lg align-center text-white round shadow"  style="animation-delay: 0.1s;width:80%;" bindtap="reportTeam">
+      <text class="text-bold">提交</text>
+    </view> -->
+    <view class="padding-sm" style="position: absolute;top:10rpx;right:10rpx;" bindtap="hideModal">
+      <text class="cuIcon-close" style="font-size:40rpx;"></text>
+    </view>
+  </view>
+</view>
+
